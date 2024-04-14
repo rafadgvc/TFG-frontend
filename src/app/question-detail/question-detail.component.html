@@ -1,15 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>ole</title>
-</head>
-<body>
-  <h1>{{this.question?.title}}</h1>
-  <span>{{this.question?.answer1}}</span>
-  <span>{{ this.question?.answer2 }}</span>
-  <span>{{ this.question?.answer3 }}</span>
-  <span>{{ this.question?.answer4 }}</span>
+<div class="content-border-radius padding">
+  <div class="row gap">
+    <h3 class="bold blue-palette-700">Cuerpo de la pregunta: </h3>
+    <h3 class="bold-sm">{{this.question?.title}}</h3>
+  </div>
+  <div class="column">
+    <div class="row center">
+      <span class="semibold padding-sm blue-palette-700">Respuesta: </span>
+      <span class="padding-sm black">{{this.question?.answer1}}</span>
+      <span class=" green-palette-300">(0)</span>
+    </div>
+    <div class="row center">
+      <span class="semibold padding-sm blue-palette-700">Respuesta: </span>
+      <span class="padding-sm">{{this.question?.answer2}}</span>
+      <span class=" green-palette-300">(0)</span>
+    </div>
+    <div class="row center">
+      <span class="semibold padding-sm blue-palette-700">Respuesta: </span>
+      <span class="padding-sm">{{this.question?.answer3}}</span>
+      <span class=" green-palette-300">(0)</span>
+    </div>
+    <div class="row center" >
+      <span class="semibold padding-sm blue-palette-700">Respuesta: </span>
+      <span class="padding-sm">{{this.question?.answer4}}</span>
+      <span class=" green-palette-300">(0)</span>
+    </div>
 
-</body>
-</html>
+    <div class="row gap-lg">
+      <span class="semibold blue-palette-700">Competencia de aprendizaje: </span>
+      <span>Competencia</span>
+    </div>
+  </div>
+</div>
