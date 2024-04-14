@@ -4,8 +4,6 @@ import {QuestionDetailComponent} from "./question-detail/question-detail.compone
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, QuestionDetailComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
