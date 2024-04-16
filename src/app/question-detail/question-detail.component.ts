@@ -5,7 +5,6 @@ import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'app-question-detail',
-  standalone: true,
   templateUrl: './question-detail.component.html',
   styleUrls: ['./question-detail.component.css']
 })
