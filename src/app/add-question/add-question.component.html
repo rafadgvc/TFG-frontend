@@ -1,0 +1,24 @@
+<div class="content-border-radius padding">
+  <form [formGroup]="questionForm">
+    <mat-form-field>
+      <mat-label>Cuerpo:</mat-label>
+      <input matInput formControlName="body" placeholder="Escribe aquí tu pregunta">
+    </mat-form-field>
+    <div formArrayName="answers">
+      <div class="row" *ngFor="let answerGroup of getAnswerControls(); let i = index" [formGroupName]="i">
+        <mat-form-field>
+          <mat-label>Respuesta:</mat-label>
+          <input matInput formControlName="text" placeholder="Escribe aquí una respuesta" type="text">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Puntuación:</mat-label>
+          <input matInput formControlName="score" placeholder="P. ej. 1" type="number">
+        </mat-form-field>
+        <button mat-fab color="primary" aria-label="Borrar respuesta" (click)="removeAnswer(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="addAnswer()">Agregar respuesta</button>
+  </form>
+</div>
