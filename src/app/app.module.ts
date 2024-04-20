@@ -9,15 +9,17 @@ import {MatInput} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButton, MatFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {AddQuestionComponent} from "./add-question/add-question.component";
+import {AddQuestionComponent} from "./components/add-question/add-question.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import {QuestionDetailComponent} from "./question-detail/question-detail.component";
+import {QuestionDetailComponent} from "./components/question-detail/question-detail.component";
+import {UserSignupComponent} from "./components/user-signup/user-signup.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     AddQuestionComponent,
-    QuestionDetailComponent
+    QuestionDetailComponent,
+    UserSignupComponent
     // Aquí puedes añadir otros componentes si es necesario
   ],
   imports: [

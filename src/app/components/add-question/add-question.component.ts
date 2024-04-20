@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {Question} from "../models/question";
-import {QuestionService} from "../services/question.service";
+import {Question} from "../../models/question";
+import {QuestionService} from "../../services/question.service";
 import {ActivatedRoute} from "@angular/router";
 import {MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import {Form, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
