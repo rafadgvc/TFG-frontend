@@ -1,0 +1,21 @@
+<form [formGroup]="loginForm" (submit)="login()">
+  <!-- Email -->
+    <mat-form-field class="form-group">
+      <mat-label>Correo Electrónico</mat-label>
+      <input matInput formControlName="email" type="email">
+      <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+        Por favor, introduce un correo electrónico válido
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Contraseña -->
+    <mat-form-field class="form-group">
+      <mat-label>Contraseña</mat-label>
+      <input matInput formControlName="password" type="password">
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        La contraseña debe tener al menos 6 caracteres
+      </mat-error>
+    </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Login</button>
+</form>
