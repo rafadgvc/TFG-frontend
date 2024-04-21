@@ -13,14 +13,15 @@ import {AddQuestionComponent} from "./components/add-question/add-question.compo
 import {ReactiveFormsModule} from "@angular/forms";
 import {QuestionDetailComponent} from "./components/question-detail/question-detail.component";
 import {UserSignupComponent} from "./components/user-signup/user-signup.component";
+import {LoginComponent} from "./components/login/login.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     AddQuestionComponent,
     QuestionDetailComponent,
-    UserSignupComponent
-    // Aquí puedes añadir otros componentes si es necesario
+    UserSignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
