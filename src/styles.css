@@ -93,6 +93,7 @@
     color: var(--gray-900);
     line-height: 100%;
     letter-spacing: -0.125rem;
+    padding: 1.5rem;
     margin: 0;
     font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -109,7 +110,6 @@
 
   span {
     font-size: 1.5em;
-  margin-bottom: 0.75em;
     font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
@@ -118,7 +118,6 @@
   /* Estilos para encabezados */
 h2 {
   font-size: 1.5em;
-  margin-bottom: 0.75em;
   font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
@@ -126,7 +125,6 @@ h2 {
 
 h3 {
   font-size: 1.2em;
-  margin-bottom: 0.5em;
   font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
@@ -134,7 +132,6 @@ h3 {
 
 h4 {
   font-size: 1.1em;
-  margin-bottom: 0.5em;
   font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
@@ -142,7 +139,6 @@ h4 {
 
 h5 {
   font-size: 1em;
-  margin-bottom: 0.5em;
   font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
@@ -214,9 +210,18 @@ h5 {
   align-items: center;
 }
 
+/*Containers*/
+
+.small-container {
+  max-width: 25rem;
+  margin: 0 auto;
+  border-radius: 1em;
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+  padding: 1em;
+}
 .content-border-radius {
   border-radius: 1em;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombreado en los bordes */
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
 }
 
 /* Text weight */
@@ -232,89 +237,46 @@ h5 {
   font-weight: 500;
 }
 
+/*Form Styles*/
+.form {
+  max-width: 25rem;
+  margin: 0 auto;
+  padding: 1.25rem;
+  border: 0.06rem solid var(--gray-400);
+  border-radius: 0.3rem;
+  background-color: #ffffff;
+}
 
+.form-group {
+  margin-bottom: 2rem;
+}
 
+label {
+  display: block;
+  font-weight: bold;
+}
 
-  /*.divider {*/
-  /*  width: 1px;*/
-  /*  background: var(--red-to-pink-to-purple-vertical-gradient);*/
-  /*  margin-inline: 0.5rem;*/
-  /*}*/
+.input {
+  width: 100%;
+  padding: 0.625rem;
+  font-size: 1rem;
+  border: 0.063rem solid var(--gray-400);
+  border-radius: 0.3rem;
+}
 
-  /*.pill-group {*/
-  /*  display: flex;*/
-  /*  flex-direction: column;*/
-  /*  align-items: start;*/
-  /*  flex-wrap: wrap;*/
-  /*  gap: 1.25rem;*/
-  /*}*/
+.btn {
+  padding: 0.625rem 12.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
 
-  /*.pill {*/
-  /*  display: flex;*/
-  /*  align-items: center;*/
-  /*  --pill-accent: var(--bright-blue);*/
-  /*  background: color-mix(in srgb, var(--pill-accent) 5%, transparent);*/
-  /*  color: var(--pill-accent);*/
-  /*  padding-inline: 0.75rem;*/
-  /*  padding-block: 0.375rem;*/
-  /*  border-radius: 2.75rem;*/
-  /*  border: 0;*/
-  /*  transition: background 0.3s ease;*/
-  /*  font-family: var(--inter-font);*/
-  /*  font-size: 0.875rem;*/
-  /*  font-style: normal;*/
-  /*  font-weight: 500;*/
-  /*  line-height: 1.4rem;*/
-  /*  letter-spacing: -0.00875rem;*/
-  /*  text-decoration: none;*/
-  /*}*/
+.btn-primary {
+  background-color: #2196f3;
+  color: #ffffff;
+}
 
-  /*.pill:hover {*/
-  /*  background: color-mix(in srgb, var(--pill-accent) 15%, transparent);*/
-  /*}*/
-
-  /*.pill-group .pill:nth-child(6n + 1) {*/
-  /*  --pill-accent: var(--bright-blue);*/
-  /*}*/
-  /*.pill-group .pill:nth-child(6n + 2) {*/
-  /*  --pill-accent: var(--french-violet);*/
-  /*}*/
-  /*.pill-group .pill:nth-child(6n + 3),*/
-  /*.pill-group .pill:nth-child(6n + 4),*/
-  /*.pill-group .pill:nth-child(6n + 5) {*/
-  /*  --pill-accent: var(--hot-red);*/
-  /*}*/
-
-  /*.pill-group svg {*/
-  /*  margin-inline-start: 0.25rem;*/
-  /*}*/
-
-  /*.social-links {*/
-  /*  display: flex;*/
-  /*  align-items: center;*/
-  /*  gap: 0.73rem;*/
-  /*  margin-top: 1.5rem;*/
-  /*}*/
-
-  /*.social-links path {*/
-  /*  transition: fill 0.3s ease;*/
-  /*  fill: var(--gray-400);*/
-  /*}*/
-
-  /*.social-links a:hover svg path {*/
-  /*  fill: var(--gray-900);*/
-  /*}*/
-
-  /*@media screen and (max-width: 650px) {*/
-  /*  .content {*/
-  /*    flex-direction: column;*/
-  /*    width: max-content;*/
-  /*  }*/
-
-  /*  .divider {*/
-  /*    height: 1px;*/
-  /*    width: 100%;*/
-  /*    background: var(--red-to-pink-to-purple-horizontal-gradient);*/
-  /*    margin-block: 1.5rem;*/
-  /*  }*/
-  /*}*/
+.btn-primary:hover {
+  background-color: #23ffff;
+}
