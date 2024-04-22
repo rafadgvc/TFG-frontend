@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {SubjectList} from "../../models/subject";
-import {SubjectService} from "../../services/subject.service";
+import {Subject, SubjectList} from "../../models/subject";
+import { SubjectService } from "../../services/subject.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-subject-list',
   templateUrl: './subject-list.component.html',
-  standalone: true,
   styleUrls: ['./subject-list.component.css']
 })
 export class SubjectListComponent implements OnInit {
-  subjectList: SubjectList | undefined;
+  subjectList: Subject[] = [];
+  displayedColumns: string[] = ['name', 'questionNumber', 'subject', 'questions', 'exams'];
 
-  constructor(private subjectService: SubjectService) { }
+  constructor(
+    private subjectService: SubjectService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadUserSubjects();
@@ -20,8 +24,20 @@ export class SubjectListComponent implements OnInit {
   loadUserSubjects(): void {
     this.subjectService.getUserSubjects().subscribe(
       subjectList => {
-        this.subjectList = subjectList;
+        this.subjectList = subjectList.items;
       },
     );
+  }
+
+  viewSubject(subjectId: number): void {
+    this.router.navigate(['/subject/' + subjectId]);
+  }
+
+  viewQuestionList(subjectId: number): void {
+    this.router.navigate(['/question-list/' + subjectId]);
+  }
+
+  viewExamList(subjectId: number): void {
+    this.router.navigate(['/exam-list/' + subjectId]);
   }
 }

@@ -1,18 +1,46 @@
-<div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Question Number</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let subject of subjectList?.items">
-        <td>{{ subject.id }}</td>
-        <td>{{ subject.name }}</td>
-        <td>{{ subject.questionNumber }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table mat-table [dataSource]="subjectList" class="mat-elevation-z8">
+  <!-- Nombre -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let subject"> {{subject.name}} </td>
+  </ng-container>
+
+  <!-- Número de preguntas -->
+  <ng-container matColumnDef="questionNumber">
+    <th mat-header-cell *matHeaderCellDef> Número de preguntas </th>
+    <td mat-cell *matCellDef="let subject"> {{subject.questionNumber}} </td>
+  </ng-container>
+
+  <!-- Botones ver asignatura -->
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let subject">
+      <button mat-button color="primary" class="action-button" (click)="viewSubject(subject.id)">
+        Ver Detalles
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Botones ver listado de preguntas-->
+  <ng-container matColumnDef="questions">
+    <th mat-header-cell *matHeaderCellDef>  </th>
+    <td mat-cell *matCellDef="let subject">
+      <button mat-button color="primary" class="action-button" (click)="viewQuestionList(subject.id)">
+        Ver Preguntas
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Botones ver exámenes -->
+  <ng-container matColumnDef="exams">
+    <th mat-header-cell *matHeaderCellDef>  </th>
+    <td mat-cell *matCellDef="let subject">
+      <button mat-button color="primary" class="action-button" (click)="viewExamList(subject.id)">
+       Ver Exámenes
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
