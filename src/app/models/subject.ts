@@ -1,16 +1,16 @@
 export class Subject{
   id: number;
   name: string;
-  questionNumber?: number;
+  question_number?: number;
 
   constructor (
     id: number,
     name: string,
-    questionNumber?: number,
+    question_number?: number,
   ){
     this.id = id;
     this.name = name;
-    this.questionNumber = questionNumber;
+    this.question_number = question_number;
   }
 }
 
@@ -22,5 +22,14 @@ export class SubjectList {
   constructor(items: Subject[]) {
     this.items = items;
     this.total = items.length;
+  }
+
+  static fromApiResponse(apiResponse: any): Subject {
+    // Mapear los nombres de las propiedades manualmente
+    return new Subject(
+      apiResponse.id,
+      apiResponse.name,
+      apiResponse.question_number // Asignar el valor a questionNumber
+    );
   }
 }

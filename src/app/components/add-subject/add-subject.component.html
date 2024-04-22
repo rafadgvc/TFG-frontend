@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Añadir Asignatura</h2>
+<mat-dialog-content>
+  <form [formGroup]="subjectForm" (ngSubmit)="submitForm()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre de la asignatura</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="subjectForm.get('name')?.hasError('required')">El nombre de la asignatura es obligatorio</mat-error>
+    </mat-form-field>
+    <div class="modal-buttons">
+      <button mat-button type="button" (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!subjectForm.valid">Guardar</button>
+    </div>
+  </form>
+</mat-dialog-content>

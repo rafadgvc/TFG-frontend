@@ -24,6 +24,8 @@ import {
   MatRow, MatRowDef,
   MatTable
 } from "@angular/material/table";
+import {AddSubjectComponent} from "./components/add-subject/add-subject.component";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import {
     QuestionDetailComponent,
     UserSignupComponent,
     LoginComponent,
-    SubjectListComponent
+    SubjectListComponent,
+    AddSubjectComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import {
     MatButton,
     MatIconModule,
     ReactiveFormsModule,
+    MatDialogModule,
     BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton,
     // Configura las rutas principales
   ],

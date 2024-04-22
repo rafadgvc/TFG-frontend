@@ -4,6 +4,7 @@ import {catchError, map, Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Subject, SubjectList} from "../models/subject";
 import {AuthService} from "./auth.service";
+import {User} from "../models/user";
 
 @Injectable({
   providedIn: 'root',
@@ -11,10 +12,14 @@ import {AuthService} from "./auth.service";
 export class SubjectService {
 
   private subjectUrl = 'http://localhost:5000/subject';  // URL to API
+  private accessToken = this.authService.getAccessTokenCookie();
+  private headers:HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
 
   constructor(
     private http: HttpClient, private authService: AuthService
-  ) { }
+  ) {
+
+  }
 
   getSubject(id: number): Observable<Subject> {
     return this.http.get<Subject>(this.subjectUrl + '/' + id).pipe(
@@ -23,12 +28,16 @@ export class SubjectService {
     )
   }
   getUserSubjects(): Observable<SubjectList> {
-    const accessToken = this.authService.getAccessTokenCookie();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
-
-    return this.http.get<SubjectList>(this.subjectUrl + '/user-subjects',  { headers, withCredentials: true }).pipe(
+    return this.http.get<SubjectList>(this.subjectUrl + '/user-subjects',  { headers: this.headers, withCredentials: true }).pipe(
       map(subjectList => subjectList),
       catchError(this.handleError<SubjectList>(`getSubjectList`))
+    )
+  }
+
+  addSubject(subject: Subject): Observable<Subject>{
+    return this.http.post<Subject>(this.subjectUrl, subject, {headers: this.headers, withCredentials: true}).pipe(
+      map(Subject => subject),
+      catchError(this.handleError<Subject>(`addSubject`))
     )
   }
 

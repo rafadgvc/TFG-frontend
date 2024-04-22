@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Subject, SubjectList} from "../../models/subject";
 import { SubjectService } from "../../services/subject.service";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {AddSubjectComponent} from "../add-subject/add-subject.component";
 
 @Component({
   selector: 'app-subject-list',
@@ -14,7 +16,8 @@ export class SubjectListComponent implements OnInit {
 
   constructor(
     private subjectService: SubjectService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -39,5 +42,17 @@ export class SubjectListComponent implements OnInit {
 
   viewExamList(subjectId: number): void {
     this.router.navigate(['/exam-list/' + subjectId]);
+  }
+
+  openAddQuestionModal(): void {
+    const dialogRef = this.dialog.open(AddSubjectComponent, {
+      width: '400px', // Ancho del modal
+      data: {} // Puedes pasar datos al modal si es necesario
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadUserSubjects();
+
+    });
   }
 }

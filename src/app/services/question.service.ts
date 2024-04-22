@@ -11,6 +11,8 @@ import {AuthService} from "./auth.service";
 export class QuestionService {
 
   private questionUrl = 'http://localhost:5000/question';  // URL to API
+  private accessToken = this.authService.getAccessTokenCookie();
+  private headers = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
 
   constructor(
     private http: HttpClient,
@@ -20,7 +22,7 @@ export class QuestionService {
   getQuestion(id: number): Observable<Question> {
     const accessToken = this.authService.getAccessTokenCookie();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
-    return this.http.get<Question>(this.questionUrl + '/' + id, {headers, withCredentials: true}).pipe(
+    return this.http.get<Question>(this.questionUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
       map(question => question),
       catchError(this.handleError<Question>(`getQuestion ${id}`))
     )
