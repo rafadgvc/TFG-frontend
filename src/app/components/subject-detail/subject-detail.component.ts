@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {SubjectService} from "../../services/subject.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subject} from "../../models/subject";
+import {AddSubjectComponent} from "../add-subject/add-subject.component";
+import {MatDialog} from "@angular/material/dialog";
+import {SubjectDeleteComponent} from "../subject-delete/subject-delete.component";
 
 @Component({
   selector: 'app-subject-detail',
@@ -12,7 +15,12 @@ export class SubjectDetailComponent implements OnInit{
   // Question to be shown
   subject?: Subject;
 
-  constructor(private subjectService: SubjectService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private subjectService: SubjectService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+    ) {}
 
   ngOnInit():void {
     this.route.params.subscribe(params => {
@@ -29,7 +37,10 @@ export class SubjectDetailComponent implements OnInit{
   }
 
   deleteSubject(): void {
-    //this.router.navigate(['/exam-list/' + subjectId]);
+    const dialogRef = this.dialog.open(SubjectDeleteComponent, {
+      width: '400px',
+      data: {}
+    });
   }
 
   viewQuestionList(): void {

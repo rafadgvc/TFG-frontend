@@ -28,6 +28,7 @@ import {AddSubjectComponent} from "./components/add-subject/add-subject.componen
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {SubjectDetailComponent} from "./components/subject-detail/subject-detail.component";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
+import {SubjectDeleteComponent} from "./components/subject-delete/subject-delete.component";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} fr
     SubjectListComponent,
     AddSubjectComponent,
     SubjectDetailComponent,
+    SubjectDeleteComponent
   ],
   imports: [
     BrowserModule,
