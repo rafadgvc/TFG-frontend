@@ -26,6 +26,8 @@ import {
 } from "@angular/material/table";
 import {AddSubjectComponent} from "./components/add-subject/add-subject.component";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {SubjectDetailComponent} from "./components/subject-detail/subject-detail.component";
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
     UserSignupComponent,
     LoginComponent,
     SubjectListComponent,
-    AddSubjectComponent
+    AddSubjectComponent,
+    SubjectDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,11 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
     MatIconModule,
     ReactiveFormsModule,
     MatDialogModule,
-    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton,
+    MatCard,
+    MatCardTitle,
+    MatCardContent,
+    MatCardHeader,
+    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions,
     // Configura las rutas principales
   ],
   providers: [],

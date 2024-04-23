@@ -22,7 +22,7 @@ export class SubjectService {
   }
 
   getSubject(id: number): Observable<Subject> {
-    return this.http.get<Subject>(this.subjectUrl + '/' + id).pipe(
+    return this.http.get<Subject>(this.subjectUrl + '/' + id, { headers: this.headers, withCredentials: true }).pipe(
       map(subject => subject),
       catchError(this.handleError<Subject>(`getSubject ${id}`))
     )

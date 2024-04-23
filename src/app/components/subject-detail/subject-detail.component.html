@@ -1,0 +1,17 @@
+<!-- subject-detail.component.html -->
+<div class="padding-lg">
+  <h2>Detalles de la asignatura</h2>
+
+  <div class="content-border-radius padding">
+    <p><strong>ID:</strong> {{ subject?.id }}</p>
+    <p><strong>Nombre:</strong> {{ subject?.name }}</p>
+    <p *ngIf="subject?.question_number"><strong>Número de preguntas:</strong> {{ subject?.question_number }}</p>
+  </div>
+
+  <div class="row padding-lg">
+    <button mat-button color="primary" class="btn btn-primary"  (click)="editSubject()">Editar asignatura</button>
+    <button mat-button color="warn" class="btn btn-primary" (click)="deleteSubject()">Borrar asignatura</button>
+    <button mat-button color="accent" class="btn btn-primary" (click)="viewExamList()">Ver exámenes</button>
+    <button mat-button color="primary" class="btn btn-primary" (click)="viewQuestionList()">Ver preguntas</button>
+  </div>
+</div>
