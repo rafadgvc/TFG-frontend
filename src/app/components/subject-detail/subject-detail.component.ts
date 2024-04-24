@@ -5,6 +5,7 @@ import {Subject} from "../../models/subject";
 import {AddSubjectComponent} from "../add-subject/add-subject.component";
 import {MatDialog} from "@angular/material/dialog";
 import {SubjectDeleteComponent} from "../subject-delete/subject-delete.component";
+import {SubjectModifyComponent} from "../subject-modify/subject-modify.component";
 
 @Component({
   selector: 'app-subject-detail',
@@ -15,6 +16,8 @@ export class SubjectDetailComponent implements OnInit{
   // Question to be shown
   subject?: Subject;
 
+  id?: number;
+
   constructor(
     private subjectService: SubjectService,
     private route: ActivatedRoute,
@@ -24,16 +27,31 @@ export class SubjectDetailComponent implements OnInit{
 
   ngOnInit():void {
     this.route.params.subscribe(params => {
-      const id = params['id'];
+      this.id = params['id'];
       // Llamar al servicio para obtener la pregunta según el id
-      this.subjectService.getSubject(id).subscribe(subject => {
-        this.subject = subject;
-      });
+      if (this.id != null) {
+        this.loadSubject(this.id);
+      }
     });
   }
 
+  loadSubject(id: number) {
+    this.subjectService.getSubject(id).subscribe(subject => {
+        this.subject = subject;
+      });
+  }
+
   editSubject(): void {
-    //this.router.navigate(['/exam-list/' + subjectId]);
+    const dialogRef = this.dialog.open(SubjectModifyComponent, {
+      width: '400px',
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (this.id != null) {
+        this.loadSubject(this.id);
+      }
+
+    });
   }
 
   deleteSubject(): void {
