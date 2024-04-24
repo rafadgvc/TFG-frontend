@@ -1,33 +1,16 @@
-<div class="content-border-radius padding">
-  <div class="row gap">
-    <h3 class="bold blue-palette-700">Cuerpo de la pregunta: </h3>
-    <h3 class="bold-sm">{{this.question?.title}}</h3>
-  </div>
-  <div class="column">
-<!--    <div class="row center">-->
-<!--      <span class="semibold padding-sm blue-palette-700">Respuesta: </span>-->
-<!--      <span class="padding-sm black">{{this.question?.answer1}}</span>-->
-<!--      <span class=" green-palette-300">(0)</span>-->
-<!--    </div>-->
-<!--    <div class="row center">-->
-<!--      <span class="semibold padding-sm blue-palette-700">Respuesta: </span>-->
-<!--      <span class="padding-sm">{{this.question?.answer2}}</span>-->
-<!--      <span class=" green-palette-300">(0)</span>-->
-<!--    </div>-->
-<!--    <div class="row center">-->
-<!--      <span class="semibold padding-sm blue-palette-700">Respuesta: </span>-->
-<!--      <span class="padding-sm">{{this.question?.answer3}}</span>-->
-<!--      <span class=" green-palette-300">(0)</span>-->
-<!--    </div>-->
-<!--    <div class="row center" >-->
-<!--      <span class="semibold padding-sm blue-palette-700">Respuesta: </span>-->
-<!--      <span class="padding-sm">{{this.question?.answer4}}</span>-->
-<!--      <span class=" green-palette-300">(0)</span>-->
-<!--    </div>-->
+<div class="small-container">
+  <h2>{{ question?.title }}</h2>
+  <p><strong>Dificultad estimada:</strong> {{ question?.difficulty }}</p>
+  <p><strong>Tiempo estimado:</strong> {{ question?.time }}</p>
+  <p><strong>Tipo de preguntas:</strong> {{ question?.type }}</p>
 
-    <div class="row gap-lg">
-      <span class="semibold blue-palette-700">Competencia de aprendizaje: </span>
-      <span>Competencia</span>
-    </div>
+  <h3>Respuestas:</h3>
+  <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
+    <p><strong>{{ answer.body }}</strong> ({{ answer.points }})</p>
   </div>
 </div>
+
+<div class="row padding-lg">
+    <button mat-button color="primary" class="btn btn-primary"  (click)="editQuestion()">Editar pregunta</button>
+    <button mat-button color="warn" class="btn btn-primary" (click)="deleteQuestion()">Borrar pregunta</button>
+  </div>

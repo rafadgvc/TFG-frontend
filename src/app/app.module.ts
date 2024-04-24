@@ -31,6 +31,7 @@ import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} fr
 import {SubjectDeleteComponent} from "./components/subject-delete/subject-delete.component";
 import {SubjectModifyComponent} from "./components/subject-modify/subject-modify.component";
 import {QuestionListComponent} from "./components/question-list/question-list.component";
+import {EditQuestionComponent} from "./components/edit-question/edit-question.component";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {QuestionListComponent} from "./components/question-list/question-list.co
     SubjectDetailComponent,
     SubjectDeleteComponent,
     SubjectModifyComponent,
-    QuestionListComponent
+    QuestionListComponent,
+    EditQuestionComponent
   ],
   imports: [
     BrowserModule,

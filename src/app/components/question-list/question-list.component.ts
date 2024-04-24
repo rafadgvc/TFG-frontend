@@ -60,9 +60,9 @@ export class QuestionListComponent implements OnInit{
   openAddQuestionModal(): void {
     // TODO: Cambiar a añadir pregunta
     const dialogRef = this.dialog.open(AddQuestionComponent, {
-      width: '800px', // Ancho del modal
+      width: '800px',
       maxHeight: '700px',
-      data: {} // Puedes pasar datos al modal si es necesario
+      data: {}
 
     });
 

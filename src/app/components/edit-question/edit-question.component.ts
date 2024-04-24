@@ -1,41 +1,43 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { AnswerList } from "../../models/answer";
-import { Question } from "../../models/question";
-import {Subject} from "../../models/subject";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
+import {Question} from "../../models/question";
+import {Answer, AnswerList} from "../../models/answer";
 
 @Component({
-  selector: 'app-add-question',
-  templateUrl: './add-question.component.html',
-  styleUrls: ['./add-question.component.css']
+  selector: 'app-edit-question',
+  templateUrl: './edit-question.component.html',
+  styleUrl: './edit-question.component.css'
 })
-export class AddQuestionComponent {
+export class EditQuestionComponent {
   questionForm: FormGroup;
+  question: Question = new Question (1, '¿Cuál de los siguientes no es un operador?', 2, 1, 'test',
+        new AnswerList([new Answer(3, 'Sentencia', 0),
+          new Answer(4, 'Producto Cartesiano', 1),
+          new Answer(5, 'Cura Natural', 0),
+          new Answer(6, 'Detección', 0)]
+        )
+      )
   answers: FormArray;
 
   constructor(
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<AddQuestionComponent>
+    public dialogRef: MatDialogRef<EditQuestionComponent>
   ) {
   this.questionForm = this.formBuilder.group({
-    title: ['', Validators.required],
-    difficulty: [NaN, [Validators.required, Validators.min(1), Validators.max(10)]],
-    time: [NaN, [Validators.required, Validators.min(1)]],
-    type: ['', Validators.required],
-    // TODO: Cambiar a un selector
+    title: [this.question.title, Validators.required],
+    difficulty: [this.question.difficulty, [Validators.required, Validators.min(1), Validators.max(10)]],
+    time: [this.question.time, [Validators.required, Validators.min(1)]],
+    type: [this.question.type, Validators.required],
     answers: this.formBuilder.array([], Validators.required)
   });
   this.answers = this.questionForm.get('answers') as FormArray;
-
-  this.addAnswer();
-  this.addAnswer();
 }
 
   addAnswer() {
     this.answers.push(this.formBuilder.group({
       body: ['', Validators.required],
-      points: [NaN, [Validators.required, Validators.min(-1), Validators.max(1)]]
+      points: ['', [Validators.required, Validators.min(-1), Validators.max(1)]]
     }));
   }
 

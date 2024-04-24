@@ -1,0 +1,102 @@
+
+<div>
+  <div class="center">
+  <h2>Editar pregunta</h2>
+  </div>
+  <form [formGroup]="questionForm" class="form">
+    <!--    Cuerpo-->
+    <mat-form-field appearance="fill" class="form-group">
+      <mat-label>Cuerpo</mat-label>
+      <input matInput formControlName="title">
+      <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
+        Este campo es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <!--    Dificultad-->
+    <mat-form-field appearance="fill" class="form-group">
+      <mat-label>Dificultad</mat-label>
+      <input matInput formControlName="difficulty">
+      <mat-error *ngIf="questionForm.get('difficulty')?.hasError('required')">
+        Este campo es requerido
+      </mat-error>
+      <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
+      questionForm.get('difficulty')?.hasError('min') ">
+        El mínimo de este campo es 1
+      </mat-error>
+      <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
+      questionForm.get('difficulty')?.hasError('max') ">
+        El máximo de este campo es 10
+      </mat-error>
+    </mat-form-field>
+
+    <!--    Tiempo estimado-->
+    <mat-form-field appearance="fill" class="form-group">
+      <mat-label>Tiempo Estimado</mat-label>
+      <input matInput formControlName="time">
+      <mat-error *ngIf="questionForm.get('time')?.hasError('required')">
+        Este campo es requerido
+      </mat-error>
+      <mat-error *ngIf="!questionForm.get('time')?.hasError('required') &&
+      questionForm.get('time')?.hasError('min') ">
+        El mínimo de este campo es 1
+      </mat-error>
+    </mat-form-field>
+
+    <!--    Tipo-->
+    <mat-form-field appearance="fill" class="form-group">
+      <mat-label>Tipo</mat-label>
+      <input matInput formControlName="type">
+      <mat-error *ngIf="questionForm.get('type')?.hasError('required')">
+        Este campo es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Respuestas -->
+    <div formArrayName="answers" class="form-group">
+    <div *ngIf="questionForm.get('answers')">
+      <div *ngFor="let answer of answersControls; let i = index">
+        <div [formGroupName]="i">
+          <mat-form-field appearance="fill">
+            <mat-label>Respuesta {{i + 1}}</mat-label>
+            <input matInput formControlName="body">
+
+            <mat-error *ngIf="answersControls.at(i)?.get('body')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Puntuación</mat-label>
+            <input matInput formControlName="points" type="number">
+
+            <mat-error *ngIf="answersControls.at(i)?.get('points')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="!answersControls.at(i)?.get('points')?.hasError('required') &&
+            answersControls.at(i)?.get('points')?.hasError('min')">
+              El mínimo de este campo es -1
+            </mat-error>
+            <mat-error *ngIf="!answersControls[i]?.get('points')?.hasError('required') &&
+            answersControls.at(i)?.get('points')?.hasError('max')">
+              El máximo de este campo es 1
+            </mat-error>
+          </mat-form-field>
+          <div class="padding">
+            <button type="button" class="btn btn-danger btn-modal" (click)="removeAnswer(i)">Borrar Respuesta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="padding-sm column">
+      <div class="padding-sm">
+        <button type="button" class="btn" (click)="addAnswer()">Añadir Respuesta</button>
+      </div>
+      <div class="padding-sm">
+        <button type="submit" class="btn" [disabled]="questionForm.invalid" (click)="submitForm()">Editar Pregunta</button>
+      </div>
+    </div>
+  </form>
+</div>
