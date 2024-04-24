@@ -54,7 +54,7 @@ export class QuestionListComponent implements OnInit{
   }
 
   viewQuestion(questionId: number): void {
-    this.router.navigate(['/question/' + questionId]);
+    this.router.navigate(['/question-detail/' + questionId]);
   }
 
   openAddQuestionModal(): void {
