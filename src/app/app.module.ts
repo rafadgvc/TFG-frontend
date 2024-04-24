@@ -32,6 +32,7 @@ import {SubjectDeleteComponent} from "./components/subject-delete/subject-delete
 import {SubjectModifyComponent} from "./components/subject-modify/subject-modify.component";
 import {QuestionListComponent} from "./components/question-list/question-list.component";
 import {EditQuestionComponent} from "./components/edit-question/edit-question.component";
+import {DeleteQuestionComponent} from "./components/delete-question/delete-question.component";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {EditQuestionComponent} from "./components/edit-question/edit-question.co
     SubjectDeleteComponent,
     SubjectModifyComponent,
     QuestionListComponent,
-    EditQuestionComponent
+    EditQuestionComponent,
+    DeleteQuestionComponent
   ],
   imports: [
     BrowserModule,
