@@ -16,6 +16,8 @@ export class SubjectDetailComponent implements OnInit{
   // Question to be shown
   subject?: Subject;
 
+  // TODO: Añadir estadísticas de la asignatura
+
   id?: number;
 
   constructor(

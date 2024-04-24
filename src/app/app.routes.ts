@@ -6,6 +6,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {AuthGuard} from "./auth.guard";
 import {SubjectListComponent} from "./components/subject-list/subject-list.component";
 import {SubjectDetailComponent} from "./components/subject-detail/subject-detail.component";
+import {QuestionListComponent} from "./components/question-list/question-list.component";
 
 export const routes: Routes = [
   {path: 'signup', component: UserSignupComponent},
@@ -13,5 +14,6 @@ export const routes: Routes = [
   {path: 'question-detail/:id', component: QuestionDetailComponent, canActivate: [AuthGuard]},
   {path: 'subject/:id', component: SubjectDetailComponent, canActivate: [AuthGuard]},
   {path: 'add-question', component: AddQuestionComponent, canActivate: [AuthGuard]},
+  {path: 'question-list/:id', component: QuestionListComponent, canActivate: [AuthGuard]},
   {path: 'home', component: SubjectListComponent, canActivate: [AuthGuard]}
 ];

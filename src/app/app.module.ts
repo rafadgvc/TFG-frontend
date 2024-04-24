@@ -30,6 +30,7 @@ import {SubjectDetailComponent} from "./components/subject-detail/subject-detail
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {SubjectDeleteComponent} from "./components/subject-delete/subject-delete.component";
 import {SubjectModifyComponent} from "./components/subject-modify/subject-modify.component";
+import {QuestionListComponent} from "./components/question-list/question-list.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {SubjectModifyComponent} from "./components/subject-modify/subject-modify
     AddSubjectComponent,
     SubjectDetailComponent,
     SubjectDeleteComponent,
-    SubjectModifyComponent
+    SubjectModifyComponent,
+    QuestionListComponent
   ],
   imports: [
     BrowserModule,
