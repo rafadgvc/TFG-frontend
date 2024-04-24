@@ -271,6 +271,7 @@ label {
   border: none;
   border-radius: 0.3rem;
   cursor: pointer;
+  width: auto;
 }
 
 .btn-primary {
@@ -278,6 +279,11 @@ label {
   color: #ffffff;
 }
 
+.btn-danger {
+  background-color: #e53935;
+  color: #ffffff;
+}
+
 .btn-primary:hover {
-  background-color: #23ffff;
+  background-color: #777777;
 }

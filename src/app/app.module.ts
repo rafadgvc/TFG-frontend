@@ -10,7 +10,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButton, MatFabButton, MatIconButton} from "@angular/material/button";
 import {MatIcon, MatIconModule} from "@angular/material/icon";
 import {AddQuestionComponent} from "./components/add-question/add-question.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {QuestionDetailComponent} from "./components/question-detail/question-detail.component";
 import {UserSignupComponent} from "./components/user-signup/user-signup.component";
 import {LoginComponent} from "./components/login/login.component";
@@ -61,7 +61,7 @@ import {QuestionListComponent} from "./components/question-list/question-list.co
     MatCardTitle,
     MatCardContent,
     MatCardHeader,
-    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions,
+    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule,
     // Configura las rutas principales
   ],
   providers: [],

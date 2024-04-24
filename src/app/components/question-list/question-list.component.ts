@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {SubjectService} from "../../services/subject.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {AddSubjectComponent} from "../add-subject/add-subject.component";
 import {Question} from "../../models/question";
 import {QuestionService} from "../../services/question.service";
+import {AddQuestionComponent} from "../add-question/add-question.component";
 
 @Component({
   selector: 'app-question-list',
@@ -46,7 +45,6 @@ export class QuestionListComponent implements OnInit{
       new Question(7, "¿Cuál es el planeta más grande del sistema solar?", 3, 35, "open_answer"),
       new Question(8, "¿Cuál es el río más largo del mundo?", 2, 30, "true_false"),
       new Question(9, "¿Quién pintó la Mona Lisa?", 3, 40, "open_answer"),
-      new Question(10, "¿Cuál es la fórmula química del oxígeno?", 2, 30, "open_answer"),
     ];
     this.questionList = preheatedQuestions;
   }
@@ -61,15 +59,17 @@ export class QuestionListComponent implements OnInit{
 
   openAddQuestionModal(): void {
     // TODO: Cambiar a añadir pregunta
-    // const dialogRef = this.dialog.open(AddSubjectComponent, {
-    //   width: '400px', // Ancho del modal
-    //   data: {} // Puedes pasar datos al modal si es necesario
-    // });
-    //
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.loadQuestionSubjects(3);
-    //
-    // });
+    const dialogRef = this.dialog.open(AddQuestionComponent, {
+      width: '800px', // Ancho del modal
+      maxHeight: '700px',
+      data: {} // Puedes pasar datos al modal si es necesario
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadQuestionSubjects(3);
+
+    });
   }
 
 }

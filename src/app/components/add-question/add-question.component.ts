@@ -1,58 +1,74 @@
 import { Component } from '@angular/core';
-import {Question} from "../../models/question";
-import {QuestionService} from "../../services/question.service";
-import {ActivatedRoute} from "@angular/router";
-import {MatFormFieldModule, MatLabel} from '@angular/material/form-field';
-import {Form, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {NgForOf} from "@angular/common";
-import {MatIcon} from "@angular/material/icon";
-import {MatInput} from "@angular/material/input";
-import {MatButton, MatFabButton} from "@angular/material/button";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { AnswerList } from "../../models/answer";
+import { Question } from "../../models/question";
+import {Subject} from "../../models/subject";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-question',
   templateUrl: './add-question.component.html',
-  styleUrls: ['./add-question.component.css'],
+  styleUrls: ['./add-question.component.css']
 })
-
 export class AddQuestionComponent {
-  // Question to be added
-  question?: Question;
   questionForm: FormGroup;
+  answers: FormArray;
 
   constructor(
     private formBuilder: FormBuilder,
-    private questionService: QuestionService
+    public dialogRef: MatDialogRef<AddQuestionComponent>
   ) {
-    this.questionForm = this.formBuilder.group({
-      body: ['', Validators.required],
-      answers: this.formBuilder.array([
-        this.createAnswerFormGroup(),
-        this.createAnswerFormGroup()
-      ])
-    });
-  }
+  this.questionForm = this.formBuilder.group({
+    title: ['', Validators.required],
+    difficulty: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+    time: ['', [Validators.required, Validators.min(1)]],
+    type: ['', Validators.required],
+    answers: this.formBuilder.array([], Validators.required)
+  });
+  this.answers = this.questionForm.get('answers') as FormArray;
 
-  createAnswerFormGroup(): FormGroup{
-    return this.formBuilder.group(
-      {
-        text:['', Validators.required],
-        score:[0, [Validators.required, Validators.min(-1), Validators.max(1)]]
-      }
-    )
-  }
-
-  getAnswerControls(): FormControl[] {
-  const answerControls = (this.questionForm.get('answers') as FormArray).controls;
-  return answerControls.map(control => control as FormControl);
+  this.addAnswer();
+  this.addAnswer();
 }
 
-  addAnswer(){
-    this.questionForm.get('answers')?.value.push(this.createAnswerFormGroup());
+  addAnswer() {
+    this.answers.push(this.formBuilder.group({
+      body: ['', Validators.required],
+      points: ['', [Validators.required, Validators.min(-1), Validators.max(1)]]
+    }));
   }
 
-  removeAnswer(index: number){
-    this.questionForm.get('answers')?.value.removeAt(index);
+  removeAnswer(index: number) {
+    this.answers.removeAt(index);
+  }
+
+  onSubmit() {
+    if (this.questionForm.valid) {
+      const questionData = this.questionForm.value;
+      const question = new Question(
+        0, // Assign ID appropriately
+        questionData.title,
+        questionData.difficulty,
+        questionData.time,
+        questionData.type,
+        new AnswerList(questionData.answers)
+      );
+      // Now you can use 'question' object to save or do whatever you want
+      console.log(question);
+    } else {
+      console.log('Invalid form');
+    }
+  }
+
+  get answersControls() {
+    return (this.questionForm.get('answers') as FormArray).controls;
+  }
+
+  submitForm(): void {
+    if (this.questionForm.valid) {
+      // TODO: Añadir creación de la pregunta
+      this.dialogRef.close();
+
+    }
   }
 }
