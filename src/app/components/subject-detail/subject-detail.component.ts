@@ -64,7 +64,7 @@ export class SubjectDetailComponent implements OnInit{
   }
 
   viewQuestionList(): void {
-    //this.router.navigate(['/question-list/' + subjectId]);
+    this.router.navigate(['/question-list/' + this.id]);
   }
 
   viewExamList(): void {
