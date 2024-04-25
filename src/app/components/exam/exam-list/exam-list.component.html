@@ -1,0 +1,46 @@
+<div class="column">
+  <table mat-table [dataSource]="examList" class="mat-elevation-z8">
+    <!-- Título del examen -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Examen </th>
+      <td mat-cell *matCellDef="let exam"> {{exam.title}} </td>
+    </ng-container>
+
+    <!-- Dificultad de examen -->
+    <ng-container matColumnDef="difficulty">
+      <th mat-header-cell *matHeaderCellDef> Dificultad Estimada </th>
+      <td mat-cell *matCellDef="let exam"> {{exam.difficulty}} </td>
+    </ng-container>
+
+    <!-- Tiempo de la examen -->
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef> Tiempo Estimado </th>
+      <td mat-cell *matCellDef="let exam"> {{exam.time}} </td>
+    </ng-container>
+
+    <!-- Número de preguntas -->
+    <ng-container matColumnDef="questions">
+      <th mat-header-cell *matHeaderCellDef> Nº de preguntas </th>
+      <td mat-cell *matCellDef="let exam"> {{exam.questions.total}} </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let exam">
+        <button mat-button color="primary" class="action-button" (click)="viewExam(exam.id)">
+          Ver Examen
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <div class="padding-lg">
+    <button mat-button color="primary" class="padding-lg action-button" (click)="openAddExamModal()">
+      Configurar examen
+    </button>
+  </div>
+</div>

@@ -39,6 +39,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import {EditNodeComponent} from "./components/node/edit-node/edit-node.component";
 import {NodeDetailComponent} from "./components/node/node-detail/node-detail.component";
 import {DeleteNodeComponent} from "./components/node/delete-node/delete-node.component";
+import {ExamListComponent} from "./components/exam/exam-list/exam-list.component";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {DeleteNodeComponent} from "./components/node/delete-node/delete-node.com
     AddNodeComponent,
     NodeDetailComponent,
     EditNodeComponent,
-    DeleteNodeComponent
+    DeleteNodeComponent,
+    ExamListComponent
   ],
   imports: [
     BrowserModule,

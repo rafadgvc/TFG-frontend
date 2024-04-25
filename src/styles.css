@@ -281,6 +281,7 @@ label {
   border-radius: 0.3rem;
   cursor: pointer;
   width: auto;
+  letter-spacing: -0.125rem;
 }
 
 .btn-primary {
@@ -295,4 +296,8 @@ label {
 
 .btn-primary:hover {
   background-color: #777777;
+}
+
+.mat-mdc-button {
+  letter-spacing: -0.025rem !important;
 }
