@@ -1,0 +1,43 @@
+<div class="column">
+  <table mat-table [dataSource]="this.nodeList" class="mat-elevation-z8">
+    <!-- ID del nodo -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> id </th>
+      <td mat-cell *matCellDef="let node"> {{node.id}} </td>
+    </ng-container>
+
+    <!-- Nombre del nodo -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let node"> {{node.name}} </td>
+    </ng-container>
+
+    <!-- ID del padre del nodo -->
+    <ng-container matColumnDef="parent">
+      <th mat-header-cell *matHeaderCellDef> ID del Padre </th>
+      <td mat-cell *matCellDef="let node"> {{node.parent}} </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let node">
+        <button mat-button color="primary" class="action-button" (click)="viewSubject()">
+          Ver Asignatura
+        </button>
+        <button mat-button color="primary" class="action-button" (click)="viewNode(node.id)">
+          Ver Nodo
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <div class="padding-lg">
+    <button mat-button color="primary" class="padding-lg action-button" (click)="openAddNodeModal()">
+      Añadir Nodo
+    </button>
+  </div>
+</div>
