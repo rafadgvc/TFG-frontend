@@ -33,6 +33,9 @@ import {SubjectModifyComponent} from "./components/subject-modify/subject-modify
 import {QuestionListComponent} from "./components/question-list/question-list.component";
 import {EditQuestionComponent} from "./components/edit-question/edit-question.component";
 import {DeleteQuestionComponent} from "./components/delete-question/delete-question.component";
+import {NodeListComponent} from "./components/node-list/node-list.component";
+import {AddNodeComponent} from "./components/add-node/add-node.component";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -48,7 +51,9 @@ import {DeleteQuestionComponent} from "./components/delete-question/delete-quest
     SubjectModifyComponent,
     QuestionListComponent,
     EditQuestionComponent,
-    DeleteQuestionComponent
+    DeleteQuestionComponent,
+    NodeListComponent,
+    AddNodeComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +70,7 @@ import {DeleteQuestionComponent} from "./components/delete-question/delete-quest
     MatCardTitle,
     MatCardContent,
     MatCardHeader,
-    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule,
+    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption,
     // Configura las rutas principales
   ],
   providers: [],
