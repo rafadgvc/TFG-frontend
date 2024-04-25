@@ -63,8 +63,8 @@ export class ExamListComponent {
     this.router.navigate(['/subject/' + subjectId]);
   }
 
-  viewExam(questionId: number): void {
-    this.router.navigate(['/question-detail/' + questionId]);
+  viewExam(examId: number): void {
+    this.router.navigate(['/exam/' + examId]);
   }
 
   openAddExamModal(): void {

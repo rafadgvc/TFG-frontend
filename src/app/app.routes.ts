@@ -10,6 +10,7 @@ import {QuestionListComponent} from "./components/question/question-list/questio
 import {NodeListComponent} from "./components/node/node-list/node-list.component";
 import {NodeDetailComponent} from "./components/node/node-detail/node-detail.component";
 import {ExamListComponent} from "./components/exam/exam-list/exam-list.component";
+import {ExamDetailComponent} from "./components/exam/exam-detail/exam-detail.component";
 
 export const routes: Routes = [
   {path: 'signup', component: UserSignupComponent},
@@ -21,7 +22,7 @@ export const routes: Routes = [
   {path: 'node-list/:id', component: NodeListComponent, canActivate: [AuthGuard]},
   {path: 'node/:id', component: NodeDetailComponent, canActivate: [AuthGuard]},
   {path: 'exam-list/:id', component: ExamListComponent, canActivate: [AuthGuard]},
-  {path: 'create-exam/:id', component: NodeDetailComponent, canActivate: [AuthGuard]},
+  {path: 'exam/:id', component: ExamDetailComponent, canActivate: [AuthGuard]},
   {path: 'home', component: SubjectListComponent, canActivate: [AuthGuard]}
 
 ];
