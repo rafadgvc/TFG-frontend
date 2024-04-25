@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {Question} from "../../models/question";
-import {QuestionService} from "../../services/question.service";
+import {Question} from "../../../models/question";
+import {QuestionService} from "../../../services/question.service";
 import {AddQuestionComponent} from "../add-question/add-question.component";
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {HierarchyNode, HierarchyNodeList} from "../../models/hierarchy-node";
+import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
 import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({

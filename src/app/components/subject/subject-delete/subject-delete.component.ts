@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {SubjectService} from "../../services/subject.service";
-import {Subject} from "../../models/subject";
+import {SubjectService} from "../../../services/subject.service";
+import {Subject} from "../../../models/subject";
 import {Router} from "@angular/router";
 
 @Component({

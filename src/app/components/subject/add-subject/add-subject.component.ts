@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import {SubjectService} from "../../services/subject.service";
-import {Subject} from "../../models/subject";
+import {SubjectService} from "../../../services/subject.service";
+import {Subject} from "../../../models/subject";
 
 @Component({
   selector: 'app-add-subject',

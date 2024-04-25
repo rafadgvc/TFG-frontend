@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {Question} from "../../models/question";
-import {QuestionService} from "../../services/question.service";
+import {Question} from "../../../models/question";
+import {QuestionService} from "../../../services/question.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {AddQuestionComponent} from "../add-question/add-question.component";
-import {HierarchyNode} from "../../models/hierarchy-node";
+import {AddQuestionComponent} from "../../question/add-question/add-question.component";
+import {HierarchyNode} from "../../../models/hierarchy-node";
 import {AddNodeComponent} from "../add-node/add-node.component";
 
 @Component({

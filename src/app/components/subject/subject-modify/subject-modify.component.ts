@@ -5,8 +5,8 @@ import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {SubjectService} from "../../services/subject.service";
-import {Subject} from "../../models/subject";
+import {SubjectService} from "../../../services/subject.service";
+import {Subject} from "../../../models/subject";
 
 @Component({
   selector: 'app-subject-modify',

@@ -1,14 +1,14 @@
 import {Routes} from '@angular/router';
-import {QuestionDetailComponent} from "./components/question-detail/question-detail.component";
-import {AddQuestionComponent} from "./components/add-question/add-question.component";
+import {QuestionDetailComponent} from "./components/question/question-detail/question-detail.component";
+import {AddQuestionComponent} from "./components/question/add-question/add-question.component";
 import {UserSignupComponent} from "./components/user-signup/user-signup.component";
 import {LoginComponent} from "./components/login/login.component";
 import {AuthGuard} from "./auth.guard";
-import {SubjectListComponent} from "./components/subject-list/subject-list.component";
-import {SubjectDetailComponent} from "./components/subject-detail/subject-detail.component";
-import {QuestionListComponent} from "./components/question-list/question-list.component";
-import {NodeListComponent} from "./components/node-list/node-list.component";
-import {NodeDetailComponent} from "./components/node-detail/node-detail.component";
+import {SubjectListComponent} from "./components/subject/subject-list/subject-list.component";
+import {SubjectDetailComponent} from "./components/subject/subject-detail/subject-detail.component";
+import {QuestionListComponent} from "./components/question/question-list/question-list.component";
+import {NodeListComponent} from "./components/node/node-list/node-list.component";
+import {NodeDetailComponent} from "./components/node/node-detail/node-detail.component";
 
 export const routes: Routes = [
   {path: 'signup', component: UserSignupComponent},

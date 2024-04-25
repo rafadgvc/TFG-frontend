@@ -9,12 +9,12 @@ import {MatInput} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButton, MatFabButton, MatIconButton} from "@angular/material/button";
 import {MatIcon, MatIconModule} from "@angular/material/icon";
-import {AddQuestionComponent} from "./components/add-question/add-question.component";
+import {AddQuestionComponent} from "./components/question/add-question/add-question.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {QuestionDetailComponent} from "./components/question-detail/question-detail.component";
+import {QuestionDetailComponent} from "./components/question/question-detail/question-detail.component";
 import {UserSignupComponent} from "./components/user-signup/user-signup.component";
 import {LoginComponent} from "./components/login/login.component";
-import {SubjectListComponent} from "./components/subject-list/subject-list.component";
+import {SubjectListComponent} from "./components/subject/subject-list/subject-list.component";
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -24,21 +24,21 @@ import {
   MatRow, MatRowDef,
   MatTable
 } from "@angular/material/table";
-import {AddSubjectComponent} from "./components/add-subject/add-subject.component";
+import {AddSubjectComponent} from "./components/subject/add-subject/add-subject.component";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {SubjectDetailComponent} from "./components/subject-detail/subject-detail.component";
+import {SubjectDetailComponent} from "./components/subject/subject-detail/subject-detail.component";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
-import {SubjectDeleteComponent} from "./components/subject-delete/subject-delete.component";
-import {SubjectModifyComponent} from "./components/subject-modify/subject-modify.component";
-import {QuestionListComponent} from "./components/question-list/question-list.component";
-import {EditQuestionComponent} from "./components/edit-question/edit-question.component";
-import {DeleteQuestionComponent} from "./components/delete-question/delete-question.component";
-import {NodeListComponent} from "./components/node-list/node-list.component";
-import {AddNodeComponent} from "./components/add-node/add-node.component";
+import {SubjectDeleteComponent} from "./components/subject/subject-delete/subject-delete.component";
+import {SubjectModifyComponent} from "./components/subject/subject-modify/subject-modify.component";
+import {QuestionListComponent} from "./components/question/question-list/question-list.component";
+import {EditQuestionComponent} from "./components/question/edit-question/edit-question.component";
+import {DeleteQuestionComponent} from "./components/question/delete-question/delete-question.component";
+import {NodeListComponent} from "./components/node/node-list/node-list.component";
+import {AddNodeComponent} from "./components/node/add-node/add-node.component";
 import {MatOption, MatSelect} from "@angular/material/select";
-import {EditNodeComponent} from "./components/edit-node/edit-node.component";
-import {NodeDetailComponent} from "./components/node-detail/node-detail.component";
-import {DeleteNodeComponent} from "./components/delete-node/delete-node.component";
+import {EditNodeComponent} from "./components/node/edit-node/edit-node.component";
+import {NodeDetailComponent} from "./components/node/node-detail/node-detail.component";
+import {DeleteNodeComponent} from "./components/node/delete-node/delete-node.component";
 
 @NgModule({
   declarations: [

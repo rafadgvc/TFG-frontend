@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Subject, SubjectList} from "../../models/subject";
-import { SubjectService } from "../../services/subject.service";
+import {Subject, SubjectList} from "../../../models/subject";
+import { SubjectService } from "../../../services/subject.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {AddSubjectComponent} from "../add-subject/add-subject.component";

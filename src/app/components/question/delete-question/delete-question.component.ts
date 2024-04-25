@@ -1,27 +1,29 @@
 import { Component } from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {SubjectService} from "../../services/subject.service";
+import {SubjectService} from "../../../services/subject.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-delete-node',
-  templateUrl: './delete-node.component.html',
-  styleUrl: './delete-node.component.css'
+  selector: 'app-delete-question',
+  templateUrl: './delete-question.component.html',
+  styleUrl: './delete-question.component.css'
 })
-export class DeleteNodeComponent {
-
+export class DeleteQuestionComponent {
 
 
   constructor(
-    public dialogRef: MatDialogRef<DeleteNodeComponent>,
+    public dialogRef: MatDialogRef<DeleteQuestionComponent>,
     private subjectService: SubjectService,
     private router: Router,
   ){}
 
-  deleteNode(): void {
+  deleteQuestion(): void {
 
       this.dialogRef.close();
       this.router.navigate(['/home']);
 
   }
+
+
+
 }

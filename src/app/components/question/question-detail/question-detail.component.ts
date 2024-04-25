@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Question} from "../../models/question";
+import {Question} from "../../../models/question";
 
-import {QuestionService} from "../../services/question.service";
+import {QuestionService} from "../../../services/question.service";
 import {ActivatedRoute} from "@angular/router";
-import {Answer, AnswerList} from "../../models/answer";
+import {Answer, AnswerList} from "../../../models/answer";
 import {MatDialog} from "@angular/material/dialog";
-import {SubjectModifyComponent} from "../subject-modify/subject-modify.component";
+import {SubjectModifyComponent} from "../../subject/subject-modify/subject-modify.component";
 import {EditQuestionComponent} from "../edit-question/edit-question.component";
 import {DeleteQuestionComponent} from "../delete-question/delete-question.component";
 

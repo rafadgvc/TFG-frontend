@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
-import {Question} from "../../models/question";
-import {AnswerList} from "../../models/answer";
-import {HierarchyNode, HierarchyNodeList} from "../../models/hierarchy-node";
+import {Question} from "../../../models/question";
+import {AnswerList} from "../../../models/answer";
+import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
 
 @Component({
   selector: 'app-add-level',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {DeleteNodeComponent} from "../delete-node/delete-node.component";
 import {EditNodeComponent} from "../edit-node/edit-node.component";
-import {HierarchyNode} from "../../models/hierarchy-node";
+import {HierarchyNode} from "../../../models/hierarchy-node";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 
