@@ -8,6 +8,7 @@ import {SubjectListComponent} from "./components/subject-list/subject-list.compo
 import {SubjectDetailComponent} from "./components/subject-detail/subject-detail.component";
 import {QuestionListComponent} from "./components/question-list/question-list.component";
 import {NodeListComponent} from "./components/node-list/node-list.component";
+import {NodeDetailComponent} from "./components/node-detail/node-detail.component";
 
 export const routes: Routes = [
   {path: 'signup', component: UserSignupComponent},
@@ -17,6 +18,6 @@ export const routes: Routes = [
   {path: 'add-question', component: AddQuestionComponent, canActivate: [AuthGuard]},
   {path: 'question-list/:id', component: QuestionListComponent, canActivate: [AuthGuard]},
   {path: 'node-list/:id', component: NodeListComponent, canActivate: [AuthGuard]},
-  {path: 'node/:id', component: SubjectDetailComponent, canActivate: [AuthGuard]},
+  {path: 'node/:id', component: NodeDetailComponent, canActivate: [AuthGuard]},
   {path: 'home', component: SubjectListComponent, canActivate: [AuthGuard]}
 ];

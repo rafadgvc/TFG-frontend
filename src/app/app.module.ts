@@ -36,6 +36,8 @@ import {DeleteQuestionComponent} from "./components/delete-question/delete-quest
 import {NodeListComponent} from "./components/node-list/node-list.component";
 import {AddNodeComponent} from "./components/add-node/add-node.component";
 import {MatOption, MatSelect} from "@angular/material/select";
+import {EditNodeComponent} from "./components/edit-node/edit-node.component";
+import {NodeDetailComponent} from "./components/node-detail/node-detail.component";
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import {MatOption, MatSelect} from "@angular/material/select";
     EditQuestionComponent,
     DeleteQuestionComponent,
     NodeListComponent,
-    AddNodeComponent
+    AddNodeComponent,
+    NodeDetailComponent,
+    EditNodeComponent
   ],
   imports: [
     BrowserModule,

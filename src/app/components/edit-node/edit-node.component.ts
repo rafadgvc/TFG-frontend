@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatDialogRef} from "@angular/material/dialog";
-import {Question} from "../../models/question";
-import {AnswerList} from "../../models/answer";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HierarchyNode, HierarchyNodeList} from "../../models/hierarchy-node";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-add-level',
-  templateUrl: './add-node.component.html',
-  styleUrl: './add-node.component.css'
+  selector: 'app-edit-node',
+  templateUrl: './edit-node.component.html',
+  styleUrl: './edit-node.component.css'
 })
-export class AddNodeComponent {
+export class EditNodeComponent {
   nodeForm: FormGroup;
   nodeList: HierarchyNodeList;
+  node: HierarchyNode;
 
   constructor(
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<AddNodeComponent>
+    public dialogRef: MatDialogRef<EditNodeComponent>
   ) {
-    // Inicializar el formulario
+    this.node = new HierarchyNode(8, 'Selección', 2);
+
     this.nodeForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      parent: [null, Validators.required]
+      name: [this.node.name, Validators.required],
+      parent: [this.node.parent, Validators.required]
     });
 
 
@@ -30,17 +30,19 @@ export class AddNodeComponent {
       new HierarchyNode(2, 'Conceptos Básicos', 1),
       new HierarchyNode(3, 'Operadores', 1)
     ]);
+
+
   }
 
   submitForm() {
     if (this.nodeForm.valid) {
       const nodeData = this.nodeForm.value;
-      const node = new HierarchyNode(
-        0,
-        nodeData.name,
-        nodeData.parent
-      );
-      console.log(node);
+
+      this.node.name = nodeData.name;
+      this.node.parent = nodeData.parent;
+
+      console.log(this.node);
+      //TODO: Cambiar a usar el servicio
       this.dialogRef.close();
     } else {
       console.log('Invalid form');

@@ -13,7 +13,7 @@ import {SubjectModifyComponent} from "../subject-modify/subject-modify.component
   styleUrl: './subject-detail.component.css'
 })
 export class SubjectDetailComponent implements OnInit{
-  // Question to be shown
+  // Subject to be shown
   subject?: Subject;
 
   // TODO: Añadir estadísticas de la asignatura

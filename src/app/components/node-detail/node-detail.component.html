@@ -1,1 +1,15 @@
-<p>node-detail works!</p>
+<!-- subject-detail.component.html -->
+<div class="padding-lg medium-container">
+  <h2>Detalles del nodo</h2>
+
+  <div class="padding">
+    <p><strong>ID:</strong> {{ node?.id }}</p>
+    <p><strong>Nombre:</strong> {{ node?.name }}</p>
+    <p *ngIf="node?.parent"><strong>Nodo padre:</strong> {{ node?.parent }}</p>
+  </div>
+
+  <div class="row padding-lg">
+    <button mat-button color="primary" class="btn btn-primary"  (click)="editNode()">Editar Nodo</button>
+    <button mat-button color="warn" class="btn btn-primary" (click)="deleteNode()">Borrar Nodo</button>
+  </div>
+</div>
