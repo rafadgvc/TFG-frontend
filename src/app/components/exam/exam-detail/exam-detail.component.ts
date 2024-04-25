@@ -7,6 +7,7 @@ import {Answer, AnswerList} from "../../../models/answer";
 import {EditQuestionComponent} from "../../question/edit-question/edit-question.component";
 import {DeleteQuestionComponent} from "../../question/delete-question/delete-question.component";
 import {Exam} from "../../../models/exam";
+import {DeleteExamComponent} from "../delete-exam/delete-exam.component";
 
 @Component({
   selector: 'app-exam-detail',
@@ -36,7 +37,7 @@ export class ExamDetailComponent implements OnInit{
     // TODO: Llamar al servicio para obtener la pregunta según el id
     const preheatedQuestions: Question[] = [
         new Question(1, "¿Cuál es la capital de Francia?", 2, 30, "multiple_choice"),
-        new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 20, "true_false"),
+        new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 20, "true_false", new AnswerList([new Answer(1,'1', 0), new Answer(2, '2', 0), new Answer(3, '3', 0), new Answer(4, '4', 1)])),
         new Question(3, "¿Qué año fue la Revolución Francesa?", 3, 40, "open_answer"),
         new Question(4, "¿Cuál es el resultado de 2 + 2?", 1, 15, "open_answer"),
         new Question(5, "¿Quién escribió 'Don Quijote de la Mancha'?", 2, 25, "multiple_choice"),
@@ -63,7 +64,7 @@ export class ExamDetailComponent implements OnInit{
   }
 
   deleteExam(): void {
-    const dialogRef = this.dialog.open(DeleteQuestionComponent, {
+    const dialogRef = this.dialog.open(DeleteExamComponent, {
       width: '400px',
       data: {}
     });

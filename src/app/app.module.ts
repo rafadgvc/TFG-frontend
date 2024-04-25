@@ -41,6 +41,7 @@ import {NodeDetailComponent} from "./components/node/node-detail/node-detail.com
 import {DeleteNodeComponent} from "./components/node/delete-node/delete-node.component";
 import {ExamListComponent} from "./components/exam/exam-list/exam-list.component";
 import {ExamDetailComponent} from "./components/exam/exam-detail/exam-detail.component";
+import {DeleteExamComponent} from "./components/exam/delete-exam/delete-exam.component";
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import {ExamDetailComponent} from "./components/exam/exam-detail/exam-detail.com
     EditNodeComponent,
     DeleteNodeComponent,
     ExamListComponent,
-    ExamDetailComponent
+    ExamDetailComponent,
+    DeleteExamComponent
   ],
   imports: [
     BrowserModule,

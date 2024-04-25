@@ -5,7 +5,7 @@
     <p><strong>Total de preguntas:</strong> {{ exam?.questions?.total }}</p>
   </div>
 
-  <div *ngFor="let question of exam?.questions?.items" class="small-container">
+  <div *ngFor="let question of exam?.questions?.items" class="small-container padding-xl">
     <h3>{{ question?.title }}</h3>
     <p><strong>Dificultad estimada:</strong> {{ question?.difficulty }}</p>
     <p><strong>Tiempo estimado:</strong> {{ question?.time }}</p>
