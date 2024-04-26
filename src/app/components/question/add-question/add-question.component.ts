@@ -24,7 +24,6 @@ export class AddQuestionComponent {
     difficulty: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
     time: ['', [Validators.required, Validators.min(1)]],
     type: ['', Validators.required],
-    // TODO: Cambiar a un selector
     answers: this.formBuilder.array([]),
     pairs: this.formBuilder.array([])
   });

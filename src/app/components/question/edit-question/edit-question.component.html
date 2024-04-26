@@ -1,13 +1,17 @@
 <div>
   <div class="center">
-    <h2>Editar pregunta</h2>
+    <h2>Añadir pregunta</h2>
   </div>
   <form [formGroup]="questionForm" class="form">
-    <!--    Cuerpo-->
+    <!--    Tipo-->
     <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Cuerpo</mat-label>
-      <input matInput formControlName="title">
-      <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
+      <mat-label>Tipo de la pregunta</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="questionForm.get('type')?.hasError('required')">
         Este campo es requerido
       </mat-error>
     </mat-form-field>
@@ -42,18 +46,19 @@
       </mat-error>
     </mat-form-field>
 
-    <!--    Tipo-->
+    <!--    Cuerpo-->
     <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Tipo</mat-label>
-      <input matInput formControlName="type">
-      <mat-error *ngIf="questionForm.get('type')?.hasError('required')">
+      <mat-label>Cuerpo</mat-label>
+      <input matInput formControlName="title">
+      <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
         Este campo es requerido
       </mat-error>
     </mat-form-field>
 
-    <!-- Respuestas -->
-    <div formArrayName="answers" class="form-group">
-    <div *ngIf="questionForm.get('answers')">
+
+    <!-- Respuestas si es de tipo test o de tipo desarrollo-->
+    <div  *ngIf="questionForm.get('type')?.value === 'TEST' || questionForm.get('type')?.value === 'DESARROLLO'"
+          formArrayName="answers" class="form-group">
       <div *ngFor="let answer of answersControls; let i = index">
         <div [formGroupName]="i">
           <mat-form-field appearance="fill">
@@ -65,36 +70,69 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Puntuación</mat-label>
-            <input matInput formControlName="points" type="number">
+          <div *ngIf="questionForm.get('type')?.value === 'TEST'">
+            <mat-form-field appearance="fill">
+              <mat-label>Puntuación</mat-label>
+              <input matInput formControlName="points" type="number">
 
-            <mat-error *ngIf="answersControls.at(i)?.get('points')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-            <mat-error *ngIf="!answersControls.at(i)?.get('points')?.hasError('required') &&
-            answersControls.at(i)?.get('points')?.hasError('min')">
-              El mínimo de este campo es -1
-            </mat-error>
-            <mat-error *ngIf="!answersControls[i]?.get('points')?.hasError('required') &&
-            answersControls.at(i)?.get('points')?.hasError('max')">
-              El máximo de este campo es 1
-            </mat-error>
-          </mat-form-field>
+              <mat-error *ngIf="answersControls.at(i)?.get('points')?.hasError('required')">
+                Este campo es requerido
+              </mat-error>
+              <mat-error *ngIf="!answersControls.at(i)?.get('points')?.hasError('required') &&
+              answersControls.at(i)?.get('points')?.hasError('min')">
+                El mínimo de este campo es -1
+              </mat-error>
+              <mat-error *ngIf="!answersControls[i]?.get('points')?.hasError('required') &&
+              answersControls.at(i)?.get('points')?.hasError('max')">
+                El máximo de este campo es 1
+              </mat-error>
+            </mat-form-field>
+          </div>
           <div class="padding">
             <button type="button" class="btn btn-danger btn-modal" (click)="removeAnswer(i)">Borrar Respuesta</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <div  *ngIf="questionForm.get('type')?.value === 'PARAMETRIZADA'" formArrayName="pairs" class="form-group">
+      <div *ngFor="let pair of pairsControls; let i = index">
+        <div [formGroupName]="i">
+          <mat-form-field appearance="fill">
+            <mat-label>Parámetro de pregunta {{i + 1}}</mat-label>
+            <input matInput formControlName="questionParameter">
+
+            <mat-error *ngIf="pairsControls.at(i)?.get('questionParameter')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Respuesta {{i + 1}}</mat-label>
+            <input matInput formControlName="answerParameter">
+
+            <mat-error *ngIf="pairsControls.at(i)?.get('answerParameter')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <div class="padding">
+            <button type="button" class="btn btn-danger btn-modal" (click)="removePair(i)">Borrar Pareja</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="padding-sm column">
-      <div class="padding-sm">
+      <div *ngIf="questionForm.get('type')?.value !== 'PARAMETRIZADA'" class="padding-sm">
         <button type="button" class="btn" (click)="addAnswer()">Añadir Respuesta</button>
       </div>
+      <div *ngIf="questionForm.get('type')?.value === 'PARAMETRIZADA'" class="padding-sm">
+        <button type="button" class="btn" (click)="addPair()">Añadir Pareja</button>
+      </div>
       <div class="padding-sm">
-        <button type="submit" class="btn" [disabled]="questionForm.invalid" (click)="submitForm()">Editar Pregunta</button>
+        <button type="submit" class="btn" [disabled]="questionForm.invalid" (click)="submitForm()">Crear Pregunta</button>
       </div>
     </div>
   </form>

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Question} from "../../../models/question";
 
 import {QuestionService} from "../../../services/question.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Answer, AnswerList} from "../../../models/answer";
 import {MatDialog} from "@angular/material/dialog";
 import {SubjectModifyComponent} from "../../subject/subject-modify/subject-modify.component";
@@ -22,7 +22,8 @@ export class QuestionDetailComponent implements OnInit{
   constructor(
     private questionService: QuestionService,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit():void {
@@ -47,17 +48,7 @@ export class QuestionDetailComponent implements OnInit{
   }
 
   editQuestion(): void {
-    const dialogRef = this.dialog.open(EditQuestionComponent, {
-      width: '800px',
-      maxHeight: '700px',
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(this.question) {
-        // this.populateQuestion(this.question?.id);
-      }
-
-    });
+    this.router.navigate(['/edit-question/' + this.question?.id]);
   }
 
   deleteQuestion(): void {
