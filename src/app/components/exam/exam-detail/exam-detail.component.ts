@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Question, QuestionList} from "../../../models/question";
 import {QuestionService} from "../../../services/question.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {Answer, AnswerList} from "../../../models/answer";
 import {EditQuestionComponent} from "../../question/edit-question/edit-question.component";
 import {DeleteQuestionComponent} from "../../question/delete-question/delete-question.component";
 import {Exam} from "../../../models/exam";
 import {DeleteExamComponent} from "../delete-exam/delete-exam.component";
+import {ExportExamComponent} from "../export-exam/export-exam.component";
 
 @Component({
   selector: 'app-exam-detail',
@@ -22,7 +23,8 @@ export class ExamDetailComponent implements OnInit{
   constructor(
     private questionService: QuestionService,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit():void {
@@ -50,16 +52,13 @@ export class ExamDetailComponent implements OnInit{
   }
 
   editExam(): void {
-    const dialogRef = this.dialog.open(EditQuestionComponent, {
-      width: '800px',
-      maxHeight: '700px',
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(this.exam) {
-        // this.populateQuestion(this.question?.id);
-      }
+     this.router.navigate(['/edit-exam/' + this.exam?.id]);
+  }
 
+  exportExam(): void {
+    const dialogRef = this.dialog.open(ExportExamComponent, {
+      width: '400px',
+      data: {exam: this.exam}
     });
   }
 
