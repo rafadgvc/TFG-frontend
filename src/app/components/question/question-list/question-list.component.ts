@@ -57,19 +57,8 @@ export class QuestionListComponent implements OnInit{
     this.router.navigate(['/question-detail/' + questionId]);
   }
 
-  openAddQuestionModal(): void {
-    // TODO: Cambiar a añadir pregunta
-    const dialogRef = this.dialog.open(AddQuestionComponent, {
-      width: '800px',
-      maxHeight: '700px',
-      data: {}
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.loadQuestionSubjects(3);
-
-    });
+  addQuestion(): void {
+    this.router.navigate(['/add-question']);
   }
 
 }

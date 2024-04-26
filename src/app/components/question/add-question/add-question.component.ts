@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AnswerList } from "../../../models/answer";
 import { Question } from "../../../models/question";
-import {Subject} from "../../../models/subject";
-import {MatDialogRef} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-question',
@@ -13,10 +12,12 @@ import {MatDialogRef} from "@angular/material/dialog";
 export class AddQuestionComponent {
   questionForm: FormGroup;
   answers: FormArray;
+  pairs: FormArray;
+  types: string[] = ['Test', 'Desarrollo', 'Parametrizada']
 
   constructor(
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<AddQuestionComponent>
+    private router: Router,
   ) {
   this.questionForm = this.formBuilder.group({
     title: ['', Validators.required],
@@ -24,12 +25,15 @@ export class AddQuestionComponent {
     time: ['', [Validators.required, Validators.min(1)]],
     type: ['', Validators.required],
     // TODO: Cambiar a un selector
-    answers: this.formBuilder.array([], Validators.required)
+    answers: this.formBuilder.array([]),
+    pairs: this.formBuilder.array([])
   });
   this.answers = this.questionForm.get('answers') as FormArray;
+  this.pairs = this.questionForm.get('pairs') as FormArray;
 
   this.addAnswer();
   this.addAnswer();
+  this.addPair();
 }
 
   addAnswer() {
@@ -39,8 +43,19 @@ export class AddQuestionComponent {
     }));
   }
 
+  addPair() {
+    this.pairs.push(this.formBuilder.group({
+      questionParameter: [''],
+      answerParameter: ['']
+    }));
+  }
+
   removeAnswer(index: number) {
     this.answers.removeAt(index);
+  }
+
+  removePair(index: number) {
+    this.pairs.removeAt(index);
   }
 
   onSubmit() {
@@ -65,10 +80,14 @@ export class AddQuestionComponent {
     return (this.questionForm.get('answers') as FormArray).controls;
   }
 
+  get pairsControls() {
+    return (this.questionForm.get('pairs') as FormArray).controls;
+  }
+
   submitForm(): void {
     if (this.questionForm.valid) {
       // TODO: Añadir creación de la pregunta
-      this.dialogRef.close();
+      this.router.navigate(['/home']);
 
     }
   }
