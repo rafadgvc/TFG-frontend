@@ -43,6 +43,7 @@ import {ExamListComponent} from "./components/exam/exam-list/exam-list.component
 import {ExamDetailComponent} from "./components/exam/exam-detail/exam-detail.component";
 import {DeleteExamComponent} from "./components/exam/delete-exam/delete-exam.component";
 import {AddExamComponent} from "./components/exam/add-exam/add-exam.component";
+import {EditExamComponent} from "./components/exam/edit-exam/edit-exam.component";
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import {AddExamComponent} from "./components/exam/add-exam/add-exam.component";
     ExamListComponent,
     ExamDetailComponent,
     DeleteExamComponent,
-    AddExamComponent
+    AddExamComponent,
+    EditExamComponent
   ],
   imports: [
     BrowserModule,

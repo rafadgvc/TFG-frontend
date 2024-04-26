@@ -13,6 +13,7 @@ import {ExamListComponent} from "./components/exam/exam-list/exam-list.component
 import {ExamDetailComponent} from "./components/exam/exam-detail/exam-detail.component";
 import {EditQuestionComponent} from "./components/question/edit-question/edit-question.component";
 import {AddExamComponent} from "./components/exam/add-exam/add-exam.component";
+import {EditExamComponent} from "./components/exam/edit-exam/edit-exam.component";
 
 export const routes: Routes = [
   {path: 'signup', component: UserSignupComponent},
@@ -27,6 +28,7 @@ export const routes: Routes = [
   {path: 'exam-list/:id', component: ExamListComponent, canActivate: [AuthGuard]},
   {path: 'exam/:id', component: ExamDetailComponent, canActivate: [AuthGuard]},
   {path: 'add-exam/:id', component: AddExamComponent, canActivate: [AuthGuard]},
+  {path: 'edit-exam/:id', component: EditExamComponent, canActivate: [AuthGuard]},
   {path: 'home', component: SubjectListComponent, canActivate: [AuthGuard]}
 
 ];
