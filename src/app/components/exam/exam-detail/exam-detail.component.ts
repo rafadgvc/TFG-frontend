@@ -9,6 +9,7 @@ import {DeleteQuestionComponent} from "../../question/delete-question/delete-que
 import {Exam} from "../../../models/exam";
 import {DeleteExamComponent} from "../delete-exam/delete-exam.component";
 import {ExportExamComponent} from "../export-exam/export-exam.component";
+import {DeleteResultComponent} from "../../result/delete-result/delete-result.component";
 
 @Component({
   selector: 'app-exam-detail',
@@ -64,6 +65,13 @@ export class ExamDetailComponent implements OnInit{
 
   deleteExam(): void {
     const dialogRef = this.dialog.open(DeleteExamComponent, {
+      width: '400px',
+      data: {}
+    });
+  }
+
+  deleteResults(): void {
+    const dialogRef = this.dialog.open(DeleteResultComponent, {
       width: '400px',
       data: {}
     });
