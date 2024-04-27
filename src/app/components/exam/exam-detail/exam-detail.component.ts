@@ -10,6 +10,7 @@ import {Exam} from "../../../models/exam";
 import {DeleteExamComponent} from "../delete-exam/delete-exam.component";
 import {ExportExamComponent} from "../export-exam/export-exam.component";
 import {DeleteResultComponent} from "../../result/delete-result/delete-result.component";
+import {ImportResultComponent} from "../../result/import-result/import-result.component";
 
 @Component({
   selector: 'app-exam-detail',
@@ -21,6 +22,8 @@ export class ExamDetailComponent implements OnInit{
   // Question to be shown
   exam?: Exam;
 
+  id: number = 1;
+
   constructor(
     private questionService: QuestionService,
     private route: ActivatedRoute,
@@ -30,9 +33,9 @@ export class ExamDetailComponent implements OnInit{
 
   ngOnInit():void {
     this.route.params.subscribe(params => {
-      const id = +params['id'];
+      this.id = +params['id'];
 
-      this.populateExam(id);
+      this.populateExam(this.id);
     });
   }
 
@@ -65,6 +68,13 @@ export class ExamDetailComponent implements OnInit{
 
   deleteExam(): void {
     const dialogRef = this.dialog.open(DeleteExamComponent, {
+      width: '400px',
+      data: {}
+    });
+  }
+
+  importResults(): void {
+    const dialogRef = this.dialog.open(ImportResultComponent, {
       width: '400px',
       data: {}
     });
