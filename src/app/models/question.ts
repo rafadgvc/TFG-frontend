@@ -7,6 +7,7 @@ export class Question{
   time: number;
   type: string;
   answers?: AnswerList;
+  points?: number;
   // subject_id: number;
 
   constructor (
@@ -15,13 +16,15 @@ export class Question{
     difficulty: number,
     time: number,
     type: string,
-    answers?: AnswerList
+    answers?: AnswerList,
+    points?: number,
   ){
     this.id = id;
     this.title = title;
     this.difficulty = difficulty;
     this.time = time;
     this.type = type;
+    this.points = points;
     this.answers = answers
   }
 }

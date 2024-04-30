@@ -19,7 +19,7 @@ import {ImportResultComponent} from "../../result/import-result/import-result.co
 })
 export class ExamDetailComponent implements OnInit{
 
-  // Question to be shown
+  // Exam to be shown
   exam?: Exam;
 
   id: number = 1;

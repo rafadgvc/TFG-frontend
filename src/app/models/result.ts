@@ -5,18 +5,18 @@ export class Result {
   id: number;
   taker: number;
   exam?: Exam;
-  questions?: QuestionList;
+  question?: Question;
 
   constructor (
     id: number,
     taker: number,
     exam?: Exam,
-    questions?: QuestionList
+    question?: Question
   ){
     this.id = id;
     this.taker = taker;
     this.exam = exam;
-    this.questions = questions;
+    this.question = question;
   }
 }
 

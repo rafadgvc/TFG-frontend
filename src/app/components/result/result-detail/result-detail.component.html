@@ -1,0 +1,57 @@
+<div class="column">
+  <div class="row">
+    <mat-form-field class="form-group">
+      <mat-label>Seleccionar examen</mat-label>
+      <mat-select [(ngModel)]="selectedExamId" (selectionChange)="applyFilter()">
+        <mat-option *ngFor="let exam of exams" [value]="exam.id">
+          {{ exam.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field  class="form-group">
+      <mat-label>Seleccionar alumno</mat-label>
+      <mat-select [(ngModel)]="selectedTaker" (selectionChange)="applyFilter()">
+        <mat-option *ngFor="let taker of takers" [value]="taker">
+          {{ taker }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <button mat-button (click)="resetFilters()">Limpiar filtros</button>
+
+  <table mat-table [dataSource]="this.dataSource" class="mat-elevation-z8">
+    <!-- Examen -->
+    <ng-container matColumnDef="exam">
+      <th mat-header-cell *matHeaderCellDef> Examen </th>
+      <td mat-cell *matCellDef="let result"> {{result.exam.title}} </td>
+    </ng-container>
+
+    <!-- Alumno -->
+    <ng-container matColumnDef="taker">
+      <th mat-header-cell *matHeaderCellDef> Alumno </th>
+      <td mat-cell *matCellDef="let result"> {{result.taker}} </td>
+    </ng-container>
+
+    <!-- Pregunta -->
+    <ng-container matColumnDef="question">
+      <th mat-header-cell *matHeaderCellDef> Pregunta </th>
+      <td mat-cell *matCellDef="let result"> {{result.question.title }} </td>
+    </ng-container>
+
+    <!-- Tiempo del examen -->
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef> Tiempo Estimado </th>
+      <td mat-cell *matCellDef="let result"> {{result.question.time}} </td>
+    </ng-container>
+
+    <!-- Puntos de la pregunta -->
+    <ng-container matColumnDef="points">
+      <th mat-header-cell *matHeaderCellDef> Puntuación obtenida </th>
+      <td mat-cell *matCellDef="let result"> {{result.question.points}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
