@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { CookieService } from 'ngx-cookie-service';
 
@@ -8,7 +8,9 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
 
-  private subjectUrl = 'http://localhost:5000/user';
+  private authUrl = 'http://localhost:5000/user';
+  private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 
   constructor(
     private http: HttpClient,
@@ -17,7 +19,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(
-      this.subjectUrl + '/login',
+      this.authUrl + '/login',
       { email, password },
       { withCredentials: true }
     );
@@ -26,4 +28,21 @@ export class AuthService {
   getAccessTokenCookie(): string {
     return this.cookieService.get('access_token_cookie');
   }
+
+  logout(): Observable<any> {
+    return this.http.post<any>(
+      this.authUrl + '/logout',
+      null, // No se envía ningún cuerpo en la solicitud
+      { withCredentials: true } // Asegúrate de enviar las cookies en la solicitud
+    );
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.isLoggedInSubject.asObservable();
+  }
+
+  updateAuthStatus(isLoggedIn: boolean) {
+  console.log('Updating auth status to:', isLoggedIn);
+  this.isLoggedInSubject.next(isLoggedIn);
+}
 }

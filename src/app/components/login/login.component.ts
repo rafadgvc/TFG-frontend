@@ -26,11 +26,12 @@ export class LoginComponent {
       this.authService.login(email, password)
         .subscribe(
           () => {
-            // Redirigir a la página de inicio, por ejemplo
+
+            this.authService.updateAuthStatus(true);
             this.router.navigate(['/home']);
           },
           error => {
-            // Manejar el error, por ejemplo mostrar un mensaje de error al usuario
+            // TODO: enviar error a la snackbar
             console.error('Error en el inicio de sesión:', error);
           }
         );
