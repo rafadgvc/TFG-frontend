@@ -16,6 +16,19 @@
       </mat-error>
     </mat-form-field>
 
+    <!-- Selector de Nodos -->
+    <mat-form-field appearance="fill" class="form-group">
+      <mat-label>Nodos de la Jerarquía</mat-label>
+      <mat-select formControlName="nodes" multiple>
+        <mat-option *ngFor="let node of hierarchyNodes" [value]="node.id">
+          {{ node.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="questionForm.get('nodes')?.hasError('required')">
+        Selecciona al menos un nodo.
+      </mat-error>
+    </mat-form-field>
+
     <!--    Dificultad-->
     <mat-form-field appearance="fill" class="form-group">
       <mat-label>Dificultad</mat-label>

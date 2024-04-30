@@ -42,7 +42,8 @@ export class NodeDetailComponent {
 
   editNode(): void {
     const dialogRef = this.dialog.open(EditNodeComponent, {
-      width: '400px',
+      width: '800px',
+      maxHeight: '700px',
       data: {}
     });
     // TODO: Llamar al servicio de get Nodo

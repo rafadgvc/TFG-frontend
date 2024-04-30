@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Question, QuestionList} from "../../../models/question";
 import {QuestionService} from "../../../services/question.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -11,8 +11,8 @@ import {Exam} from "../../../models/exam";
   templateUrl: './exam-list.component.html',
   styleUrl: './exam-list.component.css'
 })
-export class ExamListComponent {
-  id?: number;
+export class ExamListComponent implements OnInit{
+  id: number = 0;
   questionList: Question[] = [];
   examList: Exam[] = [];
   displayedColumns: string[] = ['title', 'difficulty', 'time', 'questions', 'actions'];
@@ -59,26 +59,12 @@ export class ExamListComponent {
     this.examList = preheatedExams;
   }
 
-  viewSubject(subjectId: number): void {
-    this.router.navigate(['/subject/' + subjectId]);
-  }
-
   viewExam(examId: number): void {
     this.router.navigate(['/exam/' + examId]);
   }
 
-  openAddExamModal(): void {
+  addExam(subjectId: number): void {
     // TODO: Cambiar a añadir examen
-    const dialogRef = this.dialog.open(AddQuestionComponent, {
-      width: '800px',
-      maxHeight: '700px',
-      data: {}
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.loadSubjectExams(3);
-
-    });
+    this.router.navigate(['/add-exam/' + subjectId]);
   }
 }

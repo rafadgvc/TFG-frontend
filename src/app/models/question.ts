@@ -1,4 +1,5 @@
 import {AnswerList} from "./answer";
+import {HierarchyNode, HierarchyNodeList} from "./hierarchy-node";
 
 export class Question{
   id: number;
@@ -8,7 +9,7 @@ export class Question{
   type: string;
   answers?: AnswerList;
   points?: number;
-  // subject_id: number;
+  nodes?: HierarchyNodeList;
 
   constructor (
     id: number,
@@ -18,6 +19,7 @@ export class Question{
     type: string,
     answers?: AnswerList,
     points?: number,
+    nodes?: HierarchyNodeList,
   ){
     this.id = id;
     this.title = title;
@@ -25,7 +27,8 @@ export class Question{
     this.time = time;
     this.type = type;
     this.points = points;
-    this.answers = answers
+    this.answers = answers;
+    this.nodes = nodes;
   }
 }
 

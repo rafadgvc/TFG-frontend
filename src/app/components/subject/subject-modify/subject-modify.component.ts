@@ -15,6 +15,7 @@ import {Subject} from "../../../models/subject";
 })
 export class SubjectModifyComponent {
   subjectForm: FormGroup;
+  subject: Subject = new Subject(1, 'string');
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +23,7 @@ export class SubjectModifyComponent {
     private subjectService: SubjectService
   ) {
     this.subjectForm = this.formBuilder.group({
-      name: ['', Validators.required]
+      name: [this.subject.name, Validators.required]
     });
   }
 

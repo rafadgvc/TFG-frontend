@@ -202,8 +202,8 @@ h5 {
 }
 
 .center {
-  display: flex;
   align-items: center;
+  text-align: center;
 }
 
 .vertical-center {

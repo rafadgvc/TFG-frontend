@@ -59,14 +59,27 @@
 
 
 
-    <!-- Respuestas si es de tipo test o de tipo desarrollo-->
+    <!-- Preguntas-->
     <div formArrayName="questions" class="form-group">
       <div *ngFor="let question of questionsControls; let i = index">
         <h3>Pregunta {{i + 1}}</h3>
         <div [formGroupName]="i">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="form-group">
             <mat-label>Nodo de la pregunta</mat-label>
-            <input matInput formControlName="node">
+            <mat-select formControlName="node">
+              <mat-option *ngFor="let node of nodeList" [value]="node.id">
+                {{ node.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-group">
+            <mat-label>Tipo de la pregunta</mat-label>
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
+                {{ type }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <mat-form-field appearance="fill">

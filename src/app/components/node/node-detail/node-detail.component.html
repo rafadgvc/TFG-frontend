@@ -8,8 +8,11 @@
     <p *ngIf="node?.parent"><strong>Nodo padre:</strong> {{ node?.parent }}</p>
   </div>
 
+
+
   <div class="row padding-lg">
     <button mat-button color="primary" class="btn btn-primary"  (click)="editNode()">Editar Nodo</button>
     <button mat-button color="warn" class="btn btn-primary" (click)="deleteNode()">Borrar Nodo</button>
   </div>
 </div>
+ <app-result-detail></app-result-detail>

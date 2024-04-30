@@ -1,6 +1,6 @@
 <div>
   <div class="center">
-    <h2>Añadir pregunta</h2>
+    <h2>Editar pregunta</h2>
   </div>
   <form [formGroup]="questionForm" class="form">
     <!--    Tipo-->
@@ -132,7 +132,7 @@
         <button type="button" class="btn" (click)="addPair()">Añadir Pareja</button>
       </div>
       <div class="padding-sm">
-        <button type="submit" class="btn" [disabled]="questionForm.invalid" (click)="submitForm()">Crear Pregunta</button>
+        <button type="submit" class="btn" [disabled]="questionForm.invalid" (click)="submitForm()">Editar Pregunta</button>
       </div>
     </div>
   </form>

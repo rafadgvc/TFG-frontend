@@ -31,7 +31,7 @@ export class EditQuestionComponent {
     title: [this.question.title, Validators.required],
     difficulty: [this.question.difficulty, [Validators.required, Validators.min(1), Validators.max(10)]],
     time: [this.question.time, [Validators.required, Validators.min(1)]],
-    type: [this.question.type.toUpperCase, Validators.required],
+    type: [this.question.type.toUpperCase(), Validators.required],
     answers: this.formBuilder.array([]),
     pairs: this.formBuilder.array([])
   });

@@ -1,4 +1,4 @@
-<div class="column">
+<div class="column padding">
   <div class="row">
     <mat-form-field class="form-group">
       <mat-label>Seleccionar examen</mat-label>
@@ -9,7 +9,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field  class="form-group">
+    <mat-form-field class="form-group">
       <mat-label>Seleccionar alumno</mat-label>
       <mat-select [(ngModel)]="selectedTaker" (selectionChange)="applyFilter()">
         <mat-option *ngFor="let taker of takers" [value]="taker">
@@ -17,8 +17,24 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-form-field class="form-group">
+      <mat-label>Seleccionar nodo</mat-label>
+      <mat-select [(ngModel)]="selectedNode" (selectionChange)="applyFilter()">
+        <mat-option [value]="null">Todos los nodos</mat-option>
+        <mat-option *ngFor="let node of nodeList" [value]="node.name">
+          {{ node.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <button mat-button (click)="resetFilters()">Limpiar filtros</button>
+
+  <div class="padding summary">
+    <p><strong>Media de puntuación:</strong> {{ calculateAveragePoints(dataSource.filteredData) }}</p>
+    <p><strong>Total de respuestas:</strong> {{ calculateTotalResults(dataSource.filteredData) }}</p>
+    <p><strong>Tiempo medio de respuesta:</strong> {{ calculateAverageTime(dataSource.filteredData) }}</p>
+</div>
 
   <table mat-table [dataSource]="this.dataSource" class="mat-elevation-z8">
     <!-- Examen -->
@@ -39,16 +55,22 @@
       <td mat-cell *matCellDef="let result"> {{result.question.title }} </td>
     </ng-container>
 
+    <!-- Nodo de la pregunta -->
+    <ng-container matColumnDef="node">
+      <th mat-header-cell *matHeaderCellDef> Nodo </th>
+      <td mat-cell *matCellDef="let result"> {{ this.formatNodes(result.question.nodes) }} </td>
+    </ng-container>
+
     <!-- Tiempo del examen -->
     <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef> Tiempo Estimado </th>
-      <td mat-cell *matCellDef="let result"> {{result.question.time}} </td>
+      <td mat-cell *matCellDef="let result"> {{this.formatTime(result.question.time)}} </td>
     </ng-container>
 
     <!-- Puntos de la pregunta -->
     <ng-container matColumnDef="points">
       <th mat-header-cell *matHeaderCellDef> Puntuación obtenida </th>
-      <td mat-cell *matCellDef="let result"> {{result.question.points}} </td>
+      <td mat-cell *matCellDef="let result"> {{this.formatPoints(result.question.points)}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

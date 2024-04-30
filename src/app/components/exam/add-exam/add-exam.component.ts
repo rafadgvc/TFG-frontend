@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Question} from "../../../models/question";
 import {AnswerList} from "../../../models/answer";
+import {HierarchyNode} from "../../../models/hierarchy-node";
 
 @Component({
   selector: 'app-add-exam',
@@ -12,12 +13,25 @@ import {AnswerList} from "../../../models/answer";
 export class AddExamComponent {
   examForm: FormGroup;
   questions: FormArray;
-  types: string[] = ['Test', 'Desarrollo', 'Parametrizada']
+  types: string[] = ['Test', 'Desarrollo', 'Ninguno']
+  nodeList: HierarchyNode[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
   ) {
+    const preheatedNodes: HierarchyNode[] = [
+      new HierarchyNode(1, "Fundamentos de Bases de Datos", NaN),
+      new HierarchyNode(2, "Conceptos Básicos", 1),
+      new HierarchyNode(3, "Operadores SQL", 1),
+      new HierarchyNode(4, "Álgebra Relacional", 1),
+      new HierarchyNode(5, "Tabla", 2),
+      new HierarchyNode(6, "Columna", 5),
+      new HierarchyNode(7, "Fila", 5),
+      new HierarchyNode(8, "Selección", 2),
+      new HierarchyNode(9, "Proyección", 2),
+    ];
+    this.nodeList = preheatedNodes;
   this.examForm = this.formBuilder.group({
     title: ['', Validators.required],
     difficulty: ['', [Validators.min(1), Validators.max(10)]],
@@ -34,7 +48,8 @@ export class AddExamComponent {
     this.questions.push(this.formBuilder.group({
       node: [''],
       difficulty: ['', [Validators.min(1), Validators.max(10)]],
-      time: ['', [Validators.min(1)]]
+      time: ['', [Validators.min(1)]],
+      type: ['']
     }));
   }
 

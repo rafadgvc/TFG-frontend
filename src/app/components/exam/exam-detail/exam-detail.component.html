@@ -17,7 +17,7 @@
     </div>
   </div>
 
-<app-result-detail></app-result-detail>
+
 
 
 <div class="row padding-lg">
@@ -30,4 +30,8 @@
   <div *ngIf="this.id <= 1">
     <button mat-button color="primary" class="btn btn-primary" (click)="importResults()">Importar resultados</button>
   </div>
+</div>
+
+<div *ngIf="this.id > 1">
+  <app-result-detail></app-result-detail>
 </div>
