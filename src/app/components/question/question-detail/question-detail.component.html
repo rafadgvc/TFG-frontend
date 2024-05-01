@@ -4,9 +4,26 @@
   <p><strong>Tiempo estimado:</strong> {{ question?.time }}</p>
   <p><strong>Tipo de preguntas:</strong> {{ question?.type }}</p>
 
-  <h3>Respuestas:</h3>
-  <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
-    <p><strong>{{ answer.body }}</strong> ({{ answer.points }})</p>
+  <div *ngIf="question?.type?.toUpperCase() === 'TEST'">
+    <h3>Respuestas:</h3>
+    <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
+      <div *ngIf="answer.points < 0 ">
+        <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+      </div>
+      <div *ngIf="answer.points >= 0  && answer.points < 1">
+        <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+      </div>
+      <div *ngIf="answer.points === 1">
+        <p class="success-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="question?.type?.toUpperCase() === 'DESARROLLO'">
+    <h3> Posibles respuestas correctas:</h3>
+    <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
+      <p class="semibold success-text">{{ answer.body }}</p>
+    </div>
   </div>
 </div>
 

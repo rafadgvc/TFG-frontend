@@ -256,6 +256,19 @@ h5 {
   font-weight: 500;
 }
 
+/*   Text colours   */
+.success-text {
+  color: #4caf50;
+}
+
+.warn-text {
+  color: #fed766;
+}
+
+.error-text {
+  color: #ee6c4d;
+}
+
 /*Form Styles*/
 .form {
   max-width: 25rem;
