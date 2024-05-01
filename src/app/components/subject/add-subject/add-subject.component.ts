@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import {SubjectService} from "../../../services/subject.service";
-import {Subject} from "../../../models/subject";
+import { SubjectService } from "../../../services/subject.service";
+import { Subject } from "../../../models/subject";
+import { SnackbarService } from "../../../services/snackbar.service";
 
 @Component({
   selector: 'app-add-subject',
@@ -15,29 +16,27 @@ export class AddSubjectComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddSubjectComponent>,
-    private subjectService: SubjectService
+    private subjectService: SubjectService,
+    private snackbarService: SnackbarService // Inyecta el servicio de Snackbar
   ) {
     this.subjectForm = this.formBuilder.group({
       name: ['', Validators.required]
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   submitForm(): void {
     if (this.subjectForm.valid) {
       const subjectName = this.subjectForm.value.name;
-
-
       const newSubject: Subject = {
         id: NaN,
         name: subjectName
       };
 
-      // Llamar al servicio para agregar la asignatura
       this.subjectService.addSubject(newSubject).subscribe(
-        result => {
+        () => {
+          this.snackbarService.showSuccess('Asignatura agregada correctamente.'); // Muestra mensaje de éxito
           this.dialogRef.close();
         }
       );

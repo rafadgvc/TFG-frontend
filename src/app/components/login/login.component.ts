@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
+import {SnackbarService} from "../../services/snackbar.service";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private snackbarService: SnackbarService
   ) {}
 
   login(): void {
@@ -29,10 +31,10 @@ export class LoginComponent {
 
             this.authService.updateAuthStatus(true);
             this.router.navigate(['/home']);
+            this.snackbarService.showSuccess('Inicio de sesión exitoso');
           },
           error => {
-            // TODO: enviar error a la snackbar
-            console.error('Error en el inicio de sesión:', error);
+            this.snackbarService.showError('Error en el inicio de sesión');
           }
         );
     }

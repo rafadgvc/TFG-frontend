@@ -42,7 +42,6 @@ export class AuthService {
   }
 
   updateAuthStatus(isLoggedIn: boolean) {
-  console.log('Updating auth status to:', isLoggedIn);
-  this.isLoggedInSubject.next(isLoggedIn);
-}
+    this.isLoggedInSubject.next(isLoggedIn);
+  }
 }

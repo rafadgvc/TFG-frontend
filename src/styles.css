@@ -407,6 +407,21 @@ th:last-child, td:last-child {
 }
 
 
+/*   Snackbar   */
+.snackbar-success {
+  background-color: #43a047; /* Color de fondo para mensajes de éxito */
+  color: #fff; /* Color del texto */
+}
+
+.snackbar-error {
+  background-color: #d32f2f; /* Color de fondo para mensajes de error */
+  color: #fff; /* Color del texto */
+}
+
+.snackbar-warning {
+  background-color: #ffa000; /* Color de fondo para mensajes de advertencia */
+  color: #fff; /* Color del texto */
+}
 
 
 /*

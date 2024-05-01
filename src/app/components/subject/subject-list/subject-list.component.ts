@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Subject, SubjectList} from "../../../models/subject";
+import { Subject, SubjectList } from "../../../models/subject";
 import { SubjectService } from "../../../services/subject.service";
-import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
-import {AddSubjectComponent} from "../add-subject/add-subject.component";
+import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { AddSubjectComponent } from "../add-subject/add-subject.component";
+import { SnackbarService } from "../../../services/snackbar.service";
 
 @Component({
   selector: 'app-subject-list',
@@ -17,8 +18,9 @@ export class SubjectListComponent implements OnInit {
   constructor(
     private subjectService: SubjectService,
     private router: Router,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.loadUserSubjects();
@@ -46,13 +48,12 @@ export class SubjectListComponent implements OnInit {
 
   openAddQuestionModal(): void {
     const dialogRef = this.dialog.open(AddSubjectComponent, {
-      width: '400px', // Ancho del modal
-      data: {} // Puedes pasar datos al modal si es necesario
+      width: '400px',
+      data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.loadUserSubjects();
-
     });
   }
 }

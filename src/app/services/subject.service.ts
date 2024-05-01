@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-
-import {catchError, map, Observable, of} from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Subject, SubjectList} from "../models/subject";
-import {AuthService} from "./auth.service";
-import {User} from "../models/user";
+import { Injectable } from '@angular/core';
+import { catchError, map } from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Subject, SubjectList } from "../models/subject";
+import { AuthService } from "./auth.service";
+import { SnackbarService } from "./snackbar.service"; // Importa el servicio de Snackbar
 
 @Injectable({
   providedIn: 'root',
@@ -13,45 +13,37 @@ export class SubjectService {
 
   private subjectUrl = 'http://localhost:5000/subject';  // URL to API
   private accessToken = this.authService.getAccessTokenCookie();
-  private headers:HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
+  private headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
 
   constructor(
-    private http: HttpClient, private authService: AuthService
-  ) {
-
-  }
+    private http: HttpClient,
+    private authService: AuthService,
+    private snackbarService: SnackbarService // Inyecta el servicio de Snackbar
+  ) {}
 
   getSubject(id: number): Observable<Subject> {
     return this.http.get<Subject>(this.subjectUrl + '/' + id, { headers: this.headers, withCredentials: true }).pipe(
-      map(subject => subject),
       catchError(this.handleError<Subject>(`getSubject ${id}`))
-    )
+    );
   }
+
   getUserSubjects(): Observable<SubjectList> {
     return this.http.get<SubjectList>(this.subjectUrl + '/user-subjects',  { headers: this.headers, withCredentials: true }).pipe(
-      map(subjectList => subjectList),
       catchError(this.handleError<SubjectList>(`getSubjectList`))
-    )
+    );
   }
 
   addSubject(subject: Subject): Observable<Subject>{
     return this.http.post<Subject>(this.subjectUrl, subject, {headers: this.headers, withCredentials: true}).pipe(
-      map(Subject => subject),
       catchError(this.handleError<Subject>(`addSubject`))
-    )
+    );
   }
-
-
-
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to snackbar
-      console.error(error); // log to console instead
-
+      console.error(error);
+      this.snackbarService.showError('Ocurrió un error. Por favor, inténtalo de nuevo.'); // Muestra mensaje de error
       return of(result as T);
     };
   }
-
 }
