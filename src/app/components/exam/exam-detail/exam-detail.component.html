@@ -20,16 +20,17 @@
 
 
 
-<div class="row padding-lg">
+<div class="row horizontal-center gap-sm padding-lg">
     <button mat-button color="primary" class="btn btn-primary"  (click)="editExam()">Editar examen</button>
-    <button mat-button color="primary" class="btn btn-primary"  (click)="exportExam()">Exportar examen</button>
-    <button mat-button color="warn" class="btn btn-primary" (click)="deleteExam()">Borrar examen</button>
-  <div *ngIf="this.id > 1">
-    <button mat-button color="warn" class="btn btn-primary" (click)="deleteResults()">Borrar resultados</button>
-  </div>
+    <button mat-button color="primary" class="btn btn-accent"  (click)="exportExam()">Exportar examen</button>
   <div *ngIf="this.id <= 1">
-    <button mat-button color="primary" class="btn btn-primary" (click)="importResults()">Importar resultados</button>
+    <button mat-button color="primary" class="btn btn-accent" (click)="importResults()">Importar resultados</button>
   </div>
+    <button mat-button color="warn" class="btn btn-danger" (click)="deleteExam()">Borrar examen</button>
+  <div *ngIf="this.id > 1">
+    <button mat-button color="warn" class="btn btn-danger" (click)="deleteResults()">Borrar resultados</button>
+  </div>
+
 </div>
 
 <div *ngIf="this.id > 1">

@@ -6,9 +6,9 @@
         ¿Confirmas que quieres borrar los resultados del examen <strong>"Ordinaria 2016"</strong>? Esta acción no se puede deshacer.
       </p>
     </div>
-    <div class="modal-buttons padding-sm">
-      <button mat-button type="button" (click)="dialogRef.close()">Cancelar</button>
-      <button mat-raised-button color="primary" (click)="this.deleteResult()">Borrar</button>
+    <div class="row gap-sm padding-sm">
+      <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" class="btn btn-danger" (click)="this.deleteResult()">Borrar</button>
     </div>
   </mat-dialog-content>
 </div>

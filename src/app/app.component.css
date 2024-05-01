@@ -1,4 +1,5 @@
 .app-header {
-  background-color: #efd1c6;
+  background-color: #ee6c4d;
   padding: 1em;
+  justify-content: space-between;
 }

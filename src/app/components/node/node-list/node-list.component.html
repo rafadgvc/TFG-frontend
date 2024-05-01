@@ -22,12 +22,14 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let node">
-        <button mat-button color="primary" class="action-button" (click)="viewSubject()">
-          Ver Asignatura
-        </button>
-        <button mat-button color="primary" class="action-button" (click)="viewNode(node.id)">
-          Ver Nodo
-        </button>
+        <div class="row gap-sm">
+          <button mat-button color="primary" class="btn btn-primary" (click)="viewNode(node.id)">
+            Ver Nodo
+          </button>
+          <button mat-button color="primary" class="btn btn-secondary" (click)="viewSubject()">
+            Ver Asignatura
+          </button>
+      </div>
       </td>
     </ng-container>
 
@@ -36,7 +38,7 @@
   </table>
 
   <div class="padding-lg">
-    <button mat-button color="primary" class="padding-lg action-button" (click)="openAddNodeModal()">
+    <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">
       Añadir Nodo
     </button>
   </div>

@@ -11,9 +11,9 @@
         ¡ATENCIÓN! Si continúas, se eliminarán también todos los recursos asociados a la asignatura (jerarquía, preguntas, tests...).
       </p>
     </div>
-    <div class="modal-buttons padding-sm">
-      <button mat-button type="button" (click)="dialogRef.close()">Cancelar</button>
-      <button mat-raised-button color="primary" (click)="this.deleteSubject()">Borrar</button>
+    <div class="row gap-sm">
+      <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" class="btn btn-danger" (click)="this.deleteSubject()">Borrar</button>
     </div>
   </mat-dialog-content>
 </div>

@@ -8,11 +8,12 @@
     <p *ngIf="subject?.question_number"><strong>Número de preguntas:</strong> {{ subject?.question_number }}</p>
   </div>
 
-  <div class="row padding-lg">
-    <button mat-button color="primary" class="btn btn-primary"  (click)="editSubject()">Editar asignatura</button>
-    <button mat-button color="warn" class="btn btn-primary" (click)="deleteSubject()">Borrar asignatura</button>
-    <button mat-button color="primary" class="btn btn-primary"  (click)="viewNodeList()">Ver Jerarquía</button>
-    <button mat-button color="accent" class="btn btn-primary" (click)="viewExamList()">Ver exámenes</button>
-    <button mat-button color="primary" class="btn btn-primary" (click)="viewQuestionList()">Ver preguntas</button>
-  </div>
+
+</div>
+<div class="row horizontal-center padding gap">
+  <button mat-button color="primary" class="btn btn-primary"  (click)="editSubject()">Editar asignatura</button>
+  <button mat-button color="warn" class="btn btn-danger" (click)="deleteSubject()">Borrar asignatura</button>
+  <button mat-button color="primary" class="btn btn-secondary"  (click)="viewNodeList()">Ver Jerarquía</button>
+  <button mat-button color="primary" class="btn btn-secondary" (click)="viewQuestionList()">Ver preguntas</button>
+  <button mat-button color="accent" class="btn btn-accent" (click)="viewExamList()">Ver exámenes</button>
 </div>

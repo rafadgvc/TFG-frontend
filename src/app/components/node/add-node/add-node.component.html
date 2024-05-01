@@ -23,8 +23,9 @@
     </mat-form-field>
 
     <div class="padding-sm column">
-      <div class="padding-sm">
-        <button type="submit" class="btn" [disabled]="nodeForm.invalid" (click)="submitForm()">Crear Nodo</button>
+      <div class="row gap-sm padding-sm">
+        <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
+        <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="nodeForm.invalid" (click)="submitForm()">Crear Nodo</button>
       </div>
     </div>
   </form>

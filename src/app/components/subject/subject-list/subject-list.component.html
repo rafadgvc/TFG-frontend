@@ -18,7 +18,7 @@
     <ng-container matColumnDef="subject">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let subject">
-        <button mat-button color="primary" class="action-button" (click)="viewSubject(subject.id)">
+        <button mat-button color="primary" class="btn btn-primary" (click)="viewSubject(subject.id)">
           Ver Detalles
         </button>
       </td>
@@ -28,7 +28,7 @@
     <ng-container matColumnDef="questions">
       <th mat-header-cell *matHeaderCellDef>  </th>
       <td mat-cell *matCellDef="let subject">
-        <button mat-button color="primary" class="action-button" (click)="viewQuestionList(subject.id)">
+        <button mat-button color="primary" class="btn btn-secondary" (click)="viewQuestionList(subject.id)">
           Ver Preguntas
         </button>
       </td>
@@ -38,7 +38,7 @@
     <ng-container matColumnDef="exams">
       <th mat-header-cell *matHeaderCellDef>  </th>
       <td mat-cell *matCellDef="let subject">
-        <button mat-button color="primary" class="action-button" (click)="viewExamList(subject.id)">
+        <button mat-button color="primary" class="btn btn-secondary" (click)="viewExamList(subject.id)">
          Ver Exámenes
         </button>
       </td>
@@ -49,7 +49,7 @@
   </table>
 
   <div class="padding-lg">
-  <button mat-button color="primary" class="padding-lg action-button" (click)="openAddQuestionModal()">
+  <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddQuestionModal()">
     Añadir Asignatura
   </button>
   </div>

@@ -1,6 +1,8 @@
-<div class="app-header">
+<div class="app-header row">
   <h1>Question Bank</h1>
-  <button *ngIf="this.isLoggedIn" (click)="logout()">Cerrar Sesión</button>
+  <div class="vertical-center">
+    <button *ngIf="this.isLoggedIn" mat-button color="primary" class="btn btn-primary" (click)="logout()">Cerrar Sesión</button>
+  </div>
 </div>
 
 <div class="padding-lg gap">

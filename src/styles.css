@@ -208,7 +208,16 @@ h5 {
 
 .vertical-center {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  align-content: center;
+  justify-content: space-around;
+}
+
+.horizontal-center{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 /*Containers*/
@@ -252,7 +261,7 @@ h5 {
   max-width: 25rem;
   margin: 0 auto;
   padding: 1.25rem;
-  border: 0.06rem solid var(--gray-400);
+  border: 6rem solid var(--gray-400);
   border-radius: 0.3rem;
   background-color: #ffffff;
 }
@@ -274,30 +283,79 @@ label {
   border-radius: 0.3rem;
 }
 
+ /*  Buttons  */
+
 .btn {
-  padding: 0.625rem 12.5rem;
   font-size: 1rem;
   border: none;
-  border-radius: 0.3rem;
+  background-color: #eeeeee !important;
+  border-radius: 1.5rem !important;
   cursor: pointer;
   width: auto;
-  letter-spacing: -0.125rem;
+  max-width: 15rem;
+  letter-spacing: -0.025rem !important;
+  white-space: nowrap;
+  height: auto;
 }
 
 .btn-primary {
-  background-color: #2196f3;
-  color: #ffffff;
-}
-
-.btn-danger {
-  background-color: #e53935;
-  color: #ffffff;
+  background-color: #3d5a80 !important;
+  color: #ffffff !important;
 }
 
 .btn-primary:hover {
-  background-color: #777777;
+  background-color: #98c1d9  !important;
 }
 
-.mat-mdc-button {
-  letter-spacing: -0.025rem !important;
+.btn-primary:disabled {
+  background-color: #c8f1f9  !important;
 }
+
+.btn-secondary {
+  background-color: #2a9d8f !important;
+  color: #ffffff !important;
+}
+
+.btn-secondary:hover {
+  background-color: #7aeddf !important;
+}
+
+.btn-accent {
+  background-color: #e9c46a !important;
+  color: #ffffff !important;
+}
+
+.btn-accent:hover {
+  background-color: #99741a  !important;
+}
+
+.btn-danger {
+  background-color: #ee6c4d !important;
+  color: #ffffff !important;
+}
+
+.btn-danger:hover {
+  background-color: #9e1c0d  !important;
+}
+
+.text-button {
+  font-size: 1rem;
+  border: none;
+  border-radius: 1.5rem !important;
+  cursor: pointer;
+  width: auto;
+  letter-spacing: -0.025rem !important;
+  white-space: nowrap;
+  height: auto;
+}
+
+/*
+color palette:
+#3d5a80 (primary buttons)
+#fed766 (secondary buttons)
+#2a9d8f (accent buttons)
+#98c1d9 (hovered buttons)
+#e0fbfc
+#ee6c4d (heading)
+#293241
+*/
