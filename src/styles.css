@@ -349,6 +349,53 @@ label {
   height: auto;
 }
 
+/*   Tables   *//* Estilos para tablas */
+/* Estilos para tablas */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  border-radius: 10px; /* Ajusta el valor según tu preferencia */
+  overflow: hidden;
+}
+
+tr {
+  transition: background-color 0.3s;
+  margin-bottom: 10px; /* Espacio entre las filas */
+}
+
+tr:first-child {
+  background-color: #ee6c4d; /* Color de la primera fila */
+  font-weight: bold; /* Hace que el texto de la primera fila sea negrita */
+}
+
+tr:not(:first-child) {
+  background-color: #ffffff; /* Color de las filas que no son la primera */
+}
+
+tr:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* Cambia el color de fondo al pasar el ratón */
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Borde inferior para cada fila */
+}
+
+th:first-child, td:first-child {
+  border-top-left-radius: 10px; /* Redondez en la esquina superior izquierda */
+  border-bottom-left-radius: 10px; /* Redondez en la esquina inferior izquierda */
+}
+
+th:last-child, td:last-child {
+  border-top-right-radius: 10px; /* Redondez en la esquina superior derecha */
+  border-bottom-right-radius: 10px; /* Redondez en la esquina inferior derecha */
+}
+
+
+
+
 /*
 color palette:
 #3d5a80 (primary buttons)
