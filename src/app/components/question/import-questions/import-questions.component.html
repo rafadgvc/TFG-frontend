@@ -1,0 +1,17 @@
+<div class="padding-sm column">
+  <h2 class="center">Importar Resultados</h2>
+  <mat-dialog-content>
+    <div class="padding-xs">
+      <p>
+        Selecciona el archivo de preguntas que quieres importar.
+      </p>
+    </div>
+    <div class="padding-xs">
+       <input type="file" class="" (change)="onFileSelected($event)" accept=".csv,.xlsx,.xls">
+    </div>
+    <div class="row gap-sm padding-sm">
+      <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" class="btn btn-accent" (click)="this.importQuestions()">Importar</button>
+    </div>
+  </mat-dialog-content>
+</div>

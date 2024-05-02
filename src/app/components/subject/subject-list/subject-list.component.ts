@@ -46,7 +46,7 @@ export class SubjectListComponent implements OnInit {
     this.router.navigate(['/exam-list/' + subjectId]);
   }
 
-  openAddQuestionModal(): void {
+  openAddSubjectModal(): void {
     const dialogRef = this.dialog.open(AddSubjectComponent, {
       width: '400px',
       data: {}
