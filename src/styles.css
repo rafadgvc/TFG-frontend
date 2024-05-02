@@ -422,6 +422,16 @@ th:last-child, td:last-child {
   background-color: #ffa000; /* Color de fondo para mensajes de advertencia */
   color: #fff; /* Color del texto */
 }
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
 
 
 /*

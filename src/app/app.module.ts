@@ -49,6 +49,7 @@ import {ImportResultComponent} from "./components/result/import-result/import-re
 import {DeleteResultComponent} from "./components/result/delete-result/delete-result.component";
 import {ResultDetailComponent} from "./components/result/result-detail/result-detail.component";
 import {ImportQuestionsComponent} from "./components/question/import-questions/import-questions.component";
+import {MatPaginator} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -96,7 +97,7 @@ import {ImportQuestionsComponent} from "./components/question/import-questions/i
     MatCardTitle,
     MatCardContent,
     MatCardHeader,
-    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption,
+    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator,
     // Configura las rutas principales
   ],
   providers: [],
