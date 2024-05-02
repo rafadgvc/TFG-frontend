@@ -6,7 +6,11 @@
     <!--    Tipo-->
     <mat-form-field appearance="fill" class="form-group">
       <mat-label>Tipo de la pregunta</mat-label>
-      <mat-select formControlName="type">
+      <mat-select
+        formControlName="type"
+        matTooltip="Las preguntas parametrizadas permitirán añadir varias preguntas parecidas en las que cambia solo una frase de la pregunta y de la respuesta"
+        matTooltipPosition="right"
+      >
         <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
           {{ type }}
         </mat-option>
@@ -60,13 +64,29 @@
     </mat-form-field>
 
     <!--    Cuerpo-->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Cuerpo</mat-label>
-      <input matInput formControlName="title">
-      <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
-        Este campo es requerido
-      </mat-error>
-    </mat-form-field>
+    <div  *ngIf="questionForm.get('type')?.value === 'PARAMETRIZADA' ">
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Cuerpo</mat-label>
+          <input
+            matInput formControlName="title"
+            matTooltip="Escribe '<param>' donde quieras que se inserte el parámetro en la pregunta"
+          matTooltipPosition="right"
+          >
+          <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div  *ngIf="questionForm.get('type')?.value !== 'PARAMETRIZADA' ">
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Cuerpo</mat-label>
+          <input matInput formControlName="title">
+          <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
+    </div>
 
 
     <!-- Respuestas si es de tipo test o de tipo desarrollo-->

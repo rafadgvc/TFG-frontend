@@ -50,6 +50,7 @@ import {DeleteResultComponent} from "./components/result/delete-result/delete-re
 import {ResultDetailComponent} from "./components/result/result-detail/result-detail.component";
 import {ImportQuestionsComponent} from "./components/question/import-questions/import-questions.component";
 import {MatPaginator} from "@angular/material/paginator";
+import {MatTooltip} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -97,7 +98,7 @@ import {MatPaginator} from "@angular/material/paginator";
     MatCardTitle,
     MatCardContent,
     MatCardHeader,
-    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator,
+    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator, MatTooltip,
     // Configura las rutas principales
   ],
   providers: [],
