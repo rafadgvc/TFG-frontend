@@ -39,4 +39,9 @@ export class LoginComponent {
         );
     }
   }
+
+  signUp(): void {
+      this.router.navigate(['/signup']);
+
+  }
 }

@@ -1,6 +1,6 @@
-<div class="column center">
+<div class="column center small-container">
   <h3>Registro de usuario</h3>
-  <form [formGroup]="signupForm" (ngSubmit)="registerUser()" class="form">
+  <form [formGroup]="signupForm" (ngSubmit)="registerUser()" class="column">
 
     <!-- Nombre -->
     <mat-form-field class="form-group">
@@ -36,6 +36,6 @@
       </mat-error>
     </mat-form-field>
 
-    <button type="submit" [disabled]="signupForm.invalid" class="btn btn-primary">Registrarse</button>
+    <button mat-raised-button type="submit" [disabled]="signupForm.invalid" class="btn btn-primary">Registrarse</button>
   </form>
 </div>
