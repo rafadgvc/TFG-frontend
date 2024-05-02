@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {Tree, TreeModule} from 'primeng/tree';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -99,7 +100,7 @@ import {MatTooltip} from "@angular/material/tooltip";
     MatCardContent,
     MatCardHeader,
     BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator, MatTooltip,
-    // Configura las rutas principales
+    TreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
