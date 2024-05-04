@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DeleteNodeComponent} from "../delete-node/delete-node.component";
 import {EditNodeComponent} from "../edit-node/edit-node.component";
 import {HierarchyNode} from "../../../models/hierarchy-node";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
+import {NodeService} from "../../../services/node.service";
 
 @Component({
   selector: 'app-node-detail',
   templateUrl: './node-detail.component.html',
   styleUrl: './node-detail.component.css'
 })
-export class NodeDetailComponent {
+export class NodeDetailComponent implements OnInit{
   // Subject to be shown
   node?: HierarchyNode;
 
@@ -21,7 +22,8 @@ export class NodeDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private nodeService: NodeService
     ) {
   }
 
@@ -36,8 +38,10 @@ export class NodeDetailComponent {
   }
 
   loadNode(id: number) {
-    // TODO: Añadir llamada a servicio
-    this.node = new HierarchyNode(id, 'Operador de producto cartesiano', 4);
+    // Llamar al servicio para obtener el nodo según el id
+    this.nodeService.getNode(id).subscribe(node => {
+      this.node = node;
+    });
   }
 
   editNode(): void {
