@@ -76,7 +76,7 @@ export class NodeListComponent implements OnInit{
     return treeNodes;
   }
 
-  openAddNodeModal(id: number): void {
+  openAddNodeModal(id: number = NaN): void {
     const dialogRef = this.dialog.open(AddNodeComponent, {
       width: '800px',
       maxHeight: '700px',
