@@ -41,6 +41,12 @@ export class NodeService {
     );
   }
 
+  deleteNode(node: HierarchyNode): Observable<any>{
+    return this.http.delete<HierarchyNode>(this.nodeUrl + '/' + node.id, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<HierarchyNode>(`delete Node`))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

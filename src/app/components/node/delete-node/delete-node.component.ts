@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {SubjectService} from "../../../services/subject.service";
 import {Router} from "@angular/router";
+import {NodeService} from "../../../services/node.service";
+import {HierarchyNode} from "../../../models/hierarchy-node";
+import {SnackbarService} from "../../../services/snackbar.service";
 
 @Component({
   selector: 'app-delete-node',
@@ -10,18 +13,27 @@ import {Router} from "@angular/router";
 })
 export class DeleteNodeComponent {
 
-
+  node: HierarchyNode;
 
   constructor(
     public dialogRef: MatDialogRef<DeleteNodeComponent>,
     private subjectService: SubjectService,
     private router: Router,
-  ){}
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private nodeService: NodeService,
+    private snackbarService: SnackbarService
+  ){
+    this.node = this.data.node;
+  }
 
   deleteNode(): void {
-
-      this.dialogRef.close();
-      this.router.navigate(['/home']);
+      this.nodeService.deleteNode(this.node).subscribe(
+        () => {
+          this.snackbarService.showSuccess('Nodo modificado correctamente.');
+          this.dialogRef.close();
+          this.router.navigate(['/home']);
+        }
+      );
 
   }
 }

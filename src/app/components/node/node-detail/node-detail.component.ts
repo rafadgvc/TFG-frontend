@@ -63,7 +63,9 @@ export class NodeDetailComponent implements OnInit{
   deleteNode(): void {
     const dialogRef = this.dialog.open(DeleteNodeComponent, {
       width: '400px',
-      data: {}
+      data: {
+        node: this.node
+      }
     });
   }
 
