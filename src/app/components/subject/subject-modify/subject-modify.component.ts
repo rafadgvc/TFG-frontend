@@ -36,8 +36,6 @@ export class SubjectModifyComponent {
           this.dialogRef.close();
         }
       );
-
-      // TODO: Llamar al servicio de asignatura
       this.dialogRef.close();
     }
   }

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import {catchError, map, Observable, of} from "rxjs";
-import {Question} from "../models/question";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {HierarchyNode, HierarchyNodeList} from "../models/hierarchy-node";
 import {AuthService} from "./auth.service";
-import {Subject, SubjectList} from "../models/subject";
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +17,6 @@ export class NodeService {
   ) { }
 
   getNode(id: number): Observable<HierarchyNode> {
-    const accessToken = this.authService.getAccessTokenCookie();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
     return this.http.get<HierarchyNode>(this.nodeUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
       map(node => node),
       catchError(this.handleError<HierarchyNode>(`getNode ${id}`))
@@ -30,6 +26,12 @@ export class NodeService {
   addNode(node: HierarchyNode): Observable<HierarchyNode>{
     return this.http.post<HierarchyNode>(this.nodeUrl, node, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<HierarchyNode>(`add Node`))
+    );
+  }
+
+  updateNode(node: HierarchyNode): Observable<HierarchyNode>{
+    return this.http.put<HierarchyNode>(this.nodeUrl + '/' + node.id, node, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<HierarchyNode>(`update Node`))
     );
   }
 

@@ -41,7 +41,7 @@ export class SubjectService {
 
   updateSubject(subject: Subject): Observable<Subject>{
     return this.http.put<Subject>(this.subjectUrl + '/' + subject.id, subject, {headers: this.headers, withCredentials: true}).pipe(
-      catchError(this.handleError<Subject>(`addSubject`))
+      catchError(this.handleError<Subject>(`update Subject`))
     );
   }
 

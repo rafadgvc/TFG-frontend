@@ -12,16 +12,6 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Selector del nodo padre -->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Padre</mat-label>
-      <mat-select formControlName="parent">
-        <mat-option *ngFor="let node of nodeList.items" [value]="node.id">
-          {{ node.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
     <div class="padding-sm column">
       <div class="row gap-sm padding-sm">
         <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>

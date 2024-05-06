@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
-import {MatDialogRef} from "@angular/material/dialog";
+import {HierarchyNode} from "../../../models/hierarchy-node";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {NodeService} from "../../../services/node.service";
+import {SnackbarService} from "../../../services/snackbar.service";
 
 @Component({
   selector: 'app-edit-node',
@@ -10,42 +12,35 @@ import {MatDialogRef} from "@angular/material/dialog";
 })
 export class EditNodeComponent {
   nodeForm: FormGroup;
-  nodeList: HierarchyNodeList;
   node: HierarchyNode;
 
   constructor(
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<EditNodeComponent>
+    public dialogRef: MatDialogRef<EditNodeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private nodeService: NodeService,
+    private snackbarService: SnackbarService
   ) {
-    this.node = new HierarchyNode(8, 'Selección', 2);
+    this.node = this.data.node;
 
     this.nodeForm = this.formBuilder.group({
-      name: [this.node.name, Validators.required],
-      parent: [this.node.parent_id, Validators.required]
+      name: [this.node.name, Validators.required]
     });
 
-
-    this.nodeList = new HierarchyNodeList([
-      new HierarchyNode(1, 'FBD', NaN),
-      new HierarchyNode(2, 'Conceptos Básicos', 1),
-      new HierarchyNode(3, 'Operadores', 1)
-    ]);
 
 
   }
 
   submitForm() {
     if (this.nodeForm.valid) {
-      const nodeData = this.nodeForm.value;
-
-      this.node.name = nodeData.name;
-      this.node.parent_id = nodeData.parent;
-
-      console.log(this.node);
-      //TODO: Cambiar a usar el servicio
+       this.node.name = this.nodeForm.value.name;
+      this.nodeService.updateNode(this.node).subscribe(
+        () => {
+          this.snackbarService.showSuccess('Nodo modificado correctamente.');
+          this.dialogRef.close();
+        }
+      );
       this.dialogRef.close();
-    } else {
-      console.log('Invalid form');
     }
   }
 }

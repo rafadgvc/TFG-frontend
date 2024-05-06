@@ -48,9 +48,10 @@ export class NodeDetailComponent implements OnInit{
     const dialogRef = this.dialog.open(EditNodeComponent, {
       width: '800px',
       maxHeight: '700px',
-      data: {}
+      data: {
+        node: this.node
+      }
     });
-    // TODO: Llamar al servicio de get Nodo
     dialogRef.afterClosed().subscribe(result => {
       if (this.id != null) {
         this.loadNode(this.id);
