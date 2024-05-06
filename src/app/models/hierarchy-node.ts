@@ -3,17 +3,20 @@ export class HierarchyNode {
   name: string;
   parent_id?: number;
   subject_id?: number;
+  leaf?: boolean;
 
   constructor (
     id: number,
     name: string,
     parent?: number,
-    subject?: number
+    subject?: number,
+    leaf?: boolean,
   ){
     this.id = id;
     this.name = name;
     this.parent_id = parent;
-    this.subject_id = subject
+    this.subject_id = subject;
+    this.leaf = leaf;
   }
 }
 
