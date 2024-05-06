@@ -16,7 +16,7 @@
     <mat-form-field appearance="fill" class="form-group">
       <mat-label>Padre</mat-label>
       <mat-select formControlName="parent">
-        <mat-option *ngFor="let node of nodeList.items" [value]="node.id">
+        <mat-option *ngFor="let node of nodeList" [value]="node.id">
           {{ node.name }}
         </mat-option>
       </mat-select>

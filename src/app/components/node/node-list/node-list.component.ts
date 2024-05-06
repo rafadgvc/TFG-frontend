@@ -1,26 +1,28 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import {HierarchyNode, HierarchyNodeList} from '../../../models/hierarchy-node';
 import { AddNodeComponent } from '../add-node/add-node.component';
 import {AddQuestionComponent} from "../../question/add-question/add-question.component";
+import {NodeService} from "../../../services/node.service";
 
 @Component({
   selector: 'app-node-list',
   templateUrl: './node-list.component.html',
   styleUrls: ['./node-list.component.css']
 })
-export class NodeListComponent {
+export class NodeListComponent implements OnInit{
   id?: number;
-  nodeList: any[] = []; // Cambiamos el tipo de HierarchyNode[] a any[]
+  nodeTree: any[] = []; // Cambiamos el tipo de HierarchyNode[] a any[]
   selectedNode: any; // Cambiamos el tipo de HierarchyNode a any
-  preheatedNodes: HierarchyNode[] = [];
+  nodeList: HierarchyNode[] = [];
   rootNode: any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private nodeService: NodeService
   ) { }
 
   ngOnInit(): void {
@@ -35,19 +37,15 @@ export class NodeListComponent {
 
   loadHierarchySubjectNodes(id: number): void {
     // TODO: Llamar al servicio para obtener los nodos
-    this.preheatedNodes = [
-      new HierarchyNode(1, "Fundamentos de Bases de Datos", NaN),
-      new HierarchyNode(2, "Conceptos Básicos", 1),
-      new HierarchyNode(3, "Operadores SQL", 1),
-      new HierarchyNode(4, "Álgebra Relacional", 1),
-      new HierarchyNode(5, "Tabla", 2),
-      new HierarchyNode(6, "Columna", 5),
-      new HierarchyNode(7, "Fila", 5),
-      new HierarchyNode(8, "Selección", 4),
-      new HierarchyNode(9, "Proyección", 4),
-    ];
+    this.nodeService.getSubjectNodes(id).subscribe(
+      nodeList => {
+        this.nodeList = nodeList.items;
+        this.nodeTree = this.convertToTreeNodeList(this.nodeList);
+        console.log(this.rootNode);
+      },
+    );
 
-    this.nodeList = this.convertToTreeNodeList(this.preheatedNodes);
+
   }
 
   convertToTreeNodeList(nodes: HierarchyNode[]): any[] {
@@ -60,8 +58,8 @@ export class NodeListComponent {
 
     // Paso 2: Construir la estructura del árbol
     nodes.forEach(node => {
-      if (node.parent && nodeMap.has(node.parent)) {
-        const parentNode = nodeMap.get(node.parent);
+      if (node.parent_id && nodeMap.has(node.parent_id)) {
+        const parentNode = nodeMap.get(node.parent_id);
         parentNode.children.push(nodeMap.get(node.id));
       }
     });
@@ -69,10 +67,8 @@ export class NodeListComponent {
     // Paso 3: Encontrar el nodo raíz(es)
     const treeNodes: any[] = [];
     nodeMap.forEach((value, key) => {
-      console.log(value);
-      if (!nodes.find(node => node.id === value.parent)) {
+      if (!nodes.find(node => node.id === value.parent_id)) {
         treeNodes.push(value);
-        console.log('ooo');
         this.rootNode = value;
       }
       else{
@@ -83,17 +79,21 @@ export class NodeListComponent {
     return treeNodes;
   }
 
-  openAddNodeModal(id: number = NaN): void {
+  openAddNodeModal(id: number): void {
     const dialogRef = this.dialog.open(AddNodeComponent, {
       width: '800px',
       maxHeight: '700px',
-      data: {}
-
+      data: {
+        nodeList: this.nodeList,
+        selectedNodeId: id,
+        subjectId: this.id,
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.loadHierarchySubjectNodes(3);
-
+      if(this.id) {
+        this.loadHierarchySubjectNodes(this.id);
+      }
     });
   }
 
@@ -119,39 +119,34 @@ export class NodeListComponent {
 
   // Función auxiliar para buscar el nodo y calcular su profundidad
   dfs = (currentNode: any, targetNode: any, currentDepth: number): number | null => {
-  if (currentNode === targetNode) {
-    // Si encontramos el nodo, devolvemos su profundidad multiplicada por 1.25
+  if (currentNode.id === targetNode.id) {
+
     return currentDepth * 1.25;
   } else if (currentNode.children && currentNode.children.length > 0) {
-    // Si el nodo actual no es el buscado, buscamos en sus hijos
+
     for (const child of currentNode.children) {
       const result = this.dfs(child, targetNode, currentDepth + 1);
       if (result !== null) {
-        return result; // Si encontramos el nodo en algún hijo, devolvemos su profundidad
+        return result;
       }
     }
   }
-  return null; // Si no encontramos el nodo, devolvemos null
+  return null;
 };
 
 calculateMarginLeft(node: any): number {
-  // Llamamos a la función de búsqueda en profundidad desde el nodo raíz con profundidad 1
-  const marginLeft = this.dfs(this.rootNode, node, 1);
+  // Nivel base para el margen izquierdo
+  const baseMargin = 1; // Puedes ajustar este valor según lo que se vea mejor
 
-  if (marginLeft === null) {
+  // Obtener la profundidad del nodo
+  const depth = this.dfs(this.rootNode, node, 1);
+
+  if (depth === null) {
     // Si no se encontró el nodo, devolvemos 0
     return 0;
   }
 
-  return marginLeft;
+  // Calcular el margen izquierdo en relación con el nivel del nodo
+  return baseMargin * depth;
 }
-
-
-
-
-
-
-
-
-  // Otros métodos del componente según sea necesario
 }

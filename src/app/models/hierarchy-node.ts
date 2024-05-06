@@ -1,16 +1,19 @@
 export class HierarchyNode {
   id: number;
   name: string;
-  parent?: number;
+  parent_id?: number;
+  subject_id?: number;
 
   constructor (
     id: number,
     name: string,
     parent?: number,
+    subject?: number
   ){
     this.id = id;
     this.name = name;
-    this.parent = parent;
+    this.parent_id = parent;
+    this.subject_id = subject
   }
 }
 

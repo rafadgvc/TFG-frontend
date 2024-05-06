@@ -21,7 +21,7 @@ export class EditNodeComponent {
 
     this.nodeForm = this.formBuilder.group({
       name: [this.node.name, Validators.required],
-      parent: [this.node.parent, Validators.required]
+      parent: [this.node.parent_id, Validators.required]
     });
 
 
@@ -39,7 +39,7 @@ export class EditNodeComponent {
       const nodeData = this.nodeForm.value;
 
       this.node.name = nodeData.name;
-      this.node.parent = nodeData.parent;
+      this.node.parent_id = nodeData.parent;
 
       console.log(this.node);
       //TODO: Cambiar a usar el servicio

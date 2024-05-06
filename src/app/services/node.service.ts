@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import {catchError, map, Observable, of} from "rxjs";
 import {Question} from "../models/question";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {HierarchyNode} from "../models/hierarchy-node";
+import {HierarchyNode, HierarchyNodeList} from "../models/hierarchy-node";
 import {AuthService} from "./auth.service";
+import {Subject, SubjectList} from "../models/subject";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,18 @@ export class NodeService {
       map(node => node),
       catchError(this.handleError<HierarchyNode>(`getNode ${id}`))
     )
+  }
+
+  addNode(node: HierarchyNode): Observable<HierarchyNode>{
+    return this.http.post<HierarchyNode>(this.nodeUrl, node, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<HierarchyNode>(`add Node`))
+    );
+  }
+
+  getSubjectNodes(id: number): Observable<HierarchyNodeList> {
+    return this.http.get<HierarchyNodeList>(this.nodeUrl + '/list/'+ id,  { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError<HierarchyNodeList>(`HierarchyNodeList`))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

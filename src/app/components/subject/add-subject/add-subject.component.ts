@@ -17,7 +17,7 @@ export class AddSubjectComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddSubjectComponent>,
     private subjectService: SubjectService,
-    private snackbarService: SnackbarService // Inyecta el servicio de Snackbar
+    private snackbarService: SnackbarService
   ) {
     this.subjectForm = this.formBuilder.group({
       name: ['', Validators.required]
@@ -36,7 +36,7 @@ export class AddSubjectComponent implements OnInit {
 
       this.subjectService.addSubject(newSubject).subscribe(
         () => {
-          this.snackbarService.showSuccess('Asignatura agregada correctamente.'); // Muestra mensaje de éxito
+          this.snackbarService.showSuccess('Asignatura agregada correctamente.');
           this.dialogRef.close();
         }
       );
