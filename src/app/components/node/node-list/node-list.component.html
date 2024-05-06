@@ -4,14 +4,14 @@
       <div class="node-container" [style.marginLeft.em]="calculateMarginLeft(node)">
         <span class="node-label">{{node.name}}</span>
         <div class="node-buttons">
-          <button mat-button color="primary" class="btn btn-primary" (click)="viewNode(node.id)">
-            Ver Nodo
+          <button mat-icon-button color="primary" class="btn btn-primary" (click)="viewNode(node.id)">
+            <mat-icon>more_horiz</mat-icon>
           </button>
-          <button mat-button color="primary" class="btn btn-secondary" (click)="openAddQuestionModal(node.id)">
-            Añadir Pregunta
+          <button mat-icon-button color="primary" class="btn btn-secondary" (click)="openAddQuestionModal(node.id)">
+            <mat-icon>question_mark</mat-icon>
           </button>
-          <button mat-button color="primary" class="btn btn-accent" (click)="openAddNodeModal(node.id)">
-            Añadir hijo
+          <button mat-icon-button color="primary" class="btn btn-accent" (click)="openAddNodeModal(node.id)">
+            <mat-icon>library_add</mat-icon>
           </button>
         </div>
       </div>

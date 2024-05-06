@@ -41,7 +41,6 @@ export class NodeListComponent implements OnInit{
       nodeList => {
         this.nodeList = nodeList.items;
         this.nodeTree = this.convertToTreeNodeList(this.nodeList);
-        console.log(this.rootNode);
       },
     );
 
@@ -49,6 +48,7 @@ export class NodeListComponent implements OnInit{
   }
 
   convertToTreeNodeList(nodes: HierarchyNode[]): any[] {
+    // TODO: Ordenar el array para que se muestren en el orden correcto
     const nodeMap = new Map<number, any>();
 
     // Paso 1: Crear un mapa de nodos usando el ID como clave
@@ -70,9 +70,6 @@ export class NodeListComponent implements OnInit{
       if (!nodes.find(node => node.id === value.parent_id)) {
         treeNodes.push(value);
         this.rootNode = value;
-      }
-      else{
-        console.log('aaa')
       }
     });
 

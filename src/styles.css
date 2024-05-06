@@ -432,6 +432,56 @@ th:last-child, td:last-child {
   border-color: currentColor;
 }
 
+.txt-btn {
+  font-size: 1rem;
+  border: none;
+  border-radius: 1.5rem !important;
+  cursor: pointer;
+  width: auto;
+  max-width: 15rem;
+  letter-spacing: -0.025rem !important;
+  white-space: nowrap;
+  height: auto;
+}
+
+.txt-btn-primary {
+  color: #3d5a80 !important;
+}
+
+.txt-btn-primary:hover {
+  color: #98c1d9  !important;
+}
+
+.txt-btn-primary:disabled {
+  color: #c8f1f9  !important;
+}
+
+.txt-btn-secondary {
+  color: #2a9d8f !important;
+}
+
+.txt-btn-secondary:hover {
+  color: #7aeddf !important;
+}
+
+.txt-btn-accent {
+  color: #e9c46a !important;
+}
+
+.txt-btn-accent:hover {
+  color: #99741a  !important;
+}
+
+.txt-btn-danger {
+  color: #ee6c4d !important;
+}
+
+.txt-btn-danger:hover {
+  color: #9e1c0d  !important;
+}
+
+
+
 
 
 /*

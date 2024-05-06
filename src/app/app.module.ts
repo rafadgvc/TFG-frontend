@@ -9,7 +9,6 @@ import {MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButton, MatFabButton, MatIconButton} from "@angular/material/button";
-import {MatIcon, MatIconModule} from "@angular/material/icon";
 import {AddQuestionComponent} from "./components/question/add-question/add-question.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {QuestionDetailComponent} from "./components/question/question-detail/question-detail.component";
@@ -52,6 +51,8 @@ import {ResultDetailComponent} from "./components/result/result-detail/result-de
 import {ImportQuestionsComponent} from "./components/question/import-questions/import-questions.component";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTooltip} from "@angular/material/tooltip";
+import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule para los iconos
+import {MatTree, MatTreeModule} from '@angular/material/tree';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,8 @@ import {MatTooltip} from "@angular/material/tooltip";
     MatFabButton,
     MatLabel,
     MatInput,
+    MatIconModule,
+    MatTreeModule,
     MatButton,
     MatIconModule,
     ReactiveFormsModule,
