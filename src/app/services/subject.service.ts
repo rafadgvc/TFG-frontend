@@ -39,6 +39,12 @@ export class SubjectService {
     );
   }
 
+  updateSubject(subject: Subject): Observable<Subject>{
+    return this.http.put<Subject>(this.subjectUrl + '/' + subject.id, subject, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Subject>(`addSubject`))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

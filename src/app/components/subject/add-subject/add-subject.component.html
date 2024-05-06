@@ -1,14 +1,16 @@
-<h2 mat-dialog-title>Añadir Asignatura</h2>
-<mat-dialog-content>
-  <form [formGroup]="subjectForm" (ngSubmit)="submitForm()">
-    <mat-form-field appearance="fill">
-      <mat-label>Nombre de la asignatura</mat-label>
-      <input matInput formControlName="name" required>
-      <mat-error *ngIf="subjectForm.get('name')?.hasError('required')">El nombre de la asignatura es obligatorio</mat-error>
-    </mat-form-field>
-    <div class="row gap-sm">
-      <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
-      <button mat-raised-button color="primary" type="submit" class="btn btn-primary" [disabled]="!subjectForm.valid">Guardar</button>
-    </div>
-  </form>
-</mat-dialog-content>
+<div class="padding">
+  <h2 mat-dialog-title><strong>Añadir Asignatura</strong></h2>
+  <mat-dialog-content>
+    <form [formGroup]="subjectForm" (ngSubmit)="submitForm()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre de la asignatura</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="subjectForm.get('name')?.hasError('required')">El nombre de la asignatura es obligatorio</mat-error>
+      </mat-form-field>
+      <div class="row gap-sm">
+        <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit" class="btn btn-primary" [disabled]="!subjectForm.valid">Guardar</button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</div>

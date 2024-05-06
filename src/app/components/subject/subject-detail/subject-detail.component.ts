@@ -46,7 +46,10 @@ export class SubjectDetailComponent implements OnInit{
   editSubject(): void {
     const dialogRef = this.dialog.open(SubjectModifyComponent, {
       width: '400px',
-      data: {}
+      data: {
+        subject: this.subject
+      }
+
     });
     dialogRef.afterClosed().subscribe(result => {
       if (this.id != null) {
