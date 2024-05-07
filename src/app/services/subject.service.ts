@@ -4,7 +4,8 @@ import {Observable, of} from 'rxjs';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subject, SubjectList } from "../models/subject";
 import { AuthService } from "./auth.service";
-import { SnackbarService } from "./snackbar.service"; // Importa el servicio de Snackbar
+import { SnackbarService } from "./snackbar.service";
+import {HierarchyNode} from "../models/hierarchy-node"; // Importa el servicio de Snackbar
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,12 @@ export class SubjectService {
   updateSubject(subject: Subject): Observable<Subject>{
     return this.http.put<Subject>(this.subjectUrl + '/' + subject.id, subject, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<Subject>(`update Subject`))
+    );
+  }
+
+  deleteSubject(subject: Subject): Observable<any>{
+    return this.http.delete<Subject>(this.subjectUrl + '/' + subject.id, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Subject>(`delete Subject`))
     );
   }
 

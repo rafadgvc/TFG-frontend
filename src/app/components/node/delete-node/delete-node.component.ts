@@ -17,7 +17,6 @@ export class DeleteNodeComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DeleteNodeComponent>,
-    private subjectService: SubjectService,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private nodeService: NodeService,

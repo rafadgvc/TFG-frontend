@@ -55,14 +55,15 @@ export class SubjectDetailComponent implements OnInit{
       if (this.id != null) {
         this.loadSubject(this.id);
       }
-
     });
   }
 
   deleteSubject(): void {
     const dialogRef = this.dialog.open(SubjectDeleteComponent, {
       width: '400px',
-      data: {}
+      data: {
+        subject: this.subject
+      }
     });
   }
 
