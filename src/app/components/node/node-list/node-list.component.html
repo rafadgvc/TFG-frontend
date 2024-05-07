@@ -2,7 +2,7 @@
   <p-tree [value]="nodeList" selectionMode="single" [(selection)]="selectedNode">
     <ng-template let-node pTemplate="default">
       <div class="node-container" [style.marginLeft.em]="calculateMarginLeft(node)">
-        <span class="node-label">{{node.name}}</span>
+        <span class="node-label" [style.background]="calculateNodeBackground(node)">{{node.name}}</span>
         <div class="node-buttons">
           <button mat-icon-button color="primary" class="btn btn-primary" (click)="viewNode(node.id)">
             <mat-icon>more_horiz</mat-icon>
@@ -16,6 +16,7 @@
         </div>
       </div>
     </ng-template>
+
   </p-tree>
   <div class="padding">
     <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">

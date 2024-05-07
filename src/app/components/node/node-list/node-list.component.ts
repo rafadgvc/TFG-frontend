@@ -18,6 +18,7 @@ export class NodeListComponent implements OnInit{
   nodeList: HierarchyNode[] = [];
   selectedNode?: HierarchyNode;
   rootNode: any;
+  maxDepth: number = 0;
 
   constructor(
     private router: Router,
@@ -72,6 +73,25 @@ export class NodeListComponent implements OnInit{
       }
     });
 
+      this.maxDepth = 0;
+
+    const calculateMaxDepth = (node: any, depth: number) => {
+      if (depth > this.maxDepth) {
+        this.maxDepth = depth;
+      }
+      if (node.children && node.children.length > 0) {
+        for (const child of node.children) {
+          calculateMaxDepth(child, depth + 1);
+        }
+      }
+    };
+
+    // Calcula maxDepth para cada nodo raíz
+    for (const node of treeNodes) {
+      calculateMaxDepth(node, 1);
+    }
+
+    console.log(this.maxDepth);
     return treeNodes;
   }
 
@@ -109,23 +129,66 @@ export class NodeListComponent implements OnInit{
     });
   }
 
+  calculateNodeLevel (currentNode: any): number {
+    let level = 1;
+    let currentParentId = currentNode.parent_id;
+
+
+    while (currentParentId) {
+      const parentNode = this.nodeList.find(n => n.id === currentParentId);
+      if (parentNode) {
+        level++;
+        currentParentId = parentNode.parent_id;
+      } else {
+        break;
+      }
+    }
+
+    return level;
+  };
+
+  calculateNodeBackground(node: any): string {
+  // Función auxiliar para calcular el nivel de un nodo en el árbol
+
+  const rootColor: number[] = [255, 255, 255]; // Blanco
+  const deepestColor: number[] = [238, 108, 77]; // #ee6c4d
+
+
+  const nodeLevel = this.calculateNodeLevel(node);
+
+
+  const depthPercentage = (nodeLevel - 1) / (this.maxDepth - 1);
+
+
+  const interpolatedColor = [
+    Math.round(rootColor[0] + depthPercentage * (deepestColor[0] - rootColor[0])),
+    Math.round(rootColor[1] + depthPercentage * (deepestColor[1] - rootColor[1])),
+    Math.round(rootColor[2] + depthPercentage * (deepestColor[2] - rootColor[2]))
+  ];
+
+  const colorHex = '#' + interpolatedColor.map(c => c.toString(16).padStart(2, '0')).join('');
+
+  return colorHex;
+}
+
+
 
   // Función auxiliar para buscar el nodo y calcular su profundidad
   dfs = (currentNode: any, targetNode: any, currentDepth: number): number | null => {
-  if (currentNode.id === targetNode.id) {
-
-    return currentDepth * 1.25;
-  } else if (currentNode.children && currentNode.children.length > 0) {
-
-    for (const child of currentNode.children) {
-      const result = this.dfs(child, targetNode, currentDepth + 1);
-      if (result !== null) {
-        return result;
+    if (currentNode.id === targetNode.id) {
+      currentNode.level = currentDepth;
+      return currentDepth;
+    } else if (currentNode.children && currentNode.children.length > 0) {
+      for (const child of currentNode.children) {
+        const result = this.dfs(child, targetNode, currentDepth + 1);
+        if (result !== null) {
+          currentNode.level = currentDepth;
+          return result;
+        }
       }
     }
-  }
-  return null;
-};
+    return null;
+  };
 
   calculateMarginLeft(node: any): number {
 
