@@ -26,6 +26,7 @@ export class SubjectListComponent implements OnInit {
   }
 
   loadUserSubjects(): void {
+    this.loading = true;
     this.subjectService.getUserSubjects().subscribe(
       subjectList => {
         this.subjectList = subjectList.items;

@@ -50,3 +50,18 @@
 
   </div>
 </div>
+
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div *ngIf="!loading && this.questionList.length <= 0" class="gap-lg vertical-center">
+  <mat-icon style="font-size: 10rem; width: 10rem; height: 10rem;">search_off</mat-icon>
+  <p>No se encontraron preguntas.</p>
+  <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="addQuestion()">
+    Añadir Pregunta
+  </button>
+  <button mat-button color="accent" class="padding-lg btn btn-accent" (click)="openAddQuestionsModal()">
+    Importar Preguntas
+  </button>
+</div>

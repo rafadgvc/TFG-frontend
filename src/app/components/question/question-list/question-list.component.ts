@@ -13,6 +13,7 @@ import {ImportQuestionsComponent} from "../import-questions/import-questions.com
   styleUrl: './question-list.component.css'
 })
 export class QuestionListComponent implements OnInit{
+  loading: boolean = true;
   id: number = 0;
   questionList: Question[] = [];
   displayedColumns: string[] = ['title', 'difficulty', 'time', 'type', 'actions'];
@@ -32,11 +33,13 @@ export class QuestionListComponent implements OnInit{
       // Llamar al servicio para obtener la pregunta según el id
       if (this.id != null) {
         this.loadQuestionSubjects(this.id);
+
       }
     });
   }
 
   loadQuestionSubjects(id: number): void {
+    this.loading = true;
     const preheatedQuestions: Question[] = [
       new Question(1, "¿Cuál es la capital de Francia?", 2, 30, "multiple_choice"),
       new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 20, "true_false"),
@@ -49,6 +52,7 @@ export class QuestionListComponent implements OnInit{
       new Question(9, "¿Quién pintó la Mona Lisa?", 3, 40, "open_answer"),
     ];
     this.questionList = preheatedQuestions;
+    this.loading = false;
   }
 
   viewSubject(subjectId: number): void {

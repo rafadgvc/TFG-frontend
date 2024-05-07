@@ -1,4 +1,4 @@
-<div *ngIf="!loading" class="column">
+<div *ngIf="!loading && this.nodeList.length > 0" class="column">
   <p-tree [value]="nodeList" selectionMode="single" [(selection)]="selectedNode">
     <ng-template let-node pTemplate="default">
       <div class="node-container" [style.marginLeft.em]="calculateMarginLeft(node)">
@@ -17,11 +17,23 @@
       </div>
     </ng-template>
   </p-tree>
-  <button mat-icon-button color="primary" class="btn btn-accent" (click)="openAddNodeModal()">
-    <mat-icon>library_add</mat-icon>
-  </button>
+  <div class="padding">
+    <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">
+      <mat-icon>add</mat-icon>
+      Añadir Nodo
+    </button>
+  </div>
 </div>
 
 <div *ngIf="loading">
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div *ngIf="!loading && this.nodeList.length <= 0" class="gap-lg vertical-center">
+  <mat-icon style="font-size: 10rem; width: 10rem; height: 10rem;">search_off</mat-icon>
+  <p>No se encontraron nodos.</p>
+  <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">
+    <mat-icon>add</mat-icon>
+    Añadir Nodo
+  </button>
 </div>

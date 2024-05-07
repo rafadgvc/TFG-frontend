@@ -37,6 +37,7 @@ export class NodeListComponent implements OnInit{
   }
 
   loadHierarchySubjectNodes(id: number): void {
+    this.loading = true;
     this.nodeService.getSubjectNodes(id).subscribe(
       nodeList => {
         this.nodeList = nodeList.items;

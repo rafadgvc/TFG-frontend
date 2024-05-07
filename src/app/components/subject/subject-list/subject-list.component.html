@@ -1,4 +1,4 @@
-<div *ngIf="!loading" class="column">
+<div *ngIf="!loading && this.subjectList.length > 0" class="column">
   <table mat-table [dataSource]="subjectList" class="mat-elevation-z8">
     <!-- Nombre -->
     <ng-container matColumnDef="name">
@@ -58,4 +58,13 @@
 </div>
 <div *ngIf="loading">
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div *ngIf="!loading && this.subjectList.length <= 0" class="gap-lg vertical-center">
+  <mat-icon style="font-size: 10rem; width: 10rem; height: 10rem;">search_off</mat-icon>
+  <p>No se encontraron asignaturas.</p>
+  <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddSubjectModal()">
+    <mat-icon>add</mat-icon>
+    Añadir Asignatura
+  </button>
 </div>
