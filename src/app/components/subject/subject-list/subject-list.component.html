@@ -1,4 +1,4 @@
-<div class="column">
+<div *ngIf="!loading" class="column">
   <table mat-table [dataSource]="subjectList" class="mat-elevation-z8">
     <!-- Nombre -->
     <ng-container matColumnDef="name">
@@ -55,4 +55,7 @@
 
   </button>
   </div>
+</div>
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>

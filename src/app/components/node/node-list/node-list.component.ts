@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import {HierarchyNode} from '../../../models/hierarchy-node';
+import {HierarchyNode, HierarchyNodeList} from '../../../models/hierarchy-node';
 import { AddNodeComponent } from '../add-node/add-node.component';
 import {AddQuestionComponent} from "../../question/add-question/add-question.component";
 import {NodeService} from "../../../services/node.service";
@@ -12,9 +12,11 @@ import {NodeService} from "../../../services/node.service";
   styleUrls: ['./node-list.component.css']
 })
 export class NodeListComponent implements OnInit{
+  loading: boolean = true;
   id?: number;
   nodeTree: any[] = [];
   nodeList: HierarchyNode[] = [];
+  selectedNode?: HierarchyNode;
   rootNode: any;
 
   constructor(
@@ -39,6 +41,7 @@ export class NodeListComponent implements OnInit{
       nodeList => {
         this.nodeList = nodeList.items;
         this.nodeTree = this.convertToTreeNodeList(this.nodeList);
+        this.loading = false;
       },
     );
 

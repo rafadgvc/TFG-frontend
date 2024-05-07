@@ -11,6 +11,7 @@ import { AddSubjectComponent } from "../add-subject/add-subject.component";
   styleUrls: ['./subject-list.component.css']
 })
 export class SubjectListComponent implements OnInit {
+  loading: boolean = true;
   subjectList: Subject[] = [];
   displayedColumns: string[] = ['name', 'questionNumber', 'subject', 'questions', 'exams'];
 
@@ -28,6 +29,7 @@ export class SubjectListComponent implements OnInit {
     this.subjectService.getUserSubjects().subscribe(
       subjectList => {
         this.subjectList = subjectList.items;
+        this.loading = false;
       },
     );
   }

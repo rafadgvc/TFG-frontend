@@ -53,6 +53,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTooltip} from "@angular/material/tooltip";
 import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule para los iconos
 import {MatTree, MatTreeModule} from '@angular/material/tree';
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -85,26 +86,26 @@ import {MatTree, MatTreeModule} from '@angular/material/tree';
     ResultDetailComponent,
     ImportQuestionsComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    RouterModule.forRoot(routes), MatFormFieldModule,
-    MatFabButton,
-    MatLabel,
-    MatInput,
-    MatIconModule,
-    MatTreeModule,
-    MatButton,
-    MatIconModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatCard,
-    MatCardTitle,
-    MatCardContent,
-    MatCardHeader,
-    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator, MatTooltip,
-    TreeModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        RouterModule.forRoot(routes), MatFormFieldModule,
+        MatFabButton,
+        MatLabel,
+        MatInput,
+        MatIconModule,
+        MatTreeModule,
+        MatButton,
+        MatIconModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatCard,
+        MatCardTitle,
+        MatCardContent,
+        MatCardHeader,
+        BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator, MatTooltip,
+        TreeModule, MatProgressBar
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
-<div class="column">
-  <p-tree [value]="nodeList" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelected($event)">
+<div *ngIf="!loading" class="column">
+  <p-tree [value]="nodeList" selectionMode="single" [(selection)]="selectedNode">
     <ng-template let-node pTemplate="default">
       <div class="node-container" [style.marginLeft.em]="calculateMarginLeft(node)">
         <span class="node-label">{{node.name}}</span>
@@ -20,4 +20,8 @@
   <button mat-icon-button color="primary" class="btn btn-accent" (click)="openAddNodeModal()">
     <mat-icon>library_add</mat-icon>
   </button>
+</div>
+
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
