@@ -1,4 +1,4 @@
-<div class="column">
+<div *ngIf="!loading && this.questionList.length > 0" class="column">
   <table mat-table [dataSource]="questionList" class="mat-elevation-z8">
     <!-- Cuerpo de la pregunta -->
     <ng-container matColumnDef="title">

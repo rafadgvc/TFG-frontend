@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 
 import {catchError, map, Observable, of} from 'rxjs';
-import {Question} from "../models/question";
+import {Question, QuestionList} from "../models/question";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
+import {SubjectList} from "../models/subject";
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,12 @@ export class QuestionService {
       map(question => question),
       catchError(this.handleError<Question>(`getQuestion ${id}`))
     )
+  }
+
+  getSubjectQuestions(id: number): Observable<QuestionList> {
+    return this.http.get<QuestionList>(this.questionUrl + '/subject-questions/' + id,  { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError<QuestionList>(`getSubjectQuestions`))
+    );
   }
 
 
