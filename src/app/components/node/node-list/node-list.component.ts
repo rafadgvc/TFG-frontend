@@ -51,7 +51,6 @@ export class NodeListComponent implements OnInit{
   }
 
   convertToTreeNodeList(nodes: HierarchyNode[]): any[] {
-    // TODO: Ordenar el array para que se muestren en el orden correcto
     const nodeMap = new Map<number, any>();
 
     nodes.forEach(node => {
