@@ -91,7 +91,6 @@ export class NodeListComponent implements OnInit{
       calculateMaxDepth(node, 1);
     }
 
-    console.log(this.maxDepth);
     return treeNodes;
   }
 
@@ -202,4 +201,16 @@ export class NodeListComponent implements OnInit{
     }
     return baseMargin * depth;
   }
+
+  onNodeExpand(event: any) {
+    const node = event.node;
+    node.expanded = true; // Actualiza el estado del nodo a expandido
+  }
+
+  onNodeCollapse(event: any) {
+    const node = event.node;
+    node.expanded = false; // Actualiza el estado del nodo a contraído
+  }
 }
+
+

@@ -1,5 +1,5 @@
 <div *ngIf="!loading && this.nodeList.length > 0" class="column">
-  <p-tree [value]="nodeList" selectionMode="single" [(selection)]="selectedNode">
+  <p-tree [value]="nodeTree" selectionMode="single" [(selection)]="selectedNode" (onNodeExpand)="onNodeExpand($event)" (onNodeCollapse)="onNodeCollapse($event)">
     <ng-template let-node pTemplate="default">
       <div class="node-container" [style.marginLeft.em]="calculateMarginLeft(node)">
         <span class="node-label" [style.background]="calculateNodeBackground(node)">{{node.name}}</span>
@@ -16,8 +16,7 @@
         </div>
       </div>
     </ng-template>
-
-  </p-tree>
+</p-tree>
   <div class="padding">
     <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">
       <mat-icon>add</mat-icon>
