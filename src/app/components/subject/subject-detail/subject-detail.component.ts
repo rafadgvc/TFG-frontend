@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {SubjectService} from "../../../services/subject.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subject} from "../../../models/subject";
-import {AddSubjectComponent} from "../add-subject/add-subject.component";
 import {MatDialog} from "@angular/material/dialog";
 import {SubjectDeleteComponent} from "../subject-delete/subject-delete.component";
 import {SubjectModifyComponent} from "../subject-modify/subject-modify.component";

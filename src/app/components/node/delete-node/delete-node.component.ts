@@ -1,6 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SubjectService} from "../../../services/subject.service";
 import {Router} from "@angular/router";
 import {NodeService} from "../../../services/node.service";
 import {HierarchyNode} from "../../../models/hierarchy-node";

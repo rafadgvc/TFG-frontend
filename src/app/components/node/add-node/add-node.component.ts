@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { HierarchyNode, HierarchyNodeList } from "../../../models/hierarchy-node";
+import { HierarchyNode } from "../../../models/hierarchy-node";
 import {NodeService} from "../../../services/node.service";
 import {SnackbarService} from "../../../services/snackbar.service";
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
+import {SnackbarService} from "../../services/snackbar.service";
 
 @Component({
   selector: 'app-user-signup',
@@ -12,7 +13,11 @@ export class UserSignupComponent {
   signupForm: FormGroup;
   user : User = new User(NaN, '', '', '');
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private snackbarService: SnackbarService
+  ) {
     this.signupForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -28,8 +33,7 @@ export class UserSignupComponent {
       this.user.email = this.signupForm.get('email')?.value;
       this.userService.signup(this.user).subscribe(
         response => {
-          console.log('Usuario registrado correctamente:', response);
-          // Aquí puedes redirigir al usuario a otra página o mostrar un mensaje de éxito
+          this.snackbarService.showSuccess(response.name + " se ha registrado correctamente.");
         }
       );
     }
@@ -37,9 +41,9 @@ export class UserSignupComponent {
 
 
   checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => {
-  let pass = group.get('password')?.value;
-  let confirmPass = group.get('confirmPassword')?.value
+    let pass = group.get('password')?.value;
+    let confirmPass = group.get('confirmPassword')?.value
 
-  return pass === confirmPass ? null : { notSame: true }
-}
+    return pass === confirmPass ? null : { notSame: true }
+  }
 }

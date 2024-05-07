@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import {HierarchyNode, HierarchyNodeList} from '../../../models/hierarchy-node';
+import {HierarchyNode} from '../../../models/hierarchy-node';
 import { AddNodeComponent } from '../add-node/add-node.component';
 import {AddQuestionComponent} from "../../question/add-question/add-question.component";
 import {NodeService} from "../../../services/node.service";
@@ -13,8 +13,7 @@ import {NodeService} from "../../../services/node.service";
 })
 export class NodeListComponent implements OnInit{
   id?: number;
-  nodeTree: any[] = []; // Cambiamos el tipo de HierarchyNode[] a any[]
-  selectedNode: any; // Cambiamos el tipo de HierarchyNode a any
+  nodeTree: any[] = [];
   nodeList: HierarchyNode[] = [];
   rootNode: any;
 
@@ -36,7 +35,6 @@ export class NodeListComponent implements OnInit{
   }
 
   loadHierarchySubjectNodes(id: number): void {
-    // TODO: Llamar al servicio para obtener los nodos
     this.nodeService.getSubjectNodes(id).subscribe(
       nodeList => {
         this.nodeList = nodeList.items;
@@ -51,12 +49,10 @@ export class NodeListComponent implements OnInit{
     // TODO: Ordenar el array para que se muestren en el orden correcto
     const nodeMap = new Map<number, any>();
 
-    // Paso 1: Crear un mapa de nodos usando el ID como clave
     nodes.forEach(node => {
       nodeMap.set(node.id, { ...node, children: [] });
     });
 
-    // Paso 2: Construir la estructura del árbol
     nodes.forEach(node => {
       if (node.parent_id && nodeMap.has(node.parent_id)) {
         const parentNode = nodeMap.get(node.parent_id);
@@ -64,7 +60,6 @@ export class NodeListComponent implements OnInit{
       }
     });
 
-    // Paso 3: Encontrar el nodo raíz(es)
     const treeNodes: any[] = [];
     nodeMap.forEach((value, key) => {
       if (!nodes.find(node => node.id === value.parent_id)) {
@@ -110,9 +105,6 @@ export class NodeListComponent implements OnInit{
     });
   }
 
-  nodeSelected(node: any): void {
-    // Tu lógica para manejar la selección de un nodo
-  }
 
   // Función auxiliar para buscar el nodo y calcular su profundidad
   dfs = (currentNode: any, targetNode: any, currentDepth: number): number | null => {
@@ -131,19 +123,16 @@ export class NodeListComponent implements OnInit{
   return null;
 };
 
-calculateMarginLeft(node: any): number {
-  // Nivel base para el margen izquierdo
-  const baseMargin = 1; // Puedes ajustar este valor según lo que se vea mejor
+  calculateMarginLeft(node: any): number {
 
-  // Obtener la profundidad del nodo
-  const depth = this.dfs(this.rootNode, node, 1);
+    const baseMargin = 1;
 
-  if (depth === null) {
-    // Si no se encontró el nodo, devolvemos 0
-    return 0;
+
+    const depth = this.dfs(this.rootNode, node, 1);
+
+    if (depth === null) {
+      return 0;
+    }
+    return baseMargin * depth;
   }
-
-  // Calcular el margen izquierdo en relación con el nivel del nodo
-  return baseMargin * depth;
-}
 }

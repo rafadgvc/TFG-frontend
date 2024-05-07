@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subject, SubjectList } from "../models/subject";
 import { AuthService } from "./auth.service";
 import { SnackbarService } from "./snackbar.service";
-import {HierarchyNode} from "../models/hierarchy-node"; // Importa el servicio de Snackbar
 
 @Injectable({
   providedIn: 'root',

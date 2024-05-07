@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject, SubjectList } from "../../../models/subject";
+import { Subject } from "../../../models/subject";
 import { SubjectService } from "../../../services/subject.service";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { AddSubjectComponent } from "../add-subject/add-subject.component";
-import { SnackbarService } from "../../../services/snackbar.service";
 
 @Component({
   selector: 'app-subject-list',
@@ -18,8 +17,7 @@ export class SubjectListComponent implements OnInit {
   constructor(
     private subjectService: SubjectService,
     private router: Router,
-    public dialog: MatDialog,
-    private snackbarService: SnackbarService
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {

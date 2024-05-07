@@ -12,10 +12,10 @@ import {NodeService} from "../../../services/node.service";
   styleUrl: './node-detail.component.css'
 })
 export class NodeDetailComponent implements OnInit{
-  // Subject to be shown
+  // Node to be shown
   node?: HierarchyNode;
 
-  // TODO: Añadir estadísticas de la asignatura
+  // TODO: Añadir estadísticas del nodo
 
   id?: number;
 
