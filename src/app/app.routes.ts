@@ -20,7 +20,7 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'question/:id', component: QuestionDetailComponent, canActivate: [AuthGuard]},
   {path: 'subject/:id', component: SubjectDetailComponent, canActivate: [AuthGuard]},
-  {path: 'add-question', component: AddQuestionComponent, canActivate: [AuthGuard]},
+  {path: 'add-question/:id', component: AddQuestionComponent, canActivate: [AuthGuard]},
   {path: 'edit-question/:id', component: EditQuestionComponent, canActivate: [AuthGuard]},
   {path: 'question-list/:id', component: QuestionListComponent, canActivate: [AuthGuard]},
   {path: 'node-list/:id', component: NodeListComponent, canActivate: [AuthGuard]},

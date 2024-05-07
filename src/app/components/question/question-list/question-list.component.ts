@@ -57,7 +57,7 @@ export class QuestionListComponent implements OnInit{
   }
 
   addQuestion(): void {
-    this.router.navigate(['/add-question']);
+    this.router.navigate(['/add-question/'+ this.id]);
   }
 
   openAddQuestionsModal(): void {

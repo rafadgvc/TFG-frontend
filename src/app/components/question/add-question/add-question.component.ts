@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AnswerList } from "../../../models/answer";
 import { Question } from "../../../models/question";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
+import {NodeService} from "../../../services/node.service";
 
 @Component({
   selector: 'app-add-question',
@@ -15,21 +16,13 @@ export class AddQuestionComponent {
   answers: FormArray;
   pairs: FormArray;
   types: string[] = ['Test', 'Desarrollo', 'Parametrizada'];
-  hierarchyNodes: HierarchyNode[] = [
-      new HierarchyNode(1, "Fundamentos de Bases de Datos", NaN),
-      new HierarchyNode(2, "Conceptos Básicos", 1),
-      new HierarchyNode(3, "Operadores SQL", 1),
-      new HierarchyNode(4, "Álgebra Relacional", 1),
-      new HierarchyNode(5, "Tabla", 2),
-      new HierarchyNode(6, "Columna", 5),
-      new HierarchyNode(7, "Fila", 5),
-      new HierarchyNode(8, "Selección", 2),
-      new HierarchyNode(9, "Proyección", 2),
-    ];
+  hierarchyNodes: HierarchyNode[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private nodeService: NodeService,
+    private activatedRoute: ActivatedRoute,
   ) {
   this.questionForm = this.formBuilder.group({
     title: ['', Validators.required],
@@ -46,6 +39,14 @@ export class AddQuestionComponent {
   this.addAnswer();
   this.addAnswer();
   this.addPair();
+
+  this.activatedRoute.params.subscribe(params => {
+      const id = +params['id']; // Convertir a número
+      // Llamar al servicio para obtener los nodos correspondientes
+      this.nodeService.getSubjectNodes(id).subscribe(nodes => {
+        this.hierarchyNodes = nodes.items;
+      });
+    });
 }
 
   addAnswer() {
