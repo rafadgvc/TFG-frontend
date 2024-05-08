@@ -24,7 +24,7 @@ export class QuestionService {
   getQuestion(id: number): Observable<Question> {
     const accessToken = this.authService.getAccessTokenCookie();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
-    return this.http.get<Question>(this.questionUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
+    return this.http.get<Question>(this.questionUrl + '/full/' + id, {headers: this.headers, withCredentials: true}).pipe(
       map(question => question),
       catchError(this.handleError<Question>(`getQuestion ${id}`))
     )

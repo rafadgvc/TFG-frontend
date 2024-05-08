@@ -18,6 +18,7 @@ import {DeleteQuestionComponent} from "../delete-question/delete-question.compon
 export class QuestionDetailComponent implements OnInit{
   // Question to be shown
   question?: Question;
+  loading: boolean = true;
 
   constructor(
     private questionService: QuestionService,
@@ -29,23 +30,7 @@ export class QuestionDetailComponent implements OnInit{
   ngOnInit():void {
     this.route.params.subscribe(params => {
       const id = +params['id'];
-      if(id % 2 == 0) {
-        this.question = new Question(id, '¿Cuál de los siguientes no es un operador?', 2, 1, 'test',
-          new AnswerList([new Answer(3, 'Sentencia', 0),
-            new Answer(4, 'Producto Cartesiano', 1),
-            new Answer(5, 'Cura Natural', 0),
-            new Answer(6, 'Detección', 0)]
-          )
-        )
-      } else{
-        this.question = new Question (id, '¿Qué operadores funcionan únicamente sobre una tabla?', 2, 1, 'desarrollo',
-        new AnswerList([new Answer(3, 'Selección', 1),
-          new Answer(4, 'Proyección', 1)]
-        )
-      )
-      }
-
-      //this.populateQuestion(id);
+      this.populateQuestion(id);
     });
   }
 
@@ -53,6 +38,7 @@ export class QuestionDetailComponent implements OnInit{
     // Llamar al servicio para obtener la pregunta según el id
     this.questionService.getQuestion(id).subscribe(question => {
       this.question = question;
+      this.loading = false;
     });
   }
 

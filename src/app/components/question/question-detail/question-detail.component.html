@@ -1,33 +1,39 @@
-<div class="small-container">
-  <h2>{{ question?.title }}</h2>
-  <p><strong>Dificultad estimada:</strong> {{ question?.difficulty }}</p>
-  <p><strong>Tiempo estimado:</strong> {{ question?.time }}</p>
-  <p><strong>Tipo de preguntas:</strong> {{ question?.type }}</p>
+<div *ngIf="!loading">
+  <div class="small-container">
+    <h2>{{ question?.title }}</h2>
+    <p><strong>Dificultad estimada:</strong> {{ question?.difficulty }}</p>
+    <p><strong>Tiempo estimado:</strong> {{ question?.time }}</p>
+    <p><strong>Tipo de preguntas:</strong> {{ question?.type }}</p>
 
-  <div *ngIf="question?.type?.toUpperCase() === 'TEST'">
-    <h3>Respuestas:</h3>
-    <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
-      <div *ngIf="answer.points < 0 ">
-        <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+    <div *ngIf="question?.type?.toUpperCase() === 'TEST'">
+      <h3>Respuestas:</h3>
+      <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
+        <div *ngIf="answer.points < 0 ">
+          <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+        </div>
+        <div *ngIf="answer.points >= 0  && answer.points < 1">
+          <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+        </div>
+        <div *ngIf="answer.points === 1">
+          <p class="success-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+        </div>
       </div>
-      <div *ngIf="answer.points >= 0  && answer.points < 1">
-        <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
-      </div>
-      <div *ngIf="answer.points === 1">
-        <p class="success-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+    </div>
+
+    <div *ngIf="question?.type?.toUpperCase() === 'DEVELOPMENT'">
+      <h3> Ejemplos de respuestas correctas:</h3>
+      <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
+        <p class="semibold success-text">{{ answer.body }}</p>
       </div>
     </div>
   </div>
 
-  <div *ngIf="question?.type?.toUpperCase() === 'DESARROLLO'">
-    <h3> Posibles respuestas correctas:</h3>
-    <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
-      <p class="semibold success-text">{{ answer.body }}</p>
-    </div>
-  </div>
-</div>
-
-<div class="row horizontal-center gap padding-lg">
+  <div class="row horizontal-center gap padding-lg">
     <button mat-button color="primary" class="btn btn-primary"  (click)="editQuestion()">Editar pregunta</button>
     <button mat-button color="warn" class="btn btn-danger" (click)="deleteQuestion()">Borrar pregunta</button>
   </div>
+</div>
+
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
