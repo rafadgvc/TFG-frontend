@@ -5,6 +5,7 @@ import {Question, QuestionList} from "../models/question";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {SubjectList} from "../models/subject";
+import {HierarchyNode} from "../models/hierarchy-node";
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,12 @@ export class QuestionService {
   getSubjectQuestions(id: number): Observable<QuestionList> {
     return this.http.get<QuestionList>(this.questionUrl + '/subject-questions/' + id,  { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<QuestionList>(`getSubjectQuestions`))
+    );
+  }
+
+  addQuestion(question: Question): Observable<Question>{
+    return this.http.post<Question>(this.questionUrl, question, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Question>(`add Question`))
     );
   }
 

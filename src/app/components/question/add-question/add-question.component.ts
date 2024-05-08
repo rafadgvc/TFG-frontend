@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { AnswerList } from "../../../models/answer";
+import {Answer, AnswerList} from "../../../models/answer";
 import { Question } from "../../../models/question";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
 import {NodeService} from "../../../services/node.service";
+import {QuestionService} from "../../../services/question.service";
+import {SnackbarService} from "../../../services/snackbar.service";
 
 @Component({
   selector: 'app-add-question',
@@ -12,6 +14,7 @@ import {NodeService} from "../../../services/node.service";
   styleUrls: ['./add-question.component.css']
 })
 export class AddQuestionComponent {
+  id: number = 0;
   questionForm: FormGroup;
   answers: FormArray;
   pairs: FormArray;
@@ -23,6 +26,8 @@ export class AddQuestionComponent {
     private router: Router,
     private nodeService: NodeService,
     private activatedRoute: ActivatedRoute,
+    private questionService: QuestionService,
+    private snackbarService: SnackbarService
   ) {
   this.questionForm = this.formBuilder.group({
     title: ['', Validators.required],
@@ -41,9 +46,9 @@ export class AddQuestionComponent {
   this.addPair();
 
   this.activatedRoute.params.subscribe(params => {
-      const id = +params['id']; // Convertir a número
+      this.id = +params['id']; // Convertir a número
       // Llamar al servicio para obtener los nodos correspondientes
-      this.nodeService.getSubjectNodes(id).subscribe(nodes => {
+      this.nodeService.getSubjectNodes(this.id).subscribe(nodes => {
         this.hierarchyNodes = nodes.items;
       });
     });
@@ -72,23 +77,6 @@ export class AddQuestionComponent {
   }
 
   onSubmit() {
-    if (this.questionForm.valid) {
-      const questionData = this.questionForm.value;
-      const question = new Question(
-        0, // Assign ID appropriately
-        questionData.title,
-        questionData.difficulty,
-        questionData.time,
-        questionData.type,
-        new AnswerList(questionData.answers),
-        undefined,
-         new HierarchyNodeList(this.hierarchyNodes.filter(node => questionData.nodes.includes(node.id)))
-      );
-      // Now you can use 'question' object to save or do whatever you want
-      console.log(question);
-    } else {
-      console.log('Invalid form');
-    }
   }
 
   get answersControls() {
@@ -101,9 +89,35 @@ export class AddQuestionComponent {
 
   submitForm(): void {
     if (this.questionForm.valid) {
-      // TODO: Añadir creación de la pregunta
-      this.router.navigate(['/home']);
-
+      const questionData = this.questionForm.value;
+      if (questionData.type.toLowerCase() === 'desarrollo'){
+        questionData.type = 'development';
+        for (let i = 0; i < questionData.answers.length; i++) {
+          questionData.answers[i].points = 0;
+        }
+      }
+      const question = new Question(
+        0,
+        questionData.title,
+        +questionData.difficulty,
+        +questionData.time,
+        questionData.type,
+        new AnswerList(questionData.answers),
+        undefined,
+        undefined,
+        questionData.nodes,
+        this.id
+      );
+      console.log(question)
+      // Now you can use 'question' object to save or do whatever you want
+      this.questionService.addQuestion(question).subscribe(
+        () => {
+          this.snackbarService.showSuccess('Pregunta añadida correctamente.');
+          this.router.navigate(['/question-list/' + this.id])
+        }
+      );
+    } else {
+      console.log('Invalid form');
     }
   }
 }

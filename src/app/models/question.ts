@@ -10,6 +10,8 @@ export class Question{
   answers?: AnswerList;
   points?: number;
   nodes?: HierarchyNodeList;
+  node_ids?: number[];
+  subject_id?: number;
 
   constructor (
     id: number,
@@ -20,6 +22,8 @@ export class Question{
     answers?: AnswerList,
     points?: number,
     nodes?: HierarchyNodeList,
+    node_ids?: number[],
+    subject_id?: number
   ){
     this.id = id;
     this.title = title;
@@ -29,6 +33,8 @@ export class Question{
     this.points = points;
     this.answers = answers;
     this.nodes = nodes;
+    this.node_ids = node_ids;
+    this.subject_id = subject_id;
   }
 }
 
