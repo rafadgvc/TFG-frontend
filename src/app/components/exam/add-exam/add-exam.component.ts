@@ -66,6 +66,7 @@ export class AddExamComponent {
         questionData.difficulty,
         questionData.time,
         questionData.type,
+        true,
         new AnswerList(questionData.answers)
       );
       // Now you can use 'question' object to save or do whatever you want

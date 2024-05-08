@@ -91,7 +91,6 @@ export class AddQuestionComponent {
     if (this.questionForm.valid) {
       const questionData = this.questionForm.value;
       if (questionData.type.toLowerCase() === 'desarrollo'){
-        questionData.type = 'development';
         for (let i = 0; i < questionData.answers.length; i++) {
           questionData.answers[i].points = 0;
         }
@@ -102,6 +101,7 @@ export class AddQuestionComponent {
         +questionData.difficulty,
         +questionData.time,
         questionData.type,
+        true,
         new AnswerList(questionData.answers),
         undefined,
         undefined,

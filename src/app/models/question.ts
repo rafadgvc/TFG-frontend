@@ -7,6 +7,7 @@ export class Question{
   difficulty: number;
   time: number;
   type: string;
+  active: boolean;
   answers?: AnswerList;
   points?: number;
   nodes?: HierarchyNodeList;
@@ -19,6 +20,7 @@ export class Question{
     difficulty: number,
     time: number,
     type: string,
+    active: boolean,
     answers?: AnswerList,
     points?: number,
     nodes?: HierarchyNodeList,
@@ -30,8 +32,9 @@ export class Question{
     this.difficulty = difficulty;
     this.time = time;
     this.type = type;
-    this.points = points;
+    this.active = active;
     this.answers = answers;
+    this.points = points;
     this.nodes = nodes;
     this.node_ids = node_ids;
     this.subject_id = subject_id;

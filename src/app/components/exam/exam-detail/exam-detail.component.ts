@@ -42,15 +42,15 @@ export class ExamDetailComponent implements OnInit{
   populateExam(id: number){
     // TODO: Llamar al servicio para obtener la pregunta según el id
     const preheatedQuestions: Question[] = [
-        new Question(1, "¿Cuál es la capital de Francia?", 2, 30, "multiple_choice"),
-        new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 20, "true_false", new AnswerList([new Answer(1,'1', 0), new Answer(2, '2', 0), new Answer(3, '3', 0), new Answer(4, '4', 1)])),
-        new Question(3, "¿Qué año fue la Revolución Francesa?", 3, 40, "open_answer"),
-        new Question(4, "¿Cuál es el resultado de 2 + 2?", 1, 15, "open_answer"),
-        new Question(5, "¿Quién escribió 'Don Quijote de la Mancha'?", 2, 25, "multiple_choice"),
-        new Question(6, "¿Cuál es el símbolo químico del agua?", 2, 30, "multiple_choice"),
-        new Question(7, "¿Cuál es el planeta más grande del sistema solar?", 3, 35, "open_answer"),
-        new Question(8, "¿Cuál es el río más largo del mundo?", 2, 30, "true_false"),
-        new Question(9, "¿Quién pintó la Mona Lisa?", 3, 40, "open_answer"),
+        new Question(1, "¿Cuál es la capital de Francia?", 2, 30, "multiple_choice",true),
+        new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 20, "true_false",true, new AnswerList([new Answer(1,'1', 0), new Answer(2, '2', 0), new Answer(3, '3', 0), new Answer(4, '4', 1)])),
+        new Question(3, "¿Qué año fue la Revolución Francesa?", 3, 40, "open_answer",true),
+        new Question(4, "¿Cuál es el resultado de 2 + 2?", 1, 15, "open_answer",true),
+        new Question(5, "¿Quién escribió 'Don Quijote de la Mancha'?", 2, 25, "multiple_choice",true),
+        new Question(6, "¿Cuál es el símbolo químico del agua?", 2, 30, "multiple_choice",true),
+        new Question(7, "¿Cuál es el planeta más grande del sistema solar?", 3, 35, "open_answer",true),
+        new Question(8, "¿Cuál es el río más largo del mundo?", 2, 30, "true_false",true),
+        new Question(9, "¿Quién pintó la Mona Lisa?", 3, 40, "open_answer",true),
       ];
       this.exam = new Exam(1, "Ordinaria 2016", 5, 120, new QuestionList(preheatedQuestions), 1);
   }

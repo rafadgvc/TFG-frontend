@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class EditQuestionComponent {
   questionForm: FormGroup;
-  question: Question = new Question (1, '¿Cuál de los siguientes no es un operador?', 2, 1, 'Test',
+  question: Question = new Question (1, '¿Cuál de los siguientes no es un operador?', 2, 1, 'Test',true,
         new AnswerList([new Answer(3, 'Sentencia', 0),
           new Answer(4, 'Producto Cartesiano', 1),
           new Answer(5, 'Cura Natural', 0),
@@ -74,6 +74,7 @@ export class EditQuestionComponent {
         questionData.difficulty,
         questionData.time,
         questionData.type,
+        true,
         new AnswerList(questionData.answers)
       );
       // Now you can use 'question' object to save or do whatever you want
