@@ -169,7 +169,9 @@ export class NodeListComponent implements OnInit{
   return colorHex;
 }
 
-
+  viewSubject(): void {
+    this.router.navigate(['/subject/' + this.id]);
+  }
 
   // Función auxiliar para buscar el nodo y calcular su profundidad
   dfs = (currentNode: any, targetNode: any, currentDepth: number): number | null => {
