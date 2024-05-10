@@ -18,7 +18,7 @@ export class AddQuestionComponent {
   questionForm: FormGroup;
   answers: FormArray;
   pairs: FormArray;
-  types: string[] = ['Test', 'Desarrollo', 'Parametrizada'];
+  types: string[] = ['Test', 'Desarrollo'];
   hierarchyNodes: HierarchyNode[] = [];
 
   constructor(
@@ -32,6 +32,7 @@ export class AddQuestionComponent {
   this.questionForm = this.formBuilder.group({
     title: ['', Validators.required],
     difficulty: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+    isParametrized: [false],
     time: ['', [Validators.required, Validators.min(1)]],
     type: ['', Validators.required],
     nodes: [[], Validators.required],

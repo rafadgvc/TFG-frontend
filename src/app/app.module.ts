@@ -55,6 +55,7 @@ import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule
 import {MatTree, MatTreeModule} from '@angular/material/tree';
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {DisableQuestionComponent} from "./components/question/disable-question/disable-question.component";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
@@ -88,26 +89,26 @@ import {DisableQuestionComponent} from "./components/question/disable-question/d
     ImportQuestionsComponent,
     DisableQuestionComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        RouterModule.forRoot(routes), MatFormFieldModule,
-        MatFabButton,
-        MatLabel,
-        MatInput,
-        MatIconModule,
-        MatTreeModule,
-        MatButton,
-        MatIconModule,
-        ReactiveFormsModule,
-        MatDialogModule,
-        MatCard,
-        MatCardTitle,
-        MatCardContent,
-        MatCardHeader,
-        BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator, MatTooltip,
-        TreeModule, MatProgressBar
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes), MatFormFieldModule,
+    MatFabButton,
+    MatLabel,
+    MatInput,
+    MatIconModule,
+    MatTreeModule,
+    MatButton,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatCard,
+    MatCardTitle,
+    MatCardContent,
+    MatCardHeader,
+    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator, MatTooltip,
+    TreeModule, MatProgressBar, MatSlideToggle
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
