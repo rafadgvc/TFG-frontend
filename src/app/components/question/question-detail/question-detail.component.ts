@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {SubjectModifyComponent} from "../../subject/subject-modify/subject-modify.component";
 import {EditQuestionComponent} from "../edit-question/edit-question.component";
 import {DeleteQuestionComponent} from "../delete-question/delete-question.component";
+import {DisableQuestionComponent} from "../disable-question/disable-question.component";
 
 @Component({
     selector: 'app-question-detail',
@@ -39,6 +40,7 @@ export class QuestionDetailComponent implements OnInit{
     this.questionService.getQuestion(id).subscribe(question => {
       this.question = question;
       this.loading = false;
+      console.log(question);
     });
   }
 
@@ -49,7 +51,23 @@ export class QuestionDetailComponent implements OnInit{
   deleteQuestion(): void {
     const dialogRef = this.dialog.open(DeleteQuestionComponent, {
       width: '400px',
-      data: {}
+      data: {
+        question: this.question
+      }
+    });
+  }
+
+  disableQuestion(): void {
+    const dialogRef = this.dialog.open(DisableQuestionComponent, {
+      width: '400px',
+      data: {
+        question: this.question
+      }
+    });
+    dialogRef.afterClosed().subscribe( result => {
+      if (this.question?.id) {
+        this.populateQuestion(this.question?.id);
+      }
     });
   }
 

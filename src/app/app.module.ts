@@ -54,6 +54,7 @@ import {MatTooltip} from "@angular/material/tooltip";
 import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule para los iconos
 import {MatTree, MatTreeModule} from '@angular/material/tree';
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {DisableQuestionComponent} from "./components/question/disable-question/disable-question.component";
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     ImportResultComponent,
     DeleteResultComponent,
     ResultDetailComponent,
-    ImportQuestionsComponent
+    ImportQuestionsComponent,
+    DisableQuestionComponent
   ],
     imports: [
         BrowserModule,

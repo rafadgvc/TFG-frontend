@@ -4,7 +4,7 @@ import {catchError, map, Observable, of} from 'rxjs';
 import {Question, QuestionList} from "../models/question";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
-import {SubjectList} from "../models/subject";
+import {Subject, SubjectList} from "../models/subject";
 import {HierarchyNode} from "../models/hierarchy-node";
 
 @Injectable({
@@ -39,6 +39,18 @@ export class QuestionService {
   addQuestion(question: Question): Observable<Question>{
     return this.http.post<Question>(this.questionUrl, question, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<Question>(`add Question`))
+    );
+  }
+
+  deleteQuestion(question: Question): Observable<any>{
+    return this.http.delete<Subject>(this.questionUrl + '/' + question.id, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Subject>(`delete Question`))
+    );
+  }
+
+  disableQuestion(question: Question): Observable<Question>{
+    return this.http.put<Question>(this.questionUrl + '/disable/' + question.id, null, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Question>(`disable Question`))
     );
   }
 

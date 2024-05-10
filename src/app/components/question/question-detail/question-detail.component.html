@@ -3,8 +3,12 @@
     <h2>{{ question?.title }}</h2>
     <p><strong>Dificultad estimada:</strong> {{ question?.difficulty }}</p>
     <p><strong>Tiempo estimado:</strong> {{ question?.time }}</p>
-    <p><strong>Tipo de preguntas:</strong> {{ question?.type }}</p>
-
+    <p><strong>Tipo de pregunta:</strong> {{ question?.type }}</p>
+    <div class="row">
+      <p><strong>Estado: </strong></p>
+      <p *ngIf="question?.active" class="success-text"><strong>Activada</strong></p>
+      <p *ngIf="!question?.active" class="error-text"><strong>Desactivada</strong></p>
+    </div>
     <div *ngIf="question?.type?.toUpperCase() === 'TEST'">
       <h3>Respuestas:</h3>
       <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
@@ -20,7 +24,7 @@
       </div>
     </div>
 
-    <div *ngIf="question?.type?.toUpperCase() === 'DEVELOPMENT'">
+    <div *ngIf="question?.type?.toUpperCase() === 'DESARROLLO'">
       <h3> Ejemplos de respuestas correctas:</h3>
       <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
         <p class="semibold success-text">{{ answer.body }}</p>
@@ -28,9 +32,12 @@
     </div>
   </div>
 
-  <div class="row horizontal-center gap padding-lg">
+  <div *ngIf="question?.active && !question?.connected" class="row horizontal-center gap padding-lg">
     <button mat-button color="primary" class="btn btn-primary"  (click)="editQuestion()">Editar pregunta</button>
     <button mat-button color="warn" class="btn btn-danger" (click)="deleteQuestion()">Borrar pregunta</button>
+  </div>
+  <div *ngIf="question?.active && question?.connected" class="row horizontal-center gap padding-lg">
+    <button mat-button color="warn" class="btn btn-danger" (click)="disableQuestion()">Desactivar pregunta</button>
   </div>
 </div>
 

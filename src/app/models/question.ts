@@ -13,6 +13,7 @@ export class Question{
   nodes?: HierarchyNodeList;
   node_ids?: number[];
   subject_id?: number;
+  connected?: boolean;
 
   constructor (
     id: number,
@@ -25,7 +26,8 @@ export class Question{
     points?: number,
     nodes?: HierarchyNodeList,
     node_ids?: number[],
-    subject_id?: number
+    subject_id?: number,
+    connected?: boolean,
   ){
     this.id = id;
     this.title = title;
@@ -38,6 +40,7 @@ export class Question{
     this.nodes = nodes;
     this.node_ids = node_ids;
     this.subject_id = subject_id;
+    this.connected = connected;
   }
 }
 

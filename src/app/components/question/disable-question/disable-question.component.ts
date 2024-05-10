@@ -1,20 +1,21 @@
 import {Component, Inject} from '@angular/core';
+import {Question} from "../../../models/question";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {QuestionService} from "../../../services/question.service";
 import {Router} from "@angular/router";
 import {SnackbarService} from "../../../services/snackbar.service";
-import {QuestionService} from "../../../services/question.service";
-import {Question} from "../../../models/question";
 
 @Component({
-  selector: 'app-delete-question',
-  templateUrl: './delete-question.component.html',
-  styleUrl: './delete-question.component.css'
+  selector: 'app-disable-question',
+  templateUrl: './disable-question.component.html',
+  styleUrl: './disable-question.component.css'
 })
-export class DeleteQuestionComponent {
+export class DisableQuestionComponent {
+
   question: Question;
 
   constructor(
-    public dialogRef: MatDialogRef<DeleteQuestionComponent>,
+    public dialogRef: MatDialogRef<DisableQuestionComponent>,
     private questionService: QuestionService,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -23,17 +24,13 @@ export class DeleteQuestionComponent {
     this.question = this.data.question;
 
   }
-  deleteQuestion(): void {
-      this.questionService.deleteQuestion(this.question).subscribe(
+  disableQuestion(): void {
+      this.questionService.disableQuestion(this.question).subscribe(
         () => {
-          this.snackbarService.showSuccess('Pregunta eliminada correctamente.');
+          this.snackbarService.showSuccess('Pregunta desactivada correctamente.');
           this.dialogRef.close();
-          this.router.navigate(['/home']);
         }
       );
 
   }
-
-
-
 }

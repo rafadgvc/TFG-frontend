@@ -1,0 +1,19 @@
+<div class="padding-sm column">
+  <h2 class="center">Desactivar Pregunta</h2>
+  <mat-dialog-content>
+    <div class="padding-xs">
+      <p>
+        ¿Confirmas que quieres desactivar la pregunta <strong>{{this.question.title}}</strong>? Esta acción no se puede deshacer.
+      </p>
+    </div>
+    <div class="padding-xs">
+      <p class="semibold">
+        ¡ATENCIÓN! Si continúas, tus resultados actuales no cambiarán, pero esta pregunta no podrá usarse en futuros exámenes.
+      </p>
+    </div>
+    <div class="row gap-sm padding-sm">
+      <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" class="btn btn-danger" (click)="this.disableQuestion()">Desactivar</button>
+    </div>
+  </mat-dialog-content>
+</div>
