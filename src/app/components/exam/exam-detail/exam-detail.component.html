@@ -1,8 +1,8 @@
 <div *ngIf="!this.loading">
   <h2>{{ exam?.title }}</h2>
     <div class="padding">
-      <p><strong>Dificultad estimada:</strong> {{ exam?.difficulty }}</p>
-      <p><strong>Tiempo estimado:</strong> {{ exam?.time }}</p>
+      <p><strong>Dificultad estimada media:</strong> {{ exam?.difficulty }}</p>
+      <p><strong>Tiempo total estimado:</strong> {{ exam?.time }}</p>
       <p><strong>Total de preguntas:</strong> {{ exam?.questions?.total }}</p>
     </div>
 
@@ -14,14 +14,17 @@
 
       <h4>Respuestas:</h4>
       <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
-        <div *ngIf="answer.points < 0 ">
+        <div *ngIf="question.type.toUpperCase() !== 'DESARROLLO' && answer.points <= 0 ">
           <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
         </div>
-        <div *ngIf="answer.points >= 0  && answer.points < 1">
-          <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+        <div *ngIf="question.type.toUpperCase() !== 'DESARROLLO' && answer.points > 0  && answer.points < 1">
+          <p class="warn-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
         </div>
-        <div *ngIf="answer.points === 1">
+        <div *ngIf="question.type.toUpperCase() !== 'DESARROLLO' && answer.points === 1">
           <p class="success-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+        </div>
+        <div *ngIf="question.type.toUpperCase() === 'DESARROLLO'">
+          <p class="success-text"><strong>{{ answer.body }}</strong></p>
         </div>
       </div>
     </div>
@@ -32,17 +35,17 @@
   <div class="row horizontal-center gap-sm padding-lg">
       <button mat-button color="primary" class="btn btn-primary"  (click)="editExam()">Editar examen</button>
       <button mat-button color="primary" class="btn btn-accent"  (click)="exportExam()">Exportar examen</button>
-    <div *ngIf="this.id <= 1">
+    <div *ngIf="!this.exam?.connected">
       <button mat-button color="primary" class="btn btn-accent" (click)="importResults()">Importar resultados</button>
     </div>
       <button mat-button color="warn" class="btn btn-danger" (click)="deleteExam()">Borrar examen</button>
-    <div *ngIf="this.id > 1">
+    <div *ngIf="this.exam?.connected">
       <button mat-button color="warn" class="btn btn-danger" (click)="deleteResults()">Borrar resultados</button>
     </div>
 
   </div>
 
-  <div *ngIf="this.id > 1">
+  <div *ngIf="this.exam?.connected">
     <app-result-detail></app-result-detail>
   </div>
 </div>

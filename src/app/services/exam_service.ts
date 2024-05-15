@@ -2,8 +2,8 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {catchError, map, Observable, of} from "rxjs";
-import {HierarchyNode} from "../models/hierarchy-node";
-import {Exam} from "../models/exam";
+import {HierarchyNode, HierarchyNodeList} from "../models/hierarchy-node";
+import {Exam, ExamList} from "../models/exam";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,12 @@ export class ExamService {
   addExam(exam: Exam): Observable<Exam> {
     return this.http.post<Exam>(this.examUrl, exam, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<Exam>(`add Exam`))
+    );
+  }
+
+  getSubjectExams(id: number): Observable<ExamList> {
+    return this.http.get<ExamList>(this.examUrl + '/list/'+ id,  { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError<ExamList>(`Exam List`))
     );
   }
 

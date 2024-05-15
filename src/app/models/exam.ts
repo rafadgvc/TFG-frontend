@@ -9,6 +9,7 @@ export class Exam{
   questions?: QuestionList;
   subject_id?: number;
   connected?: boolean;
+  question_number?: number;
 
   constructor (
     id: number,
@@ -18,6 +19,7 @@ export class Exam{
     questions?: QuestionList,
     subject_id?: number,
     connected?: boolean,
+    question_number?: number,
   ){
     this.id = id;
     this.title = title;
@@ -26,6 +28,7 @@ export class Exam{
     this.questions = questions;
     this.subject_id = subject_id;
     this.connected = connected;
+    this.question_number = question_number;
   }
 }
 
