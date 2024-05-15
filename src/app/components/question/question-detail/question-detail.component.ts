@@ -40,7 +40,6 @@ export class QuestionDetailComponent implements OnInit{
     this.questionService.getQuestion(id).subscribe(question => {
       this.question = question;
       this.loading = false;
-      console.log(question);
     });
   }
 

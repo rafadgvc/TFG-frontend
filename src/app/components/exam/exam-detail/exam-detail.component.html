@@ -1,38 +1,52 @@
-<h2>{{ exam?.title }}</h2>
-  <div class="padding">
-    <p><strong>Dificultad estimada:</strong> {{ exam?.difficulty }}</p>
-    <p><strong>Tiempo estimado:</strong> {{ exam?.time }}</p>
-    <p><strong>Total de preguntas:</strong> {{ exam?.questions?.total }}</p>
-  </div>
-
-  <div *ngFor="let question of exam?.questions?.items" class="small-container padding-xl">
-    <h3>{{ question?.title }}</h3>
-    <p><strong>Dificultad estimada:</strong> {{ question?.difficulty }}</p>
-    <p><strong>Tiempo estimado:</strong> {{ question?.time }}</p>
-    <p><strong>Tipo de pregunta:</strong> {{ question?.type }}</p>
-
-    <h4>Respuestas:</h4>
-    <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
-      <p><strong>{{ answer.body }}</strong> ({{ answer.points }})</p>
+<div *ngIf="!this.loading">
+  <h2>{{ exam?.title }}</h2>
+    <div class="padding">
+      <p><strong>Dificultad estimada:</strong> {{ exam?.difficulty }}</p>
+      <p><strong>Tiempo estimado:</strong> {{ exam?.time }}</p>
+      <p><strong>Total de preguntas:</strong> {{ exam?.questions?.total }}</p>
     </div>
+
+    <div *ngFor="let question of exam?.questions?.items" class="small-container padding-xl">
+      <h3>{{ question?.title }}</h3>
+      <p><strong>Dificultad estimada:</strong> {{ question?.difficulty }}</p>
+      <p><strong>Tiempo estimado:</strong> {{ question?.time }}</p>
+      <p><strong>Tipo de pregunta:</strong> {{ question?.type }}</p>
+
+      <h4>Respuestas:</h4>
+      <div *ngFor="let answer of question?.answers?.items" class="padding-xs">
+        <div *ngIf="answer.points < 0 ">
+          <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+        </div>
+        <div *ngIf="answer.points >= 0  && answer.points < 1">
+          <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+        </div>
+        <div *ngIf="answer.points === 1">
+          <p class="success-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  <div class="row horizontal-center gap-sm padding-lg">
+      <button mat-button color="primary" class="btn btn-primary"  (click)="editExam()">Editar examen</button>
+      <button mat-button color="primary" class="btn btn-accent"  (click)="exportExam()">Exportar examen</button>
+    <div *ngIf="this.id <= 1">
+      <button mat-button color="primary" class="btn btn-accent" (click)="importResults()">Importar resultados</button>
+    </div>
+      <button mat-button color="warn" class="btn btn-danger" (click)="deleteExam()">Borrar examen</button>
+    <div *ngIf="this.id > 1">
+      <button mat-button color="warn" class="btn btn-danger" (click)="deleteResults()">Borrar resultados</button>
+    </div>
+
   </div>
 
-
-
-
-<div class="row horizontal-center gap-sm padding-lg">
-    <button mat-button color="primary" class="btn btn-primary"  (click)="editExam()">Editar examen</button>
-    <button mat-button color="primary" class="btn btn-accent"  (click)="exportExam()">Exportar examen</button>
-  <div *ngIf="this.id <= 1">
-    <button mat-button color="primary" class="btn btn-accent" (click)="importResults()">Importar resultados</button>
-  </div>
-    <button mat-button color="warn" class="btn btn-danger" (click)="deleteExam()">Borrar examen</button>
   <div *ngIf="this.id > 1">
-    <button mat-button color="warn" class="btn btn-danger" (click)="deleteResults()">Borrar resultados</button>
+    <app-result-detail></app-result-detail>
   </div>
-
 </div>
 
-<div *ngIf="this.id > 1">
-  <app-result-detail></app-result-detail>
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
