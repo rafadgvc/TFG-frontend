@@ -1,13 +1,15 @@
+import {ParameterList} from "./parameter";
+
 export class QuestionParameter {
   id: number;
-  parameters: string[];
+  parameters: ParameterList;
   question_id?: number;
   uses?: number;
   subject_id?: number;
 
   constructor (
     id: number,
-    parameters: string[],
+    parameters: ParameterList,
     question_id?: number,
     uses?: number,
     subject_id?: number,
