@@ -133,14 +133,14 @@
       </div>
     </div>
 
-    <div  *ngIf="questionForm.get('isParametrized')?.value === true" formArrayName="pairs" class="form-group">
-      <div *ngFor="let pair of pairsControls; let i = index">
+    <div  *ngIf="questionForm.get('isParametrized')?.value === true" formArrayName="groups" class="form-group">
+      <div *ngFor="let group of groupsControls; let i = index">
         <div [formGroupName]="i">
           <mat-form-field appearance="fill">
             <mat-label>Parámetro de pregunta {{i + 1}}</mat-label>
             <input matInput formControlName="questionParameter">
 
-            <mat-error *ngIf="pairsControls.at(i)?.get('questionParameter')?.hasError('required')">
+            <mat-error *ngIf="groupsControls.at(i)?.get('questionParameter')?.hasError('required')">
               Este campo es requerido
             </mat-error>
           </mat-form-field>
@@ -149,13 +149,13 @@
             <mat-label>Respuesta {{i + 1}}</mat-label>
             <input matInput formControlName="answerParameter">
 
-            <mat-error *ngIf="pairsControls.at(i)?.get('answerParameter')?.hasError('required')">
+            <mat-error *ngIf="groupsControls.at(i)?.get('answerParameter')?.hasError('required')">
               Este campo es requerido
             </mat-error>
           </mat-form-field>
 
           <div class="padding">
-            <button mat-raised-button type="button" class="btn btn-danger btn-modal" (click)="removePair(i)">Borrar Pareja</button>
+            <button mat-raised-button type="button" class="btn btn-danger btn-modal" (click)="removeGroup(i)">Borrar Grupo</button>
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@
         <button mat-raised-button type="button" class="btn btn-primary" (click)="addAnswer()">Añadir Respuesta</button>
       </div>
       <div *ngIf="questionForm.get('isParametrized')?.value === true " class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary" (click)="addPair()">Añadir Pareja</button>
+        <button mat-raised-button type="button" class="btn btn-primary" (click)="addGroup()">Añadir Grupo</button>
       </div>
       <div class="padding-sm">
         <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="questionForm.invalid" (click)="submitForm()">Crear Pregunta</button>

@@ -15,9 +15,10 @@ import {SnackbarService} from "../../../services/snackbar.service";
 })
 export class AddQuestionComponent {
   id: number = 0;
+  parameterNumber: number = 1;
   questionForm: FormGroup;
   answers: FormArray;
-  pairs: FormArray;
+  groups: FormArray;
   types: string[] = ['Test', 'Desarrollo'];
   hierarchyNodes: HierarchyNode[] = [];
 
@@ -37,14 +38,13 @@ export class AddQuestionComponent {
     type: ['', Validators.required],
     nodes: [[], Validators.required],
     answers: this.formBuilder.array([]),
-    pairs: this.formBuilder.array([])
+    groups: this.formBuilder.array([])
   });
   this.answers = this.questionForm.get('answers') as FormArray;
-  this.pairs = this.questionForm.get('pairs') as FormArray;
+  this.groups = this.questionForm.get('groups') as FormArray;
 
   this.addAnswer();
   this.addAnswer();
-  this.addPair();
 
   this.activatedRoute.params.subscribe(params => {
       this.id = +params['id']; // Convertir a número
@@ -62,8 +62,8 @@ export class AddQuestionComponent {
     }));
   }
 
-  addPair() {
-    this.pairs.push(this.formBuilder.group({
+  addGroup() {
+    this.groups.push(this.formBuilder.group({
       questionParameter: [''],
       answerParameter: ['']
     }));
@@ -73,19 +73,24 @@ export class AddQuestionComponent {
     this.answers.removeAt(index);
   }
 
-  removePair(index: number) {
-    this.pairs.removeAt(index);
+  removeGroup(index: number) {
+    this.groups.removeAt(index);
   }
-
-  onSubmit() {
+  addParameter(){
+    this.parameterNumber += 1;
+    // añadir un parámetro más a todos los grupos
+  }
+  removeParameter(){
+    this.parameterNumber -= 1;
+    // borrar un parámetro en todos los grupos
   }
 
   get answersControls() {
     return (this.questionForm.get('answers') as FormArray).controls;
   }
 
-  get pairsControls() {
-    return (this.questionForm.get('pairs') as FormArray).controls;
+  get groupsControls() {
+    return (this.questionForm.get('groups') as FormArray).controls;
   }
 
   submitForm(): void {
