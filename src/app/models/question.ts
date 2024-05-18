@@ -1,5 +1,6 @@
 import {AnswerList} from "./answer";
 import {HierarchyNode, HierarchyNodeList} from "./hierarchy-node";
+import {QuestionParameterList} from "./question-parameter";
 
 export class Question{
   id: number;
@@ -14,6 +15,7 @@ export class Question{
   node_ids?: number[];
   subject_id?: number;
   connected?: boolean;
+  question_parameters?: QuestionParameterList;
 
   constructor (
     id: number,
@@ -28,6 +30,7 @@ export class Question{
     node_ids?: number[],
     subject_id?: number,
     connected?: boolean,
+    question_parameters?: QuestionParameterList,
   ){
     this.id = id;
     this.title = title;
@@ -41,6 +44,7 @@ export class Question{
     this.node_ids = node_ids;
     this.subject_id = subject_id;
     this.connected = connected;
+    this.question_parameters = question_parameters;
   }
 }
 

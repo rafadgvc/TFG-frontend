@@ -1,23 +1,27 @@
-import {ParameterList} from "./parameter";
+
+import {getLocaleExtraDayPeriodRules} from "@angular/common";
 
 export class QuestionParameter {
   id: number;
-  parameters: ParameterList;
+  value: string;
+  group: number;
+  position: number;
   question_id?: number;
-  uses?: number;
   subject_id?: number;
 
   constructor (
     id: number,
-    parameters: ParameterList,
+    value: string,
+    group: number,
+    position: number,
     question_id?: number,
-    uses?: number,
     subject_id?: number,
   ){
     this.id = id;
-    this.parameters = parameters;
+    this.value = value;
+    this.group = group;
+    this.position = position;
     this.question_id = question_id;
-    this.uses = uses;
     this.subject_id = subject_id;
   }
 }
