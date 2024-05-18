@@ -136,23 +136,57 @@
     <div  *ngIf="questionForm.get('isParametrized')?.value === true" formArrayName="groups" class="form-group">
       <div *ngFor="let group of groupsControls; let i = index">
         <div [formGroupName]="i">
-          <mat-form-field appearance="fill">
-            <mat-label>Parámetro de pregunta {{i + 1}}</mat-label>
-            <input matInput formControlName="questionParameter">
-
-            <mat-error *ngIf="groupsControls.at(i)?.get('questionParameter')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
+          <h4>Grupo de parámetros {{i + 1}}</h4>
+          <mat-form-field *ngIf="this.parameterNumber >= 1" appearance="fill">
+            <mat-label>param1</mat-label>
+            <input matInput formControlName="param1">
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Respuesta {{i + 1}}</mat-label>
-            <input matInput formControlName="answerParameter">
-
-            <mat-error *ngIf="groupsControls.at(i)?.get('answerParameter')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
+           <mat-form-field *ngIf="this.parameterNumber >= 2" appearance="fill">
+             <mat-label>param2</mat-label>
+             <input matInput formControlName="param2">
           </mat-form-field>
+
+           <mat-form-field *ngIf="this.parameterNumber >= 3" appearance="fill">
+             <mat-label>param3</mat-label>
+             <input matInput formControlName="param3">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="this.parameterNumber >= 4" appearance="fill">
+             <mat-label>param4</mat-label>
+             <input matInput formControlName="param4">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="this.parameterNumber >= 5" appearance="fill">
+             <mat-label>param5</mat-label>
+             <input matInput formControlName="param5">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="this.parameterNumber >= 6" appearance="fill">
+             <mat-label>param6</mat-label>
+             <input matInput formControlName="param6">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="this.parameterNumber >= 7" appearance="fill">
+             <mat-label>param7</mat-label>
+             <input matInput formControlName="param7">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="this.parameterNumber >= 8" appearance="fill">
+             <mat-label>param8</mat-label>
+             <input matInput formControlName="param8">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="this.parameterNumber >= 9" appearance="fill">
+             <mat-label>param9</mat-label>
+             <input matInput formControlName="param9">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="this.parameterNumber >= 10" appearance="fill">
+             <mat-label>param10</mat-label>
+             <input matInput formControlName="param10">
+          </mat-form-field>
+
 
           <div class="padding">
             <button mat-raised-button type="button" class="btn btn-danger btn-modal" (click)="removeGroup(i)">Borrar Grupo</button>
@@ -166,8 +200,14 @@
       <div *ngIf="questionForm.get('type')?.value !== 'PARAMETRIZADA'" class="padding-sm">
         <button mat-raised-button type="button" class="btn btn-primary" (click)="addAnswer()">Añadir Respuesta</button>
       </div>
-      <div *ngIf="questionForm.get('isParametrized')?.value === true " class="padding-sm">
+      <div *ngIf="questionForm.get('isParametrized')?.value === true " class="padding-sm column vertical-center">
         <button mat-raised-button type="button" class="btn btn-primary" (click)="addGroup()">Añadir Grupo</button>
+        <div *ngIf="this.parameterNumber <= 10">
+          <button mat-raised-button type="button" class="btn btn-primary" (click)="addParameter()">Añadir Parámetro</button>
+        </div>
+        <div *ngIf="this.parameterNumber > 1">
+        <button mat-raised-button type="button" class="btn btn-danger" (click)="removeParameter()">Borrar Parámetro</button>
+        </div>
       </div>
       <div class="padding-sm">
         <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="questionForm.invalid" (click)="submitForm()">Crear Pregunta</button>

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import {Answer, AnswerList} from "../../../models/answer";
+import {AnswerList} from "../../../models/answer";
 import { Question } from "../../../models/question";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
+import {HierarchyNode} from "../../../models/hierarchy-node";
 import {NodeService} from "../../../services/node.service";
 import {QuestionService} from "../../../services/question.service";
 import {SnackbarService} from "../../../services/snackbar.service";
+import {QuestionParameter, QuestionParameterList} from "../../../models/question-parameter";
 
 @Component({
   selector: 'app-add-question',
@@ -64,8 +65,16 @@ export class AddQuestionComponent {
 
   addGroup() {
     this.groups.push(this.formBuilder.group({
-      questionParameter: [''],
-      answerParameter: ['']
+      param1: [''],
+      param2: [''],
+      param3: [''],
+      param4: [''],
+      param5: [''],
+      param6: [''],
+      param7: [''],
+      param8: [''],
+      param9: [''],
+      param10: [''],
     }));
   }
 
@@ -78,11 +87,9 @@ export class AddQuestionComponent {
   }
   addParameter(){
     this.parameterNumber += 1;
-    // añadir un parámetro más a todos los grupos
   }
   removeParameter(){
     this.parameterNumber -= 1;
-    // borrar un parámetro en todos los grupos
   }
 
   get answersControls() {
@@ -96,9 +103,23 @@ export class AddQuestionComponent {
   submitForm(): void {
     if (this.questionForm.valid) {
       const questionData = this.questionForm.value;
+      let question_parameters = new QuestionParameterList([]);
       if (questionData.type.toLowerCase() === 'desarrollo'){
         for (let i = 0; i < questionData.answers.length; i++) {
           questionData.answers[i].points = 0;
+        }
+      }
+      const groupNumber = this.groupsControls.length;
+      if (this.questionForm.get('isParametrized')?.value === true) {
+
+        for (let i = 1; i < this.parameterNumber; i++) {
+          for (let j = 1; j <= groupNumber; j++) {
+            let name = `param${j}`;
+            if (this.groupsControls.at(i) !== undefined) {
+              console.log(this.groupsControls.at(i)?.get(name)?.value)
+              question_parameters.items.push(new QuestionParameter(NaN, this.groupsControls.at(i)?.get(name)?.value, i+1, j))
+            }
+          }
         }
       }
       const question = new Question(
@@ -112,7 +133,10 @@ export class AddQuestionComponent {
         undefined,
         undefined,
         questionData.nodes,
-        this.id
+        this.id,
+        false,
+        question_parameters
+
       );
       console.log(question)
       // Now you can use 'question' object to save or do whatever you want
