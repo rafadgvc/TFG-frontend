@@ -1,0 +1,38 @@
+<div class="padding-sm column">
+  <h2> Sección {{this.sectionId + 1}}</h2>
+
+  <form [formGroup]="sectionForm" class="form">
+    <mat-form-field appearance="fill" class="form-group">
+      <mat-label>Nodo de la pregunta</mat-label>
+      <mat-select formControlName="node">
+        <mat-option *ngFor="let node of nodes" [value]="node.id">
+          {{ node.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-group">
+      <mat-label>Tipo de la pregunta</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Dificultad de la pregunta</mat-label>
+      <input matInput formControlName="difficulty">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tiempo estimado</mat-label>
+      <input matInput formControlName="time">
+    </mat-form-field>
+
+    <div class="row gap-sm">
+      <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" class="btn btn-danger" (click)="this.searchQuestions()">Buscar</button>
+    </div>
+  </form>
+</div>

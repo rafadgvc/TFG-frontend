@@ -4,6 +4,12 @@
   </div>
   <form [formGroup]="examForm" class="form">
 
+    <div class="padding">
+      <p><strong>Dificultad estimada media:</strong> {{ this.calculateAverageDifficulty() }}</p>
+      <p><strong>Tiempo total estimado:</strong> {{ this.calculateTotalTime() }}</p>
+      <p><strong>Total de preguntas:</strong> {{ this.questionList.length }}</p>
+    </div>
+
     <!--    Título del examen -->
     <mat-form-field appearance="fill" class="form-group">
       <mat-label>Título</mat-label>
@@ -13,87 +19,19 @@
       </mat-error>
     </mat-form-field>
 
-    <!--    Número de preguntas -->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Número de preguntas</mat-label>
-      <input matInput formControlName="size">
-      <mat-error *ngIf="examForm.get('size')?.hasError('required')">
-        Este campo es requerido
-      </mat-error>
-      <mat-error *ngIf="!examForm.get('size')?.hasError('required') &&
-      examForm.get('size')?.hasError('min') ">
-        El mínimo de este campo es 1
-      </mat-error>
-    </mat-form-field>
-
-    <!--    Dificultad agregada del examen -->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Dificultad aproximada</mat-label>
-      <input matInput formControlName="difficulty">
-      <mat-error *ngIf="examForm.get('difficulty')?.hasError('required')">
-        Este campo es requerido
-      </mat-error>
-      <mat-error *ngIf="!examForm.get('difficulty')?.hasError('required') &&
-      examForm.get('difficulty')?.hasError('min') ">
-        El mínimo de este campo es 1
-      </mat-error>
-      <mat-error *ngIf="!examForm.get('difficulty')?.hasError('required') &&
-      examForm.get('difficulty')?.hasError('max') ">
-        El máximo de este campo es 10
-      </mat-error>
-    </mat-form-field>
-
-    <!--    Tiempo estimado del examen -->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Tiempo Estimado</mat-label>
-      <input matInput formControlName="time">
-      <mat-error *ngIf="examForm.get('time')?.hasError('required')">
-        Este campo es requerido
-      </mat-error>
-      <mat-error *ngIf="!examForm.get('time')?.hasError('required') &&
-      examForm.get('time')?.hasError('min') ">
-        El mínimo de este campo es 1
-      </mat-error>
-    </mat-form-field>
 
 
 
-
-    <!-- Preguntas-->
-    <div formArrayName="questions" class="form-group">
-      <div *ngFor="let question of questionsControls; let i = index">
-        <h3>Pregunta {{i + 1}}</h3>
+    <!-- Secciones del examen -->
+    <div formArrayName="sections" class="form-group">
+      <div *ngFor="let question of sectionsControls; let i = index">
+        <h3>Sección {{i + 1}}</h3>
         <div [formGroupName]="i">
-          <mat-form-field appearance="fill" class="form-group">
-            <mat-label>Nodo de la pregunta</mat-label>
-            <mat-select formControlName="node">
-              <mat-option *ngFor="let node of nodeList" [value]="node.id">
-                {{ node.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
 
-          <mat-form-field appearance="fill" class="form-group">
-            <mat-label>Tipo de la pregunta</mat-label>
-            <mat-select formControlName="type">
-              <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
-                {{ type }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Dificultad de la pregunta</mat-label>
-            <input matInput formControlName="difficulty">
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Tiempo estimado</mat-label>
-            <input matInput formControlName="time">
-          </mat-form-field>
 
           <div class="padding">
-            <button mat-raised-button type="button" class="btn btn-danger btn-modal" (click)="removeQuestion(i)">Borrar Pregunta</button>
+            <button mat-raised-button type="button" class="btn btn-primary btn-modal" (click)="openExamSection(i)">Seleccionar Preguntas</button>
+            <button mat-raised-button type="button" class="btn btn-danger btn-modal" (click)="removeSection(i)">Borrar Sección</button>
           </div>
         </div>
       </div>
@@ -103,7 +41,7 @@
 
     <div class="padding-sm column">
       <div class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary" [disabled]="examForm.get('size')?.value <= questionsControls.length" (click)="addQuestion()">Añadir Pregunta</button>
+        <button mat-raised-button type="button" class="btn btn-primary"(click)="addSection()">Añadir Sección</button>
       </div>
       <div class="padding-sm">
         <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="examForm.invalid" (click)="submitForm()">Crear Examen</button>

@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Question} from "../../../models/question";
 import {AnswerList} from "../../../models/answer";
 import {HierarchyNode} from "../../../models/hierarchy-node";
+import {NodeService} from "../../../services/node.service";
+import {ExamService} from "../../../services/exam_service";
+import {DisableQuestionComponent} from "../../question/disable-question/disable-question.component";
+import {MatDialog} from "@angular/material/dialog";
+import {ExamSectionModalComponent} from "../exam-section-modal/exam-section-modal.component";
 
 @Component({
   selector: 'app-add-exam',
@@ -11,50 +16,50 @@ import {HierarchyNode} from "../../../models/hierarchy-node";
   styleUrl: './add-exam.component.css'
 })
 export class AddExamComponent {
+  id: number = 0;
+  sectionNumber: number = 0;
   examForm: FormGroup;
-  questions: FormArray;
+  sections: FormArray;
   types: string[] = ['Test', 'Desarrollo', 'Ninguno']
-  nodeList: HierarchyNode[] = [];
+  hierarchyNodes: HierarchyNode[] = [];
+  questionList: Question[] = [];
+
 
   constructor(
     private formBuilder: FormBuilder,
+    private nodeService: NodeService,
+    private examService: ExamService,
     private router: Router,
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute
   ) {
-    const preheatedNodes: HierarchyNode[] = [
-      new HierarchyNode(1, "Fundamentos de Bases de Datos", NaN),
-      new HierarchyNode(2, "Conceptos Básicos", 1),
-      new HierarchyNode(3, "Operadores SQL", 1),
-      new HierarchyNode(4, "Álgebra Relacional", 1),
-      new HierarchyNode(5, "Tabla", 2),
-      new HierarchyNode(6, "Columna", 5),
-      new HierarchyNode(7, "Fila", 5),
-      new HierarchyNode(8, "Selección", 2),
-      new HierarchyNode(9, "Proyección", 2),
-    ];
-    this.nodeList = preheatedNodes;
+    this.activatedRoute.params.subscribe(params => {
+      this.id = +params['id']; // Convertir a número
+      // Llamar al servicio para obtener los nodos correspondientes
+      this.nodeService.getSubjectNodes(this.id).subscribe(nodes => {
+        this.hierarchyNodes = nodes.items;
+      });
+    });
   this.examForm = this.formBuilder.group({
     title: ['', Validators.required],
-    difficulty: ['', [Validators.min(1), Validators.max(10)]],
-    time: ['', [Validators.min(1)]],
-    questions: this.formBuilder.array([]),
-    size:['', [Validators.required, Validators.min(1)]]
+    // TODO: Comprobar si required puede servir aquí
+    sections: this.formBuilder.array([]),
   });
-  this.questions = this.examForm.get('questions') as FormArray;
+  this.sections = this.examForm.get('sections') as FormArray;
 
-  this.addQuestion();
+  this.addSection();
 }
 
-  addQuestion() {
-    this.questions.push(this.formBuilder.group({
-      node: [''],
-      difficulty: ['', [Validators.min(1), Validators.max(10)]],
-      time: ['', [Validators.min(1)]],
-      type: ['']
-    }));
+  addSection() {
+    this.sections.push(this.formBuilder.group({
+      questions: [''],
+    }))
+    this.sectionNumber += 1;
   }
 
-  removeQuestion(index: number) {
-    this.questions.removeAt(index);
+  removeSection(index: number) {
+    this.sections.removeAt(index);
+    this.sectionNumber -= 1;
   }
 
   onSubmit() {
@@ -76,15 +81,52 @@ export class AddExamComponent {
     }
   }
 
-  get questionsControls() {
-    return (this.examForm.get('questions') as FormArray).controls;
+  get sectionsControls() {
+    return (this.examForm.get('sections') as FormArray).controls;
   }
 
   submitForm(): void {
     if (this.examForm.valid) {
       // TODO: Añadir creación del examen
-      this.router.navigate(['/home']);
+      this.router.navigate(['/exam-list/' + this.id]);
 
     }
+  }
+
+  openExamSection(id: number):void {
+    const dialogRef = this.dialog.open(ExamSectionModalComponent, {
+      width: '400px',
+      data: {
+        sectionId: id,
+        nodes: this.hierarchyNodes,
+        subjectId: this.id
+      }
+    });
+    dialogRef.afterClosed().subscribe( result => {
+      if (result) {
+        console.log(result)
+      }
+    });
+  }
+
+  calculateAverageDifficulty(): string {
+    let avg = 0;
+    if (this.questionList.length !== 0){
+      for (let i = 0; i < this.questionList.length; i++){
+        avg = avg + this.questionList[i].difficulty;
+      }
+      avg = avg/this.questionList.length;
+    }
+    return `${avg} / 10`;
+  }
+
+  calculateTotalTime(): string {
+    let total = 0;
+    if (this.questionList.length !== 0){
+      for (let i = 0; i < this.questionList.length; i++){
+        total = total + this.questionList[i].time;
+      }
+    }
+    return `${total} min`;
   }
 }

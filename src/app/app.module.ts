@@ -59,6 +59,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {DisableQuestionComponent} from "./components/question/disable-question/disable-question.component";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {ExamSectionModalComponent} from "./components/exam/exam-section-modal/exam-section-modal.component";
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     DeleteResultComponent,
     ResultDetailComponent,
     ImportQuestionsComponent,
-    DisableQuestionComponent
+    DisableQuestionComponent,
+    ExamSectionModalComponent
   ],
   imports: [
     BrowserModule,
