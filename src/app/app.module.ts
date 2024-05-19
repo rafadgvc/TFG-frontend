@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {Tree, TreeModule} from 'primeng/tree';
+import {TreeModule} from 'primeng/tree';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -16,12 +16,15 @@ import {UserSignupComponent} from "./components/user-signup/user-signup.componen
 import {LoginComponent} from "./components/login/login.component";
 import {SubjectListComponent} from "./components/subject/subject-list/subject-list.component";
 import {
-  MatCell, MatCellDef,
+  MatCell,
+  MatCellDef,
   MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
-  MatRow, MatRowDef,
+  MatRow,
+  MatRowDef,
   MatTable
 } from "@angular/material/table";
 import {AddSubjectComponent} from "./components/subject/add-subject/add-subject.component";
@@ -49,10 +52,10 @@ import {ImportResultComponent} from "./components/result/import-result/import-re
 import {DeleteResultComponent} from "./components/result/delete-result/delete-result.component";
 import {ResultDetailComponent} from "./components/result/result-detail/result-detail.component";
 import {ImportQuestionsComponent} from "./components/question/import-questions/import-questions.component";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatTooltip} from "@angular/material/tooltip";
-import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule para los iconos
-import {MatTree, MatTreeModule} from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+import {MatTreeModule} from '@angular/material/tree';
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {DisableQuestionComponent} from "./components/question/disable-question/disable-question.component";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
@@ -106,8 +109,28 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     MatCardTitle,
     MatCardContent,
     MatCardHeader,
-    BrowserAnimationsModule, MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatIconButton, MatCardActions, FormsModule, MatSelect, MatOption, MatPaginator, MatTooltip,
-    TreeModule, MatProgressBar, MatSlideToggle
+    BrowserAnimationsModule,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatIconButton,
+    MatCardActions,
+    FormsModule,
+    MatSelect,
+    MatOption,
+    MatPaginator,
+    MatTooltip,
+    TreeModule,
+    MatProgressBar,
+    MatSlideToggle,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
