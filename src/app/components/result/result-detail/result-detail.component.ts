@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Exam} from "../../../models/exam";
 import {QuestionService} from "../../../services/question.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -8,6 +8,7 @@ import {Answer, AnswerList} from "../../../models/answer";
 import {Result} from "../../../models/result";
 import {MatTableDataSource} from "@angular/material/table";
 import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-result-detail',
@@ -16,6 +17,7 @@ import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
 })
 export class ResultDetailComponent{
   // Results to be shown
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   results: Result[] = [];
   exams: Exam[] = [];
   takers: number[] = [];
@@ -42,6 +44,7 @@ export class ResultDetailComponent{
       this.loadTakers();
       if (this.dataSource != undefined)
         this.dataSource.filterPredicate = this.customFilter;
+        this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -189,6 +192,10 @@ export class ResultDetailComponent{
       }
     }, 0);
     return filteredResults.length > 0 ? totalTime / filteredResults.length : 0;
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
 

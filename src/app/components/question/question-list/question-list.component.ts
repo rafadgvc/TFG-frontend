@@ -1,24 +1,25 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
-import {Question} from "../../../models/question";
-import {QuestionService} from "../../../services/question.service";
-import {AddQuestionComponent} from "../add-question/add-question.component";
-import {AddSubjectComponent} from "../../subject/add-subject/add-subject.component";
-import {ImportQuestionsComponent} from "../import-questions/import-questions.component";
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { Question } from "../../../models/question";
+import { QuestionService } from "../../../services/question.service";
+import { ImportQuestionsComponent } from "../import-questions/import-questions.component";
 
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
-  styleUrl: './question-list.component.css'
+  styleUrls: ['./question-list.component.css']
 })
 export class QuestionListComponent implements OnInit{
   loading: boolean = true;
   id: number = 0;
   questionList: Question[] = [];
   displayedColumns: string[] = ['title', 'difficulty', 'time', 'type', 'actions'];
+  dataSource = new MatTableDataSource<Question>();
 
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private questionService: QuestionService,
@@ -30,12 +31,14 @@ export class QuestionListComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      // Llamar al servicio para obtener la pregunta según el id
       if (this.id != null) {
         this.loadQuestionSubjects(this.id);
-
       }
     });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   loadQuestionSubjects(id: number): void {
@@ -43,7 +46,9 @@ export class QuestionListComponent implements OnInit{
     this.questionService.getSubjectQuestions(id).subscribe(
       questionList => {
         this.questionList = questionList.items;
+        this.dataSource = new MatTableDataSource(this.questionList);
         this.loading = false;
+        this.dataSource.paginator = this.paginator;
       },
     );
   }
@@ -57,7 +62,7 @@ export class QuestionListComponent implements OnInit{
   }
 
   addQuestion(): void {
-    this.router.navigate(['/add-question/'+ this.id]);
+    this.router.navigate(['/add-question/' + this.id]);
   }
 
   openAddQuestionsModal(): void {
@@ -70,5 +75,4 @@ export class QuestionListComponent implements OnInit{
       this.loadQuestionSubjects(this.id);
     });
   }
-
 }

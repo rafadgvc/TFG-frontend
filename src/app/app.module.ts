@@ -25,7 +25,7 @@ import {
   MatHeaderRowDef,
   MatRow,
   MatRowDef,
-  MatTable
+  MatTable, MatTableModule
 } from "@angular/material/table";
 import {AddSubjectComponent} from "./components/subject/add-subject/add-subject.component";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
@@ -130,7 +130,8 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     TreeModule,
     MatProgressBar,
     MatSlideToggle,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -36,6 +36,7 @@
     <p><strong>Tiempo medio de respuesta:</strong> {{ calculateAverageTime(dataSource.filteredData) }}</p>
 </div>
 
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   <table mat-table [dataSource]="this.dataSource" class="mat-elevation-z8">
     <!-- Examen -->
     <ng-container matColumnDef="exam">
@@ -76,4 +77,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
 </div>
