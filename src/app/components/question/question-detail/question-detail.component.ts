@@ -42,7 +42,6 @@ export class QuestionDetailComponent implements OnInit{
     this.questionService.getQuestion(id).subscribe(question => {
       this.question = question;
       this.loading = false;
-      console.log(this.question)
       if (this.question.question_parameters?.total !== undefined && this.question.question_parameters.total > 0){
         this.parameterNumber = this.question.question_parameters.items[this.question.question_parameters.total - 1].position;
       }
