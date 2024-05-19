@@ -30,6 +30,18 @@
         <p class="semibold success-text">{{ answer.body }}</p>
       </div>
     </div>
+
+    <div *ngIf="this.parameterNumber > 0">
+      <h3>Grupos de parámetros:</h3>
+      <div *ngFor="let questionParameter of question?.question_parameters?.items; let i = index" class="padding-xs">
+        <div *ngIf="questionParameter.position == 1">
+          <p><strong> Grupo {{ questionParameter.group }}:</strong></p>
+        </div>
+        <div>
+          <p><strong>param{{ questionParameter.position }}</strong>: {{ questionParameter.value }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="question?.active && !question?.connected" class="row horizontal-center gap padding-lg">

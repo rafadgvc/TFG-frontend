@@ -9,6 +9,7 @@ import {SubjectModifyComponent} from "../../subject/subject-modify/subject-modif
 import {EditQuestionComponent} from "../edit-question/edit-question.component";
 import {DeleteQuestionComponent} from "../delete-question/delete-question.component";
 import {DisableQuestionComponent} from "../disable-question/disable-question.component";
+import {QuestionParameter, QuestionParameterList} from "../../../models/question-parameter";
 
 @Component({
     selector: 'app-question-detail',
@@ -20,6 +21,7 @@ export class QuestionDetailComponent implements OnInit{
   // Question to be shown
   question?: Question;
   loading: boolean = true;
+  parameterNumber: number = 0;
 
   constructor(
     private questionService: QuestionService,
@@ -40,6 +42,10 @@ export class QuestionDetailComponent implements OnInit{
     this.questionService.getQuestion(id).subscribe(question => {
       this.question = question;
       this.loading = false;
+      console.log(this.question)
+      if (this.question.question_parameters?.total !== undefined && this.question.question_parameters.total > 0){
+        this.parameterNumber = this.question.question_parameters.items[this.question.question_parameters.total - 1].position;
+      }
     });
   }
 

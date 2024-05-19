@@ -112,8 +112,8 @@ export class AddQuestionComponent {
       const groupNumber = this.groupsControls.length;
       if (this.questionForm.get('isParametrized')?.value === true) {
 
-        for (let i = 1; i < this.parameterNumber; i++) {
-          for (let j = 1; j <= groupNumber; j++) {
+        for (let i = 1; i <= this.parameterNumber; i++) {
+          for (let j = 0; j < groupNumber; j++) {
             let name = `param${j}`;
             if (this.groupsControls.at(i) !== undefined) {
               console.log(this.groupsControls.at(i)?.get(name)?.value)
