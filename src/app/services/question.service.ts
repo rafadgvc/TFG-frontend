@@ -43,8 +43,8 @@ export class QuestionService {
   }
 
   deleteQuestion(question: Question): Observable<any>{
-    return this.http.delete<Subject>(this.questionUrl + '/' + question.id, {headers: this.headers, withCredentials: true}).pipe(
-      catchError(this.handleError<Subject>(`delete Question`))
+    return this.http.delete<Question>(this.questionUrl + '/' + question.id, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Question>(`delete Question`))
     );
   }
 
