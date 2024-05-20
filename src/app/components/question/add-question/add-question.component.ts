@@ -46,6 +46,7 @@ export class AddQuestionComponent {
 
   this.addAnswer();
   this.addAnswer();
+  this.addGroup();
 
   this.activatedRoute.params.subscribe(params => {
       this.id = +params['id']; // Convertir a número

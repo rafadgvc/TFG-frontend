@@ -186,7 +186,7 @@ h5 {
 
 /*Form Styles*/
 .form {
-  max-width: 25rem;
+  max-width: 120rem;
   margin: 0 auto;
   padding: 1.25rem;
   border: 6rem solid var(--gray-400);

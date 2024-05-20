@@ -3,215 +3,214 @@
     <h2>Añadir pregunta</h2>
   </div>
   <form [formGroup]="questionForm" class="form">
-    <!--    Tipo-->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Tipo de la pregunta</mat-label>
-      <mat-select
-        formControlName="type"
-        matTooltip="Las preguntas parametrizadas permitirán añadir varias preguntas parecidas en las que cambia solo una frase de la pregunta y de la respuesta"
-        matTooltipPosition="right"
-      >
-        <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
-          {{ type }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="questionForm.get('type')?.hasError('required')">
-        Este campo es requerido
-      </mat-error>
-    </mat-form-field>
+    <h4>General</h4>
+    <div class="row gap horizontal-center">
 
-    <!-- Toggle de pregunta parametrizada    -->
-    <div class="form-group">
-      <mat-slide-toggle formControlName="isParametrized">Parametrizada</mat-slide-toggle>
-    </div>
+      <!--    Tipo-->
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>Tipo de la pregunta</mat-label>
+        <mat-select
+          formControlName="type"
+          matTooltip="Las preguntas parametrizadas permitirán añadir varias preguntas parecidas en las que cambia solo una frase de la pregunta y de la respuesta"
+          matTooltipPosition="left"
+        >
+          <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="questionForm.get('type')?.hasError('required')">
+          Este campo es requerido
+        </mat-error>
+      </mat-form-field>
 
-    <!-- Selector de Nodos -->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Nodos de la Jerarquía</mat-label>
-      <mat-select formControlName="nodes" multiple>
-        <mat-option *ngFor="let node of hierarchyNodes" [value]="node.id">
-          {{ node.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="questionForm.get('nodes')?.hasError('required')">
-        Selecciona al menos un nodo.
-      </mat-error>
-    </mat-form-field>
+      <!-- Selector de Nodos -->
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>Nodos de la Jerarquía</mat-label>
+        <mat-select formControlName="nodes" multiple>
+          <mat-option *ngFor="let node of hierarchyNodes" [value]="node.id">
+            {{ node.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="questionForm.get('nodes')?.hasError('required')">
+          Selecciona al menos un nodo.
+        </mat-error>
+      </mat-form-field>
 
-    <!--    Dificultad-->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Dificultad</mat-label>
-      <input matInput formControlName="difficulty">
-      <mat-error *ngIf="questionForm.get('difficulty')?.hasError('required')">
-        Este campo es requerido
-      </mat-error>
-      <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
-      questionForm.get('difficulty')?.hasError('min') ">
-        El mínimo de este campo es 1
-      </mat-error>
-      <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
-      questionForm.get('difficulty')?.hasError('max') ">
-        El máximo de este campo es 10
-      </mat-error>
-    </mat-form-field>
+      <!--    Dificultad-->
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>Dificultad</mat-label>
+        <input matInput formControlName="difficulty">
+        <mat-error *ngIf="questionForm.get('difficulty')?.hasError('required')">
+          Este campo es requerido
+        </mat-error>
+        <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
+        questionForm.get('difficulty')?.hasError('min') ">
+          El mínimo de este campo es 1
+        </mat-error>
+        <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
+        questionForm.get('difficulty')?.hasError('max') ">
+          El máximo de este campo es 10
+        </mat-error>
+      </mat-form-field>
 
-    <!--    Tiempo estimado-->
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Tiempo Estimado</mat-label>
-      <input matInput formControlName="time">
-      <mat-error *ngIf="questionForm.get('time')?.hasError('required')">
-        Este campo es requerido
-      </mat-error>
-      <mat-error *ngIf="!questionForm.get('time')?.hasError('required') &&
-      questionForm.get('time')?.hasError('min') ">
-        El mínimo de este campo es 1
-      </mat-error>
-    </mat-form-field>
+      <!--    Tiempo estimado-->
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>Tiempo Estimado</mat-label>
+        <input matInput formControlName="time">
+        <mat-error *ngIf="questionForm.get('time')?.hasError('required')">
+          Este campo es requerido
+        </mat-error>
+        <mat-error *ngIf="!questionForm.get('time')?.hasError('required') &&
+        questionForm.get('time')?.hasError('min') ">
+          El mínimo de este campo es 1
+        </mat-error>
+      </mat-form-field>
 
-    <!--    Cuerpo-->
-    <div  *ngIf="questionForm.get('isParametrized')?.value === true ">
-        <mat-form-field appearance="fill" class="form-group">
-          <mat-label>Cuerpo</mat-label>
-          <input
-            matInput formControlName="title"
-            matTooltip="Escribe '##param1##' donde quieras que se inserte el parámetro 1, '##param2##' para el parámetro 2..."
-          matTooltipPosition="right"
-          >
-          <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
-            Este campo es requerido
-          </mat-error>
-        </mat-form-field>
-    </div>
 
-    <div   *ngIf="questionForm.get('isParametrized')?.value === false">
-        <mat-form-field appearance="fill" class="form-group">
-          <mat-label>Cuerpo</mat-label>
-          <input matInput formControlName="title">
-          <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
-            Este campo es requerido
-          </mat-error>
-        </mat-form-field>
+      <!--    Cuerpo-->
+          <mat-form-field appearance="fill" class="form-group">
+            <mat-label>Enunciado</mat-label>
+            <input *ngIf="questionForm.get('isParametrized')?.value === true "
+              matInput formControlName="title"
+              matTooltip="Escribe '##param1##' donde quieras que se inserte el parámetro 1, '##param2##' para el parámetro 2..."
+              matTooltipPosition="right"
+            >
+            <input *ngIf="questionForm.get('isParametrized')?.value === false"
+                   matInput formControlName="title">
+            <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </mat-form-field>
+
     </div>
 
 
     <!-- Respuestas si es de tipo test o de tipo desarrollo-->
     <div  *ngIf="questionForm.get('type')?.value === 'TEST' || questionForm.get('type')?.value === 'DESARROLLO'"
-          formArrayName="answers" class="form-group">
-      <div *ngFor="let answer of answersControls; let i = index">
-        <div [formGroupName]="i">
-          <mat-form-field appearance="fill">
-            <mat-label>Respuesta {{i + 1}}</mat-label>
-            <input matInput formControlName="body">
-
-            <mat-error *ngIf="answersControls.at(i)?.get('body')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-          </mat-form-field>
-
-          <div *ngIf="questionForm.get('type')?.value === 'TEST'">
+          formArrayName="answers" class="padding">
+      <h4>Respuestas</h4>
+      <div class="row gap horizontal-center">
+        <div *ngFor="let answer of answersControls; let i = index">
+          <div [formGroupName]="i">
             <mat-form-field appearance="fill">
-              <mat-label>Puntuación</mat-label>
-              <input matInput formControlName="points" type="number">
+              <mat-label>Respuesta {{i + 1}}</mat-label>
+              <input matInput formControlName="body">
 
-              <mat-error *ngIf="answersControls.at(i)?.get('points')?.hasError('required')">
+              <mat-error *ngIf="answersControls.at(i)?.get('body')?.hasError('required')">
                 Este campo es requerido
               </mat-error>
-              <mat-error *ngIf="!answersControls.at(i)?.get('points')?.hasError('required') &&
-              answersControls.at(i)?.get('points')?.hasError('min')">
-                El mínimo de este campo es -1
-              </mat-error>
-              <mat-error *ngIf="!answersControls[i]?.get('points')?.hasError('required') &&
-              answersControls.at(i)?.get('points')?.hasError('max')">
-                El máximo de este campo es 1
-              </mat-error>
             </mat-form-field>
-          </div>
-          <div class="padding">
-            <button mat-raised-button type="button" class="btn btn-danger" (click)="removeAnswer(i)">Borrar Respuesta</button>
+
+            <div *ngIf="questionForm.get('type')?.value === 'TEST'">
+              <mat-form-field appearance="fill">
+                <mat-label>Puntuación</mat-label>
+                <input matInput formControlName="points" type="number">
+
+                <mat-error *ngIf="answersControls.at(i)?.get('points')?.hasError('required')">
+                  Este campo es requerido
+                </mat-error>
+                <mat-error *ngIf="!answersControls.at(i)?.get('points')?.hasError('required') &&
+                answersControls.at(i)?.get('points')?.hasError('min')">
+                  El mínimo de este campo es -1
+                </mat-error>
+                <mat-error *ngIf="!answersControls[i]?.get('points')?.hasError('required') &&
+                answersControls.at(i)?.get('points')?.hasError('max')">
+                  El máximo de este campo es 1
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="padding">
+              <button mat-raised-button type="button" class="btn btn-danger" (click)="removeAnswer(i)">Borrar Respuesta</button>
+            </div>
           </div>
         </div>
       </div>
+      <button mat-raised-button type="button" class="btn btn-primary" (click)="addAnswer()">Añadir Respuesta</button>
     </div>
 
+      <!-- Toggle de pregunta parametrizada    -->
+      <div class="form-group padding">
+        <mat-slide-toggle formControlName="isParametrized">Parametrizada</mat-slide-toggle>
+      </div>
+
     <div  *ngIf="questionForm.get('isParametrized')?.value === true" formArrayName="groups" class="form-group">
+      <h4>Parámetros</h4>
       <div *ngFor="let group of groupsControls; let i = index">
         <div [formGroupName]="i">
           <h4>Grupo de parámetros {{i + 1}}</h4>
-          <mat-form-field *ngIf="this.parameterNumber >= 1" appearance="fill">
-            <mat-label>param1</mat-label>
-            <input matInput formControlName="param1">
-          </mat-form-field>
+          <div class="row gap horizontal-center">
+            <mat-form-field *ngIf="this.parameterNumber >= 1" appearance="fill">
+              <mat-label>param1</mat-label>
+              <input matInput formControlName="param1">
+            </mat-form-field>
 
-           <mat-form-field *ngIf="this.parameterNumber >= 2" appearance="fill">
-             <mat-label>param2</mat-label>
-             <input matInput formControlName="param2">
-          </mat-form-field>
+             <mat-form-field *ngIf="this.parameterNumber >= 2" appearance="fill">
+               <mat-label>param2</mat-label>
+               <input matInput formControlName="param2">
+            </mat-form-field>
 
-           <mat-form-field *ngIf="this.parameterNumber >= 3" appearance="fill">
-             <mat-label>param3</mat-label>
-             <input matInput formControlName="param3">
-          </mat-form-field>
+             <mat-form-field *ngIf="this.parameterNumber >= 3" appearance="fill">
+               <mat-label>param3</mat-label>
+               <input matInput formControlName="param3">
+            </mat-form-field>
 
-          <mat-form-field *ngIf="this.parameterNumber >= 4" appearance="fill">
-             <mat-label>param4</mat-label>
-             <input matInput formControlName="param4">
-          </mat-form-field>
+            <mat-form-field *ngIf="this.parameterNumber >= 4" appearance="fill">
+               <mat-label>param4</mat-label>
+               <input matInput formControlName="param4">
+            </mat-form-field>
 
-          <mat-form-field *ngIf="this.parameterNumber >= 5" appearance="fill">
-             <mat-label>param5</mat-label>
-             <input matInput formControlName="param5">
-          </mat-form-field>
+            <mat-form-field *ngIf="this.parameterNumber >= 5" appearance="fill">
+               <mat-label>param5</mat-label>
+               <input matInput formControlName="param5">
+            </mat-form-field>
 
-          <mat-form-field *ngIf="this.parameterNumber >= 6" appearance="fill">
-             <mat-label>param6</mat-label>
-             <input matInput formControlName="param6">
-          </mat-form-field>
+            <mat-form-field *ngIf="this.parameterNumber >= 6" appearance="fill">
+               <mat-label>param6</mat-label>
+               <input matInput formControlName="param6">
+            </mat-form-field>
 
-          <mat-form-field *ngIf="this.parameterNumber >= 7" appearance="fill">
-             <mat-label>param7</mat-label>
-             <input matInput formControlName="param7">
-          </mat-form-field>
+            <mat-form-field *ngIf="this.parameterNumber >= 7" appearance="fill">
+               <mat-label>param7</mat-label>
+               <input matInput formControlName="param7">
+            </mat-form-field>
 
-          <mat-form-field *ngIf="this.parameterNumber >= 8" appearance="fill">
-             <mat-label>param8</mat-label>
-             <input matInput formControlName="param8">
-          </mat-form-field>
+            <mat-form-field *ngIf="this.parameterNumber >= 8" appearance="fill">
+               <mat-label>param8</mat-label>
+               <input matInput formControlName="param8">
+            </mat-form-field>
 
-          <mat-form-field *ngIf="this.parameterNumber >= 9" appearance="fill">
-             <mat-label>param9</mat-label>
-             <input matInput formControlName="param9">
-          </mat-form-field>
+            <mat-form-field *ngIf="this.parameterNumber >= 9" appearance="fill">
+               <mat-label>param9</mat-label>
+               <input matInput formControlName="param9">
+            </mat-form-field>
 
-          <mat-form-field *ngIf="this.parameterNumber >= 10" appearance="fill">
-             <mat-label>param10</mat-label>
-             <input matInput formControlName="param10">
-          </mat-form-field>
+            <mat-form-field *ngIf="this.parameterNumber >= 10" appearance="fill">
+               <mat-label>param10</mat-label>
+               <input matInput formControlName="param10">
+            </mat-form-field>
 
-
-          <div class="padding">
+          </div>
+          <div class="padding row gap-sm">
+            <div *ngIf="this.parameterNumber <= 10">
+              <button mat-raised-button type="button" class="btn btn-primary" (click)="addParameter()">Añadir Parámetro</button>
+            </div>
+            <div *ngIf="this.parameterNumber > 1">
+              <button mat-raised-button type="button" class="btn btn-danger" (click)="removeParameter()">Borrar Parámetro</button>
+            </div>
             <button mat-raised-button type="button" class="btn btn-danger btn-modal" (click)="removeGroup(i)">Borrar Grupo</button>
           </div>
+
         </div>
+      </div>
+      <div class="padding">
+        <button mat-raised-button type="button" class="btn btn-primary" (click)="addGroup()">Añadir Grupo</button>
       </div>
     </div>
 
 
-    <div class="padding-sm column vertical-center">
-      <div *ngIf="questionForm.get('type')?.value !== 'PARAMETRIZADA'" class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary" (click)="addAnswer()">Añadir Respuesta</button>
-      </div>
-      <div *ngIf="questionForm.get('isParametrized')?.value === true " class="padding-sm column vertical-center">
-        <button mat-raised-button type="button" class="btn btn-primary" (click)="addGroup()">Añadir Grupo</button>
-        <div *ngIf="this.parameterNumber <= 10">
-          <button mat-raised-button type="button" class="btn btn-primary" (click)="addParameter()">Añadir Parámetro</button>
-        </div>
-        <div *ngIf="this.parameterNumber > 1">
-        <button mat-raised-button type="button" class="btn btn-danger" (click)="removeParameter()">Borrar Parámetro</button>
-        </div>
-      </div>
-      <div class="padding-sm">
+
+      <div class="padding">
         <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="questionForm.invalid" (click)="submitForm()">Crear Pregunta</button>
       </div>
-    </div>
   </form>
 </div>
