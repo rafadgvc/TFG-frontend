@@ -24,6 +24,7 @@ export class AddExamComponent {
   types: string[] = ['Test', 'Desarrollo']
   hierarchyNodes: HierarchyNode[] = [];
   sectionList: Section[] = [];
+  selectedQuestions: Question[] = [];
 
 
   constructor(
@@ -123,19 +124,21 @@ export class AddExamComponent {
   generateRemainingQuestions(): void {
     for (let i = 0; i < this.sectionList.length; i++){
       this.populateSection(i);
+
       let wantedQuestions = (this.sectionList[i].question_number !== undefined) ? <number>this.sectionList[i].question_number : 0;
       let currentQuestions = (this.sectionList[i].questions?.items.length !== undefined) ? <number>this.sectionList[i].questions?.items.length : 0;
 
       if (wantedQuestions > currentQuestions){
-        console.log(this.sectionList[i]);
         this.examService.generateRemainingQuestions(this.sectionList[i], wantedQuestions - currentQuestions).subscribe(
       questionList => {
         if (this.sectionList[i].questions === undefined){
           this.sectionList[i].questions = questionList;
         }
         else {
-          for (let a: number = 0; a < questionList.total; a++)
+          for (let a: number = 0; a < questionList.total; a++) {
             this.sectionList[i].questions?.items.push(questionList.items[a]);
+            this.selectedQuestions.push(questionList.items[a]);
+          }
         }
 
         }
@@ -152,6 +155,17 @@ export class AddExamComponent {
     this.sectionList[id].repeat = sectionData.isNew;
     this.sectionList[id].type = sectionData.type;
     this.sectionList[id].question_number = sectionData.questionNumber;
+    let excluded = this.sectionList[id].exclude_ids;
+
+    if (excluded === undefined || (excluded.length < this.selectedQuestions.length)){
+      if (this.sectionList[id].exclude_ids === undefined){
+        this.sectionList[id].exclude_ids = [];
+      }
+      for (let i = 0; i < this.selectedQuestions.length; i++){
+        this.sectionList[id].exclude_ids?.push(this.selectedQuestions[i].id)
+      }
+      console.log(this.sectionList[id].exclude_ids)
+    }
   }
 
   openExamSection(id: number):void {
@@ -167,7 +181,13 @@ export class AddExamComponent {
     });
      dialogRef.afterClosed().subscribe((result: QuestionList) => {
       if (result && result.total > 0) {
-        this.sectionList[id].questions = result;
+        if (this.sectionList[id].questions === undefined){
+          this.sectionList[id].questions = new QuestionList([]);
+        }
+        for (let a = 0; a < result.total; a++) {
+          this.sectionList[id].questions?.items.push(result.items[a]);
+          this.selectedQuestions.push(result.items[a]);
+        }
         console.log('Selected Questions:', this.sectionList[id].questions);
 
       }

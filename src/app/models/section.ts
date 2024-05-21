@@ -9,6 +9,7 @@ export class Section {
   time? : number;
   repeat?: boolean;
   questions?: QuestionList;
+  exclude_ids?: number[];
 
   constructor (
     id: number,
@@ -19,6 +20,7 @@ export class Section {
     time? : number,
     repeat?: boolean,
     questions?: QuestionList,
+    exclude_ids?: number[],
   ){
     this.id = id;
     this.node_id = node_id;
@@ -28,6 +30,7 @@ export class Section {
     this.time = time;
     this.repeat = repeat;
     this.questions = questions;
+    this.exclude_ids = exclude_ids;
   }
 }
 

@@ -60,6 +60,12 @@ export class ExamService {
     if (section.repeat !== undefined) {
       params = params.set('repeat', section.repeat.toString());
     }
+    if (section.exclude_ids !== undefined && section.exclude_ids.length > 0) {
+      section.exclude_ids.forEach(id => {
+        params = params.append('exclude_ids', id.toString());
+      });
+    }
+
 
     return this.http.get<QuestionList>(`${this.examUrl}/select-questions`, {
       headers: this.headers,
@@ -89,6 +95,11 @@ export class ExamService {
     }
     if (section.repeat !== undefined) {
       params = params.set('repeat', section.repeat.toString());
+    }
+    if (section.exclude_ids !== undefined && section.exclude_ids.length > 0) {
+      section.exclude_ids.forEach(id => {
+        params = params.append('exclude_ids', id.toString());
+      });
     }
     params = params.set('question_number', remaining.toString())
 
