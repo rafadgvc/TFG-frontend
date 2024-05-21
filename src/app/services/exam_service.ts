@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {catchError, map, Observable, of} from "rxjs";
 import {HierarchyNode, HierarchyNodeList} from "../models/hierarchy-node";
 import {Exam, ExamList} from "../models/exam";
 import {QuestionList} from "../models/question";
+import {Section} from "../models/section";
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +40,64 @@ export class ExamService {
     );
   }
 
-  getQuestionsToSelect(id: number): Observable<QuestionList> {
-    return this.http.get<QuestionList>(this.examUrl + '/select-questions/' + id,  { headers: this.headers, withCredentials: true }).pipe(
-      catchError(this.handleError<QuestionList>(`getQuestionsToSelect`))
+  getQuestionsToSelect(section: Section): Observable<QuestionList> {
+    let params = new HttpParams();
+
+    if (section.node_id !== undefined && !isNaN(section.node_id)) {
+      params = params.set('node_id', section.node_id.toString());
+    }
+    if (section.type !== undefined) {
+      section.type.forEach(type => {
+        params = params.append('type', type);
+      });
+    }
+    if (section.time !== undefined && !isNaN(section.time)) {
+      params = params.set('time', section.time.toString());
+    }
+    if (section.difficulty !== undefined && !isNaN(section.difficulty)) {
+      params = params.set('difficulty', section.difficulty.toString());
+    }
+    if (section.repeat !== undefined) {
+      params = params.set('repeat', section.repeat.toString());
+    }
+
+    return this.http.get<QuestionList>(`${this.examUrl}/select-questions`, {
+      headers: this.headers,
+      params: params,
+      withCredentials: true
+    }).pipe(
+      catchError(this.handleError<QuestionList>('getQuestionsToSelect'))
+    );
+  }
+
+  generateRemainingQuestions(section: Section, remaining: number): Observable<QuestionList> {
+    let params = new HttpParams();
+
+    if (section.node_id !== undefined && !isNaN(section.node_id)) {
+      params = params.set('node_id', section.node_id.toString());
+    }
+    if (section.type !== undefined) {
+      section.type.forEach(type => {
+        params = params.append('type', type);
+      });
+    }
+    if (section.time !== undefined && !isNaN(section.time)) {
+      params = params.set('time', section.time.toString());
+    }
+    if (section.difficulty !== undefined && !isNaN(section.difficulty)) {
+      params = params.set('difficulty', section.difficulty.toString());
+    }
+    if (section.repeat !== undefined) {
+      params = params.set('repeat', section.repeat.toString());
+    }
+    params = params.set('question_number', remaining.toString())
+
+    return this.http.get<QuestionList>(`${this.examUrl}/select-questions`, {
+      headers: this.headers,
+      params: params,
+      withCredentials: true
+    }).pipe(
+      catchError(this.handleError<QuestionList>('getQuestionsToSelect'))
     );
   }
 

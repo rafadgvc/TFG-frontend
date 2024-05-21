@@ -5,6 +5,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { QuestionService } from "../../../services/question.service";
 import {Question, QuestionList} from '../../../models/question';
 import {ExamService} from "../../../services/exam_service";
+import {Section} from "../../../models/section";
 
 @Component({
   selector: 'app-exam-section-modal',
@@ -15,6 +16,7 @@ export class ExamSectionModalComponent {
   subjectId: number = 0;
   nodeId: number = 0;
   loading: boolean = true;
+  section: Section;
   questionList: Question[] = [];
   displayedColumns: string[] = ['title', 'difficulty', 'time', 'type', 'select'];
   dataSource = new MatTableDataSource<Question>();
@@ -29,13 +31,13 @@ export class ExamSectionModalComponent {
   ) {
     this.subjectId = this.data.subjectId;
     this.nodeId = this.data.nodeId;
+    this.section = this.data.section;
     this.searchQuestions();
   }
 
   searchQuestions(): void {
     this.loading = true;
-    let id = (this.nodeId >= 0) ? this.nodeId : this.subjectId;
-    this.examService.getQuestionsToSelect(id).subscribe(
+    this.examService.getQuestionsToSelect(this.section).subscribe(
       questionList => {
         this.questionList = questionList.items;
         this.dataSource = new MatTableDataSource(this.questionList);

@@ -2,17 +2,15 @@ import { Component } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Question, QuestionList} from "../../../models/question";
-import {AnswerList} from "../../../models/answer";
 import {HierarchyNode} from "../../../models/hierarchy-node";
 import {NodeService} from "../../../services/node.service";
 import {ExamService} from "../../../services/exam_service";
-import {DisableQuestionComponent} from "../../question/disable-question/disable-question.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ExamSectionModalComponent} from "../exam-section-modal/exam-section-modal.component";
 import {Section} from "../../../models/section";
-import {QuestionParameter, QuestionParameterList} from "../../../models/question-parameter";
 import {Exam} from "../../../models/exam";
 import {SnackbarService} from "../../../services/snackbar.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-add-exam',
@@ -73,25 +71,6 @@ export class AddExamComponent {
     this.sectionList.splice(index);
   }
 
-  onSubmit() {
-    if (this.examForm.valid) {
-      const questionData = this.examForm.value;
-      const question = new Question(
-        0, // Assign ID appropriately
-        questionData.title,
-        questionData.difficulty,
-        questionData.time,
-        questionData.type,
-        true,
-        new AnswerList(questionData.answers)
-      );
-      // Now you can use 'question' object to save or do whatever you want
-      console.log(question);
-    } else {
-      console.log('Invalid form');
-    }
-  }
-
   get sectionsControls() {
     return (this.examForm.get('sections') as FormArray).controls;
   }
@@ -141,10 +120,43 @@ export class AddExamComponent {
     }
   }
 
-  openExamSection(id: number):void {
+  generateRemainingQuestions(): void {
+    for (let i = 0; i < this.sectionList.length; i++){
+      this.populateSection(i);
+      let wantedQuestions = (this.sectionList[i].question_number !== undefined) ? <number>this.sectionList[i].question_number : 0;
+      let currentQuestions = (this.sectionList[i].questions?.items.length !== undefined) ? <number>this.sectionList[i].questions?.items.length : 0;
+
+      if (wantedQuestions > currentQuestions){
+        console.log(this.sectionList[i]);
+        this.examService.generateRemainingQuestions(this.sectionList[i], wantedQuestions - currentQuestions).subscribe(
+      questionList => {
+        if (this.sectionList[i].questions === undefined){
+          this.sectionList[i].questions = questionList;
+        }
+        else {
+          for (let a: number = 0; a < questionList.total; a++)
+            this.sectionList[i].questions?.items.push(questionList.items[a]);
+        }
+
+        }
+    );
+      }
+    }
+  }
+
+  populateSection(id: number): void {
     const sectionData = this.sections.at(id).value;
-    console.log(sectionData)
-    let nodeId = (sectionData.node !== undefined) ? sectionData.node : NaN;
+    this.sectionList[id].node_id = sectionData.node;
+    this.sectionList[id].difficulty = sectionData.difficulty;
+    this.sectionList[id].time = sectionData.time;
+    this.sectionList[id].repeat = sectionData.isNew;
+    this.sectionList[id].type = sectionData.type;
+    this.sectionList[id].question_number = sectionData.questionNumber;
+  }
+
+  openExamSection(id: number):void {
+    this.populateSection(id);
+    let nodeId = (this.sectionList[id].node_id !== undefined) ? this.sectionList[id].node_id : NaN;
     const dialogRef = this.dialog.open(ExamSectionModalComponent, {
       width: '950px',
       data: {
