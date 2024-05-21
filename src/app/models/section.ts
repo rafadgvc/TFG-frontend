@@ -1,3 +1,5 @@
+import {Question, QuestionList} from "./question";
+
 export class Section {
   id: number;
   node_id?: number;
@@ -6,6 +8,7 @@ export class Section {
   difficulty?: number;
   time? : number;
   repeat?: boolean;
+  questions?: QuestionList;
 
   constructor (
     id: number,
@@ -15,6 +18,7 @@ export class Section {
     difficulty?: number,
     time? : number,
     repeat?: boolean,
+    questions?: QuestionList,
   ){
     this.id = id;
     this.node_id = node_id;
@@ -23,6 +27,7 @@ export class Section {
     this.difficulty = difficulty;
     this.time = time;
     this.repeat = repeat;
+    this.questions = questions;
   }
 }
 

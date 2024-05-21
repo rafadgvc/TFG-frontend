@@ -39,7 +39,7 @@
       <!--    Dificultad-->
       <mat-form-field appearance="fill" class="form-group">
         <mat-label>Dificultad</mat-label>
-        <input matInput formControlName="difficulty">
+        <input matInput formControlName="difficulty" type="number">
         <mat-error *ngIf="questionForm.get('difficulty')?.hasError('required')">
           Este campo es requerido
         </mat-error>
@@ -56,7 +56,7 @@
       <!--    Tiempo estimado-->
       <mat-form-field appearance="fill" class="form-group">
         <mat-label>Tiempo Estimado</mat-label>
-        <input matInput formControlName="time">
+        <input matInput formControlName="time" type="number">
         <mat-error *ngIf="questionForm.get('time')?.hasError('required')">
           Este campo es requerido
         </mat-error>

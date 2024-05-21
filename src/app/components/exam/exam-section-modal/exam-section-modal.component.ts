@@ -1,43 +1,57 @@
-import {Component, Inject} from '@angular/core';
-import {Subject} from "../../../models/subject";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SubjectService} from "../../../services/subject.service";
-import {Router} from "@angular/router";
-import {SnackbarService} from "../../../services/snackbar.service";
+import { Component, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { QuestionService } from "../../../services/question.service";
+import {Question, QuestionList} from '../../../models/question';
 import {ExamService} from "../../../services/exam_service";
-import {HierarchyNode} from "../../../models/hierarchy-node";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-exam-section-modal',
   templateUrl: './exam-section-modal.component.html',
-  styleUrl: './exam-section-modal.component.css'
+  styleUrls: ['./exam-section-modal.component.css']
 })
 export class ExamSectionModalComponent {
-  nodes: HierarchyNode[] = [];
-  subjectId: number;
-  sectionId: number;
-  types: string[] = ['Test', 'Desarrollo', 'Ninguno'];
-  sectionForm: FormGroup;
+  subjectId: number = 0;
+  nodeId: number = 0;
+  loading: boolean = true;
+  questionList: Question[] = [];
+  displayedColumns: string[] = ['title', 'difficulty', 'time', 'type', 'select'];
+  dataSource = new MatTableDataSource<Question>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  selection: { [key: number]: boolean } = {};
 
   constructor(
     public dialogRef: MatDialogRef<ExamSectionModalComponent>,
+    private questionService: QuestionService,
     private examService: ExamService,
-    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ){
-    this.nodes = this.data.nodes;
+  ) {
     this.subjectId = this.data.subjectId;
-    this.sectionId = this.data.sectionId;
-    this.sectionForm = this.formBuilder.group({
-      node: [''],
-      difficulty: ['', [Validators.min(1), Validators.max(10)]],
-      time: ['', [Validators.min(1)]],
-      type: ['']
-    })
+    this.nodeId = this.data.nodeId;
+    this.searchQuestions();
   }
 
-  searchQuestions(): void{
-    console.log('aa');
+  searchQuestions(): void {
+    this.loading = true;
+    let id = (this.nodeId >= 0) ? this.nodeId : this.subjectId;
+    this.examService.getQuestionsToSelect(id).subscribe(
+      questionList => {
+        this.questionList = questionList.items;
+        this.dataSource = new MatTableDataSource(this.questionList);
+        this.loading = false;
+        this.dataSource.paginator = this.paginator;
+
+        // Inicializa el objeto de selección con los ids de las preguntas
+        this.questionList.forEach(question => {
+          this.selection[question.id] = false;
+        });
+      },
+    );
+  }
+
+  selectQuestions() {
+    const selectedQuestions = new QuestionList( this.questionList.filter(question => this.selection[question.id]));
+    this.dialogRef.close(selectedQuestions);
   }
 }

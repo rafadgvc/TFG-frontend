@@ -4,6 +4,7 @@ import {AuthService} from "./auth.service";
 import {catchError, map, Observable, of} from "rxjs";
 import {HierarchyNode, HierarchyNodeList} from "../models/hierarchy-node";
 import {Exam, ExamList} from "../models/exam";
+import {QuestionList} from "../models/question";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,12 @@ export class ExamService {
   getSubjectExams(id: number): Observable<ExamList> {
     return this.http.get<ExamList>(this.examUrl + '/list/'+ id,  { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<ExamList>(`Exam List`))
+    );
+  }
+
+  getQuestionsToSelect(id: number): Observable<QuestionList> {
+    return this.http.get<QuestionList>(this.examUrl + '/select-questions/' + id,  { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError<QuestionList>(`getQuestionsToSelect`))
     );
   }
 

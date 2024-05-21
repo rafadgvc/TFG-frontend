@@ -399,8 +399,18 @@ th:last-child, td:last-child {
   color: #9e1c0d  !important;
 }
 
+/* Exam styles */
 
 
+.section-questions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.question-title {
+  max-width: 70rem;
+}
 
 
 /*

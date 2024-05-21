@@ -10,6 +10,7 @@ export class Exam{
   subject_id?: number;
   connected?: boolean;
   question_number?: number;
+  question_ids?: number[];
 
   constructor (
     id: number,
@@ -20,6 +21,7 @@ export class Exam{
     subject_id?: number,
     connected?: boolean,
     question_number?: number,
+    question_ids?: number[],
   ){
     this.id = id;
     this.title = title;
@@ -29,6 +31,7 @@ export class Exam{
     this.subject_id = subject_id;
     this.connected = connected;
     this.question_number = question_number;
+    this.question_ids = question_ids;
   }
 }
 
