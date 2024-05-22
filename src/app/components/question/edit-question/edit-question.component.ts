@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatDialogRef} from "@angular/material/dialog";
 import {Question} from "../../../models/question";
-import {Answer, AnswerList} from "../../../models/answer";
+import {AnswerList} from "../../../models/answer";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HierarchyNode} from "../../../models/hierarchy-node";
 import {NodeService} from "../../../services/node.service";

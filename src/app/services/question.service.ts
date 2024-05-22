@@ -4,8 +4,6 @@ import {catchError, map, Observable, of} from 'rxjs';
 import {Question, QuestionList} from "../models/question";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
-import {Subject, SubjectList} from "../models/subject";
-import {HierarchyNode} from "../models/hierarchy-node";
 
 @Injectable({
   providedIn: 'root',

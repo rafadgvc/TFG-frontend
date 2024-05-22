@@ -117,7 +117,6 @@ export class AddQuestionComponent {
           for (let j = 1; (j <= this.parameterNumber); j++) {
             let name = `param${j}`;
             if (this.groupsControls.at(i) !== undefined) {
-              console.log(this.groupsControls.at(i)?.get(name)?.value)
               question_parameters.items.push(new QuestionParameter(NaN, this.groupsControls.at(i)?.get(name)?.value, i+1, j))
             }
           }
@@ -139,8 +138,6 @@ export class AddQuestionComponent {
         question_parameters
 
       );
-      console.log(question)
-      // Now you can use 'question' object to save or do whatever you want
       this.questionService.addQuestion(question).subscribe(
         () => {
           this.snackbarService.showSuccess('Pregunta añadida correctamente.');
