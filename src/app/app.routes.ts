@@ -18,7 +18,7 @@ import {EditExamComponent} from "./components/exam/edit-exam/edit-exam.component
 export const routes: Routes = [
   {path: 'signup', component: UserSignupComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'question/:id', component: QuestionDetailComponent, canActivate: [AuthGuard]},
+  {path: 'question/:id', component: EditQuestionComponent, canActivate: [AuthGuard]},
   {path: 'subject/:id', component: SubjectDetailComponent, canActivate: [AuthGuard]},
   {path: 'add-question/:id', component: AddQuestionComponent, canActivate: [AuthGuard]},
   {path: 'edit-question/:id', component: EditQuestionComponent, canActivate: [AuthGuard]},
