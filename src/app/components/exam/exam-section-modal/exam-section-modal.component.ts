@@ -3,9 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { QuestionService } from "../../../services/question.service";
-import {Question, QuestionList} from '../../../models/question';
-import {ExamService} from "../../../services/exam_service";
-import {Section} from "../../../models/section";
+import { Question, QuestionList } from '../../../models/question';
+import { ExamService } from "../../../services/exam_service";
+import { Section } from "../../../models/section";
 
 @Component({
   selector: 'app-exam-section-modal',
@@ -22,6 +22,8 @@ export class ExamSectionModalComponent {
   dataSource = new MatTableDataSource<Question>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   selection: { [key: number]: boolean } = {};
+  maxQuestions: number; // Número máximo de preguntas permitidas
+  selectedCount: number = 0; // Contador de preguntas seleccionadas
 
   constructor(
     public dialogRef: MatDialogRef<ExamSectionModalComponent>,
@@ -32,6 +34,7 @@ export class ExamSectionModalComponent {
     this.subjectId = this.data.subjectId;
     this.nodeId = this.data.nodeId;
     this.section = this.data.section;
+    this.maxQuestions = this.data.maxQuestions; // Recibir el número máximo de preguntas permitidas
     this.searchQuestions();
   }
 
@@ -52,8 +55,18 @@ export class ExamSectionModalComponent {
     );
   }
 
+  toggleSelection(questionId: number): void {
+    if (this.selection[questionId]) {
+      this.selectedCount--;
+      this.selection[questionId] = false;
+    } else if (this.selectedCount < this.maxQuestions) {
+      this.selectedCount++;
+      this.selection[questionId] = true;
+    }
+  }
+
   selectQuestions() {
-    const selectedQuestions = new QuestionList( this.questionList.filter(question => this.selection[question.id]));
+    const selectedQuestions = new QuestionList(this.questionList.filter(question => this.selection[question.id]));
     this.dialogRef.close(selectedQuestions);
   }
 }

@@ -1,31 +1,37 @@
 import { Component } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Question, QuestionList} from "../../../models/question";
-import {HierarchyNode} from "../../../models/hierarchy-node";
-import {NodeService} from "../../../services/node.service";
-import {ExamService} from "../../../services/exam_service";
-import {MatDialog} from "@angular/material/dialog";
-import {ExamSectionModalComponent} from "../exam-section-modal/exam-section-modal.component";
-import {Section} from "../../../models/section";
-import {Exam} from "../../../models/exam";
-import {SnackbarService} from "../../../services/snackbar.service";
-import {MatTableDataSource} from "@angular/material/table";
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Question, QuestionList } from "../../../models/question";
+import { HierarchyNode } from "../../../models/hierarchy-node";
+import { NodeService } from "../../../services/node.service";
+import { ExamService } from "../../../services/exam_service";
+import { MatDialog } from "@angular/material/dialog";
+import { ExamSectionModalComponent } from "../exam-section-modal/exam-section-modal.component";
+import { Section } from "../../../models/section";
+import { Exam } from "../../../models/exam";
+import { SnackbarService } from "../../../services/snackbar.service";
 
 @Component({
   selector: 'app-add-exam',
   templateUrl: './add-exam.component.html',
-  styleUrl: './add-exam.component.css'
+  styleUrls: ['./add-exam.component.css'] // Asegúrate de que aquí sea 'styleUrls' en lugar de 'styleUrl'
 })
 export class AddExamComponent {
   id: number = 0;
   examForm: FormGroup;
   sections: FormArray;
-  types: string[] = ['Test', 'Desarrollo']
+  types: string[] = ['Test', 'Desarrollo'];
   hierarchyNodes: HierarchyNode[] = [];
   sectionList: Section[] = [];
   selectedQuestions: Question[] = [];
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,33 +49,35 @@ export class AddExamComponent {
         this.hierarchyNodes = nodes.items;
       });
     });
-  this.examForm = this.formBuilder.group({
-    title: ['', Validators.required],
-    // TODO: Comprobar si required puede servir aquí
-    sections: this.formBuilder.array([]),
-  });
-  this.sections = this.examForm.get('sections') as FormArray;
 
-  this.addSection();
-}
+    this.sections = this.formBuilder.array([], this.validateSectionQuestions());
+
+    this.examForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      sections: this.sections
+    });
+
+    this.addSection();
+  }
 
   addSection() {
     this.sections.push(this.formBuilder.group({
       node: ['', [Validators.required]],
-      questionNumber: [NaN, [Validators.required, Validators.min(1)]],
+      questionNumber: ['', [Validators.required, Validators.min(1)]],
       type: [[]],
       difficulty: [NaN, [Validators.min(1), Validators.max(10)]],
       time: [NaN, [Validators.required, Validators.min(1)]],
       isParametrized: [false],
       isNew: [false],
-
-    }))
+      questions: [[]]  // Añadimos un campo para almacenar las preguntas
+    }));
     this.sectionList.push(new Section(this.sectionList.length));
   }
 
   removeSection(index: number) {
     this.sections.removeAt(index);
-    this.sectionList.splice(index);
+    this.sectionList.splice(index, 1);
+    this.examForm.updateValueAndValidity();
   }
 
   get sectionsControls() {
@@ -84,18 +92,18 @@ export class AddExamComponent {
 
       const sectionNumber = this.sectionList.length;
 
-        for (let i = 0; i < sectionNumber; i++) {
-          let total = this.sectionList[i].questions?.total;
-          if (total !== undefined) {
-            for (let j = 0; j < total; j++) {
-              let question = this.sectionList[i].questions?.items[j];
-              if (question !== undefined) {
-                questionList.items.push(question)
-                questionIds.push(question.id)
-              }
+      for (let i = 0; i < sectionNumber; i++) {
+        let total = this.sectionList[i].questions?.total;
+        if (total !== undefined) {
+          for (let j = 0; j < total; j++) {
+            let question = this.sectionList[i].questions?.items[j];
+            if (question !== undefined) {
+              questionList.items.push(question);
+              questionIds.push(question.id);
             }
           }
         }
+      }
 
       const exam = new Exam(
         NaN,
@@ -108,12 +116,10 @@ export class AddExamComponent {
         undefined,
         questionIds
       );
-      console.log(exam)
-      // Now you can use 'question' object to save or do whatever you want
       this.examService.addExam(exam).subscribe(
         () => {
           this.snackbarService.showSuccess('Examen creado correctamente.');
-          this.router.navigate(['/exam-list/' + this.id])
+          this.router.navigate(['/exam-list/' + this.id]);
         }
       );
     } else {
@@ -122,29 +128,29 @@ export class AddExamComponent {
   }
 
   generateRemainingQuestions(): void {
-    for (let i = 0; i < this.sectionList.length; i++){
+    for (let i = 0; i < this.sectionList.length; i++) {
       this.populateSection(i);
 
-      let wantedQuestions = (this.sectionList[i].question_number !== undefined) ? <number>this.sectionList[i].question_number : 0;
-      let currentQuestions = (this.sectionList[i].questions?.items.length !== undefined) ? <number>this.sectionList[i].questions?.items.length : 0;
+      let wantedQuestions = this.sectionList[i].question_number ?? 0;
+      let currentQuestions = this.sectionList[i].questions?.items.length ?? 0;
 
-      if (wantedQuestions > currentQuestions){
+      if (wantedQuestions > currentQuestions) {
         this.examService.generateRemainingQuestions(this.sectionList[i], wantedQuestions - currentQuestions).subscribe(
-      questionList => {
-        if (this.sectionList[i].questions === undefined){
-          this.sectionList[i].questions = questionList;
-        }
-        else {
-          for (let a: number = 0; a < questionList.total; a++) {
-            this.sectionList[i].questions?.items.push(questionList.items[a]);
-            this.selectedQuestions.push(questionList.items[a]);
+          questionList => {
+            if (!this.sectionList[i].questions) {
+              this.sectionList[i].questions = questionList;
+            } else {
+              for (let a = 0; a < questionList.total; a++) {
+                this.sectionList[i].questions?.items.push(questionList.items[a]);
+                this.selectedQuestions.push(questionList.items[a]);
+              }
+            }
+            this.sections.at(i).updateValueAndValidity(); // Actualizar la validez de la sección después de generar preguntas
           }
-        }
-
-        }
-    );
+        );
       }
     }
+    this.examForm.updateValueAndValidity(); // Actualizar la validez del formulario después de generar preguntas
   }
 
   populateSection(id: number): void {
@@ -157,39 +163,43 @@ export class AddExamComponent {
     this.sectionList[id].question_number = sectionData.questionNumber;
     let excluded = this.sectionList[id].exclude_ids;
 
-    if (excluded === undefined || (excluded.length < this.selectedQuestions.length)){
-      if (this.sectionList[id].exclude_ids === undefined){
+    if (!excluded || excluded.length < this.selectedQuestions.length) {
+      if (!this.sectionList[id].exclude_ids) {
         this.sectionList[id].exclude_ids = [];
       }
-      for (let i = 0; i < this.selectedQuestions.length; i++){
-        this.sectionList[id].exclude_ids?.push(this.selectedQuestions[i].id)
+      for (let i = 0; i < this.selectedQuestions.length; i++) {
+        this.sectionList[id].exclude_ids?.push(this.selectedQuestions[i].id);
       }
-      console.log(this.sectionList[id].exclude_ids)
     }
   }
 
-  openExamSection(id: number):void {
+  openExamSection(id: number): void {
     this.populateSection(id);
-    let nodeId = (this.sectionList[id].node_id !== undefined) ? this.sectionList[id].node_id : NaN;
+    let nodeId = this.sectionList[id].node_id ?? NaN;
+    console.log(<number>this.sectionList[id].question_number, <number>this.sectionList[id].questions?.items.length);
+    let maxQuestions = (this.sectionList[id].questions !== undefined) ?
+      <number>this.sectionList[id].question_number - <number>this.sectionList[id].questions?.items.length :
+      <number>this.sectionList[id].question_number;
     const dialogRef = this.dialog.open(ExamSectionModalComponent, {
       width: '950px',
       data: {
         section: this.sectionList[id],
         subjectId: this.id,
-        nodeId: nodeId
+        nodeId: nodeId,
+        maxQuestions: maxQuestions,
       }
     });
-     dialogRef.afterClosed().subscribe((result: QuestionList) => {
+    dialogRef.afterClosed().subscribe((result: QuestionList) => {
       if (result && result.total > 0) {
-        if (this.sectionList[id].questions === undefined){
+        if (!this.sectionList[id].questions) {
           this.sectionList[id].questions = new QuestionList([]);
         }
         for (let a = 0; a < result.total; a++) {
           this.sectionList[id].questions?.items.push(result.items[a]);
           this.selectedQuestions.push(result.items[a]);
         }
-        console.log('Selected Questions:', this.sectionList[id].questions);
-
+        this.sections.at(id).updateValueAndValidity();
+        this.examForm.updateValueAndValidity();
       }
     });
   }
@@ -197,47 +207,68 @@ export class AddExamComponent {
   calculateAverageDifficulty(): string {
     let avg = 0;
     let total = 0;
-    for(let i = 0; i < this.sectionList.length; i++){
+    for (let i = 0; i < this.sectionList.length; i++) {
       let questions = this.sectionList[i].questions;
-      if (questions !== undefined){
-        for (let j = 0; j < questions.total; j++){
-          avg = avg + questions.items[j].difficulty;
-          total += 1;
+      if (questions) {
+        for (let j = 0; j < questions.items.length; j++) {
+          avg += questions.items[j].difficulty;
+          total++;
         }
       }
     }
-    avg = avg/total;
-
+    avg /= total;
     return `${avg.toFixed(3)} / 10`;
   }
 
   calculateTotalTime(): string {
     let total = 0;
-    for(let i = 0; i < this.sectionList.length; i++){
+    for (let i = 0; i < this.sectionList.length; i++) {
       let questions = this.sectionList[i].questions;
-      if (questions !== undefined){
-        for (let j = 0; j < questions.total; j++){
-          total = total + questions.items[j].time;
+      if (questions) {
+        for (let j = 0; j < questions.items.length; j++) {
+          total += questions.items[j].time;
         }
       }
     }
-
     return `${total} min`;
   }
 
   calculateTotalQuestions(): string {
     let total = 0;
-    for(let i = 0; i < this.sectionList.length; i++){
+    for (let i = 0; i < this.sectionList.length; i++) {
       let questions = this.sectionList[i].questions;
-      if (questions !== undefined){
-        total = total + questions.total;
-        }
+      if (questions) {
+        total += questions.items.length;
       }
-
+    }
     return `${total}`;
   }
 
-  eliminateQuestion(questionId: number, sectionId: number){
-    console.log(this.sectionList[sectionId].questions?.items[questionId])
+  eliminateQuestion(questionId: number, sectionId: number) {
+    const section = this.sectionList[sectionId];
+    if (section && section.questions) {
+      const questionIndex = section.questions.items.findIndex(q => q.id === questionId);
+      if (questionIndex > -1) {
+        section.questions.items.splice(questionIndex, 1);
+      }
+      this.sections.at(sectionId).updateValueAndValidity();
+    }
+    this.examForm.updateValueAndValidity();
+  }
+
+  validateSectionQuestions(): ValidatorFn {
+    return (formArray: AbstractControl): ValidationErrors | null => {
+      const sections = formArray as FormArray;
+      const size = (this.sectionList.length < sections.length) ? this.sectionList.length : sections.length;
+      for (let i = 0; i < size; i++) {
+        const section = sections.at(i);
+        const questionNumber = section.get('questionNumber')?.value;
+        const questions = (this.sectionList[i].questions === undefined) ? 0 : <number>this.sectionList[i].questions?.items.length;
+        if (questionNumber <= 0 || questions !== questionNumber) {
+          return { invalidQuestionNumber: true };
+        }
+      }
+      return null;
+    };
   }
 }
