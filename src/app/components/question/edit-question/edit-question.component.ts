@@ -3,7 +3,12 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {Question} from "../../../models/question";
 import {Answer, AnswerList} from "../../../models/answer";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {HierarchyNode} from "../../../models/hierarchy-node";
+import {NodeService} from "../../../services/node.service";
+import {QuestionService} from "../../../services/question.service";
+import {SnackbarService} from "../../../services/snackbar.service";
+import {QuestionParameter, QuestionParameterList} from "../../../models/question-parameter";
 
 @Component({
   selector: 'app-edit-question',
@@ -11,37 +16,122 @@ import {Router} from "@angular/router";
   styleUrl: './edit-question.component.css'
 })
 export class EditQuestionComponent {
+  id: number = 0;
+  parameterNumber: number = 1;
   questionForm: FormGroup;
-  question: Question = new Question (1, '¿Cuál de los siguientes no es un operador?', 2, 1, 'Test',true,
-        new AnswerList([new Answer(3, 'Sentencia', 0),
-          new Answer(4, 'Producto Cartesiano', 1),
-          new Answer(5, 'Cura Natural', 0),
-          new Answer(6, 'Detección', 0)]
-        )
-      )
   answers: FormArray;
-  pairs: FormArray;
-  types: string[] = ['Test', 'Desarrollo', 'Parametrizada']
+  groups: FormArray;
+  types: string[] = ['Test', 'Desarrollo'];
+  hierarchyNodes: HierarchyNode[] = [];
+  question?: Question;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private nodeService: NodeService,
+    private activatedRoute: ActivatedRoute,
+    private questionService: QuestionService,
+    private snackbarService: SnackbarService
   ) {
   this.questionForm = this.formBuilder.group({
-    title: [this.question.title, Validators.required],
-    difficulty: [this.question.difficulty, [Validators.required, Validators.min(1), Validators.max(10)]],
-    time: [this.question.time, [Validators.required, Validators.min(1)]],
-    type: [this.question.type.toUpperCase(), Validators.required],
+    title: ['', Validators.required],
+    difficulty: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+    isParametrized: [false],
+    time: ['', [Validators.required, Validators.min(1)]],
+    type: ['', Validators.required],
+    nodes: [[], Validators.required],
     answers: this.formBuilder.array([]),
-    pairs: this.formBuilder.array([])
+    groups: this.formBuilder.array([])
   });
   this.answers = this.questionForm.get('answers') as FormArray;
-  this.pairs = this.questionForm.get('pairs') as FormArray;
+  this.groups = this.questionForm.get('groups') as FormArray;
 
-  this.addAnswer();
-  this.addAnswer();
-  this.addPair();
-}
+  this.activatedRoute.params.subscribe(params => {
+      this.id = +params['id']; // Convertir a número
+      // Llamar al servicio para obtener los nodos correspondientes
+      this.questionService.getQuestion(this.id).subscribe(question =>{
+        this.question = question;
+        this.populateQuestionForm();
+      })
+    });
+  }
+
+  populateQuestionForm(): void {
+    if (this.question?.subject_id !== undefined) {
+      this.nodeService.getSubjectNodes(this.question?.subject_id).subscribe(nodes => {
+        this.hierarchyNodes = nodes.items;
+      });
+    }
+    this.questionForm.get('title')?.patchValue(this.question?.title);
+    this.questionForm.get('difficulty')?.patchValue(this.question?.difficulty);
+    this.questionForm.get('time')?.patchValue(this.question?.time);
+    this.questionForm.get('type')?.patchValue(this.question?.type.toUpperCase());
+    this.questionForm.get('nodes')?.patchValue(this.question?.node_ids);
+    this.questionForm.get('isParametrized')?.patchValue(<number>this.question?.question_parameters?.items.length > 0);
+
+
+    if (this.question?.answers !== undefined && this.question.answers.total > 0) {
+      const answerNumber = <number>this.question?.answers?.items.length;
+      for (let i = 0; i < answerNumber; i++) {
+        this.answers.push(this.formBuilder.group({
+          body: [this.question?.answers?.items[i].body, Validators.required],
+          points: [(this.question?.answers?.items[i].points === undefined) ? NaN : this.question?.answers?.items[i].points, [Validators.required, Validators.min(-1), Validators.max(1)]]
+        }));
+      }
+    }
+
+    if (this.question?.question_parameters !== undefined && this.question.question_parameters.total > 0) {
+      const parameterNumber = <number>this.question?.question_parameters?.items[this.question?.question_parameters?.total - 1].position;
+      this.parameterNumber = parameterNumber;
+      const groupNumber = <number>this.question?.question_parameters?.items[this.question?.question_parameters?.total - 1].group;
+      for (let i = 0; i < groupNumber; i++) {
+        this.groups.push(this.formBuilder.group({
+          param1: [(1 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber].value
+            : ''
+          ],
+          param2: [(2 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 1].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 1].value
+            : ''
+          ],
+          param3: [(3 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 2].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 2].value
+            : ''
+          ],
+          param4: [(4 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 3].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 3].value
+            : ''
+          ],
+          param5: [(5 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 4].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 4].value
+            : ''
+          ],
+          param6: [(6 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 5].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 5].value
+            : ''
+          ],
+          param7: [(7 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 6].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 6].value
+            : ''
+          ],
+          param8: [(8 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 7].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 7].value
+            : ''
+          ],
+          param9: [(9 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 8].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 8].value
+            : ''
+
+          ],
+          param10: [(10 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 9].value !== undefined)
+            ? this.question?.question_parameters?.items[i * parameterNumber + 9].value
+            : ''
+          ],
+
+        }));
+      }
+    }
+  }
 
   addAnswer() {
     this.answers.push(this.formBuilder.group({
@@ -50,10 +140,18 @@ export class EditQuestionComponent {
     }));
   }
 
-  addPair() {
-    this.pairs.push(this.formBuilder.group({
-      questionParameter: [''],
-      answerParameter: ['']
+  addGroup() {
+    this.groups.push(this.formBuilder.group({
+      param1: [''],
+      param2: [''],
+      param3: [''],
+      param4: [''],
+      param5: [''],
+      param6: [''],
+      param7: [''],
+      param8: [''],
+      param9: [''],
+      param10: [''],
     }));
   }
 
@@ -61,42 +159,72 @@ export class EditQuestionComponent {
     this.answers.removeAt(index);
   }
 
-  removePair(index: number) {
-    this.pairs.removeAt(index);
+  removeGroup(index: number) {
+    this.groups.removeAt(index);
   }
-
-  onSubmit() {
-    if (this.questionForm.valid) {
-      const questionData = this.questionForm.value;
-      const question = new Question(
-        0, // Assign ID appropriately
-        questionData.title,
-        questionData.difficulty,
-        questionData.time,
-        questionData.type,
-        true,
-        new AnswerList(questionData.answers)
-      );
-      // Now you can use 'question' object to save or do whatever you want
-      console.log(question);
-    } else {
-      console.log('Invalid form');
-    }
+  addParameter(){
+    this.parameterNumber += 1;
+  }
+  removeParameter(){
+    this.parameterNumber -= 1;
   }
 
   get answersControls() {
     return (this.questionForm.get('answers') as FormArray).controls;
   }
 
-  get pairsControls() {
-    return (this.questionForm.get('pairs') as FormArray).controls;
+  get groupsControls() {
+    return (this.questionForm.get('groups') as FormArray).controls;
   }
 
   submitForm(): void {
     if (this.questionForm.valid) {
-      // TODO: Añadir creación de la pregunta
-      this.router.navigate(['/home']);
+      const questionData = this.questionForm.value;
+      let question_parameters = new QuestionParameterList([]);
+      if (questionData.type.toLowerCase() === 'desarrollo'){
+        for (let i = 0; i < questionData.answers.length; i++) {
+          questionData.answers[i].points = 0;
+        }
+      }
+      const groupNumber = this.groupsControls.length;
+      if (this.questionForm.get('isParametrized')?.value === true) {
 
+        for (let i = 0; i < groupNumber; i++) {
+          for (let j = 1; (j <= this.parameterNumber); j++) {
+            let name = `param${j}`;
+            if (this.groupsControls.at(i) !== undefined) {
+              question_parameters.items.push(new QuestionParameter(NaN, this.groupsControls.at(i)?.get(name)?.value, i+1, j))
+            }
+          }
+        }
+      }
+
+      const question = new Question(
+        this.id,
+        questionData.title,
+        +questionData.difficulty,
+        +questionData.time,
+        questionData.type,
+        true,
+        new AnswerList(questionData.answers),
+        undefined,
+        undefined,
+        questionData.nodes,
+        this.question?.subject_id,
+        false,
+        question_parameters
+
+      );
+      this.question = question;
+      // Now you can use 'question' object to save or do whatever you want
+      this.questionService.editQuestion(question).subscribe(
+        () => {
+          this.snackbarService.showSuccess('Pregunta modificada correctamente.');
+          this.router.navigate(['/question-list/' + this.question?.subject_id])
+        }
+      );
+    } else {
+      console.log('Invalid form');
     }
   }
 }

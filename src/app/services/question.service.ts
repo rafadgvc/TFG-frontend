@@ -54,6 +54,12 @@ export class QuestionService {
     );
   }
 
+  editQuestion(question: Question): Observable<Question>{
+    return this.http.put<Question>(this.questionUrl + '/' +  question.id, question, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Question>(`edit Question`))
+    );
+  }
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
