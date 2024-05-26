@@ -149,7 +149,7 @@ export class NodeListComponent implements OnInit{
   // Función auxiliar para calcular el nivel de un nodo en el árbol
 
   const rootColor: number[] = [255, 255, 255]; // Blanco
-  const deepestColor: number[] = [238, 108, 77]; // #ee6c4d
+  const deepestColor: number[] = [209, 43, 46]; // #ee6c4d
 
 
   const nodeLevel = this.calculateNodeLevel(node);
