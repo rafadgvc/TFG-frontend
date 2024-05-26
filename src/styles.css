@@ -173,15 +173,15 @@ h5 {
 
 /*   Text colours   */
 .success-text {
-  color: #4caf50;
+  color: #009430;
 }
 
 .warn-text {
-  color: #fed766;
+  color: #ffdd00;
 }
 
 .error-text {
-  color: #ee6c4d;
+  color: #cb2c30;
 }
 
 /*Form Styles*/
@@ -227,25 +227,25 @@ label {
 }
 
 .btn-primary {
-  background-color: #3d5a80 !important;
+  background-color: #007fc0 !important;
   color: #ffffff !important;
 }
 
 .btn-primary:hover {
-  background-color: #98c1d9  !important;
+  background-color: #209fe0  !important;
 }
 
 .btn-primary:disabled {
-  background-color: #c8f1f9  !important;
+  background-color: #50bff0  !important;
 }
 
 .btn-secondary {
-  background-color: #2a9d8f !important;
+  background-color: #009430 !important;
   color: #ffffff !important;
 }
 
 .btn-secondary:hover {
-  background-color: #7aeddf !important;
+  background-color: #40d470 !important;
 }
 
 .btn-accent {
@@ -258,16 +258,16 @@ label {
 }
 
 .btn-danger {
-  background-color: #ee6c4d !important;
+  background-color: #cb2c30 !important;
   color: #ffffff !important;
 }
 
 .btn-danger:hover {
-  background-color: #9e1c0d  !important;
+  background-color: #fb5c60  !important;
 }
 
 .btn-danger:disabled {
-  background-color: #ffbc9d  !important;
+  background-color: #efac8d  !important;
 }
 
 .text-button {
@@ -297,7 +297,7 @@ tr {
 }
 
 tr:first-child {
-  background-color: #ee6c4d; /* Color de la primera fila */
+  background-color: #cb2c30; /* Color de la primera fila */
   font-weight: bold; /* Hace que el texto de la primera fila sea negrita */
 }
 
@@ -364,15 +364,15 @@ th:last-child, td:last-child {
 }
 
 .txt-btn-primary {
-  color: #3d5a80 !important;
+  color: #007fc0 !important;
 }
 
 .txt-btn-primary:hover {
-  color: #98c1d9  !important;
+  color: #209fe0  !important;
 }
 
 .txt-btn-primary:disabled {
-  color: #c8f1f9  !important;
+  color: #007fc0  !important;
 }
 
 .txt-btn-secondary {
@@ -392,11 +392,11 @@ th:last-child, td:last-child {
 }
 
 .txt-btn-danger {
-  color: #ee6c4d !important;
+  color: #cb2c30 !important;
 }
 
 .txt-btn-danger:hover {
-  color: #9e1c0d  !important;
+  color: #fb5c60  !important;
 }
 
 /* Exam styles */
@@ -415,11 +415,11 @@ th:last-child, td:last-child {
 
 /*
 color palette:
-#3d5a80 (primary buttons)
-#fed766 (secondary buttons)
+#3d5a80 (primary buttons) --> 007fc0
+#fed766 (secondary buttons) --> 009430
 #2a9d8f (accent buttons)
 #98c1d9 (hovered buttons)
 #e0fbfc
-#ee6c4d (heading)
+#ee6c4d (heading) --> cb2c30
 #293241
 */
