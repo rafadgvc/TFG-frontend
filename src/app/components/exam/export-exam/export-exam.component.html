@@ -3,10 +3,18 @@
   <mat-dialog-content>
     <div class="padding-xs">
       <p>
-        Se creará un archivo   y se guardará en este dispositivo.
+        Se creará un archivo y se guardará en este dispositivo.
       </p>
+      <mat-form-field>
+        <mat-label>Formato</mat-label>
+        <mat-select [(value)]="selectedFormat">
+          <mat-option value="PDF">PDF</mat-option>
+          <mat-option value="Aiken">Aiken</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="row gap-sm padding-sm">
+
       <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
       <button mat-raised-button color="primary" class="btn btn-accent" (click)="this.exportExam()">Exportar</button>
     </div>

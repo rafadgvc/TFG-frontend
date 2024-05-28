@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthService} from "./auth.service";
-import {catchError, map, Observable, of} from "rxjs";
+import {catchError, map, Observable, of, throwError} from "rxjs";
 import {HierarchyNode, HierarchyNodeList} from "../models/hierarchy-node";
 import {Exam, ExamList} from "../models/exam";
 import {QuestionList} from "../models/question";
@@ -109,6 +109,19 @@ export class ExamService {
       withCredentials: true
     }).pipe(
       catchError(this.handleError<QuestionList>('getQuestionsToSelect'))
+    );
+  }
+
+  exportExam(id: number, endpoint: string): Observable<Blob> {
+    return this.http.get(`${this.examUrl}/${id}/${endpoint}`, {
+      headers: this.headers,
+      responseType: 'blob',
+      withCredentials: true
+    }).pipe(
+      catchError((error: any) => {
+        console.error(`Error exporting exam to ${endpoint}:`, error);
+        return throwError(`Error exporting exam to ${endpoint}`);
+      })
     );
   }
 
