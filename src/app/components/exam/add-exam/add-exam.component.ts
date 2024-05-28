@@ -93,7 +93,7 @@ export class AddExamComponent {
       const sectionNumber = this.sectionList.length;
 
       for (let i = 0; i < sectionNumber; i++) {
-        let total = this.sectionList[i].questions?.total;
+        let total = this.sectionList[i].questions?.items.length;
         if (total !== undefined) {
           for (let j = 0; j < total; j++) {
             let question = this.sectionList[i].questions?.items[j];
@@ -104,6 +104,7 @@ export class AddExamComponent {
           }
         }
       }
+      console.log(questionIds);
 
       const exam = new Exam(
         NaN,
@@ -145,12 +146,12 @@ export class AddExamComponent {
                 this.selectedQuestions.push(questionList.items[a]);
               }
             }
-            this.sections.at(i).updateValueAndValidity(); // Actualizar la validez de la sección después de generar preguntas
+            this.sections.at(i).updateValueAndValidity();
           }
         );
       }
     }
-    this.examForm.updateValueAndValidity(); // Actualizar la validez del formulario después de generar preguntas
+    this.examForm.updateValueAndValidity();
   }
 
   populateSection(id: number): void {
