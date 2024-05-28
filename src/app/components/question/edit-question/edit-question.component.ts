@@ -8,6 +8,9 @@ import {NodeService} from "../../../services/node.service";
 import {QuestionService} from "../../../services/question.service";
 import {SnackbarService} from "../../../services/snackbar.service";
 import {QuestionParameter, QuestionParameterList} from "../../../models/question-parameter";
+import {DeleteQuestionComponent} from "../delete-question/delete-question.component";
+import {DisableQuestionComponent} from "../disable-question/disable-question.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-edit-question',
@@ -30,7 +33,8 @@ export class EditQuestionComponent {
     private nodeService: NodeService,
     private activatedRoute: ActivatedRoute,
     private questionService: QuestionService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    public dialog: MatDialog,
   ) {
   this.questionForm = this.formBuilder.group({
     title: ['', Validators.required],
@@ -174,6 +178,29 @@ export class EditQuestionComponent {
 
   get groupsControls() {
     return (this.questionForm.get('groups') as FormArray).controls;
+  }
+
+  deleteQuestion(): void {
+    const dialogRef = this.dialog.open(DeleteQuestionComponent, {
+      width: '400px',
+      data: {
+        question: this.question
+      }
+    });
+  }
+
+  disableQuestion(): void {
+    const dialogRef = this.dialog.open(DisableQuestionComponent, {
+      width: '400px',
+      data: {
+        question: this.question
+      }
+    });
+    dialogRef.afterClosed().subscribe( result => {
+      if (this.question?.id) {
+        this.router.navigate(['/question/' + this.id])
+      }
+    });
   }
 
   submitForm(): void {

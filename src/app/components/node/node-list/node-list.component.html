@@ -7,26 +7,30 @@
           <button mat-icon-button color="primary" class="btn btn-primary" (click)="viewNode(node.id)">
             <mat-icon>more_horiz</mat-icon>
           </button>
-          <button mat-icon-button color="primary" class="btn btn-secondary" (click)="openAddQuestionModal(node.id)">
+          <button mat-icon-button color="primary" class="btn btn-primary" (click)="openAddQuestionModal(node.id)">
             <mat-icon>question_mark</mat-icon>
           </button>
-          <button mat-icon-button color="primary" class="btn btn-accent" (click)="openAddNodeModal(node.id)">
+          <button mat-icon-button color="primary" class="btn btn-primary" (click)="openAddNodeModal(node.id)">
             <mat-icon>library_add</mat-icon>
           </button>
         </div>
       </div>
     </ng-template>
 </p-tree>
-  <div class="padding gap-lg">
-    <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">
-      <mat-icon>add</mat-icon>
-      Añadir Nodo
-    </button>
+  <div class="row">
+    <div class="padding-xs">
+      <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">
+        <mat-icon>add</mat-icon>
+        Añadir
+      </button>
+    </div>
 
-    <button mat-button color="primary" class="padding-lg btn btn-secondary" (click)="viewSubject()">
-      <mat-icon>view_headline</mat-icon>
-      Ver Asignatura
-    </button>
+    <div class="padding-xs">
+      <button mat-button color="primary" class="padding-lg btn btn-secondary" (click)="viewSubject()">
+        <mat-icon>undo</mat-icon>
+        Volver
+      </button>
+    </div>
   </div>
 </div>
 
@@ -39,6 +43,6 @@
   <p>No se encontraron nodos.</p>
   <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">
     <mat-icon>add</mat-icon>
-    Añadir Nodo
+    Añadir
   </button>
 </div>

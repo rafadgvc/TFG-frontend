@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="row horizontal-center gap padding-lg">
-  <button mat-button color="primary" class="btn btn-primary"  (click)="editNode()">Editar Nodo</button>
-  <button mat-button color="warn" class="btn btn-danger" [disabled]="!this.node?.leaf" (click)="deleteNode()">Borrar Nodo</button>
+  <button mat-button color="primary" class="btn btn-primary"  (click)="editNode()"> <mat-icon>edit</mat-icon> Editar</button>
+  <button mat-button color="warn" class="btn btn-danger" [disabled]="!this.node?.leaf" (click)="deleteNode()"> <mat-icon>delete</mat-icon> Borrar</button>
 </div>
  <app-result-detail></app-result-detail>

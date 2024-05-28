@@ -59,16 +59,25 @@
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" [hidePageSize]="loading && questionList.length > 0" showFirstLastButtons></mat-paginator>
 
 <div *ngIf="!loading && questionList.length > 0" class="column">
-  <div class="padding-lg">
-    <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="addQuestion()">
-      Añadir Pregunta
-    </button>
-    <button mat-button color="accent" class="padding-lg btn btn-accent" (click)="openAddQuestionsModal()">
-      Importar Preguntas
-    </button>
-    <button mat-button color="secondary" class="padding-lg btn btn-secondary" (click)="viewSubject(this.id)">
-      Ver Asignatura
-    </button>
+  <div class="row">
+    <div class="padding-xs">
+      <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="addQuestion()">
+       <mat-icon>add</mat-icon>
+        Añadir
+      </button>
+    </div>
+    <div class="padding-xs">
+      <button mat-button color="accent" class="padding-lg btn btn-primary" (click)="openAddQuestionsModal()">
+        <mat-icon>publish</mat-icon>
+        Importar
+      </button>
+    </div>
+    <div class="padding-xs">
+      <button mat-button color="secondary" class="padding-lg btn btn-secondary" (click)="viewSubject(this.id)">
+        <mat-icon>undo</mat-icon>
+        Volver
+      </button>
+    </div>
   </div>
 </div>
 
