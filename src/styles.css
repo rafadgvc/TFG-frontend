@@ -420,11 +420,7 @@ th:last-child, td:last-child {
 .question-title {
   max-width: 70rem;
 }
-::ng-deep .mat-form-field .mat-select-value-text,
-::ng-deep .mat-form-field .mat-select-placeholder,
-::ng-deep .mat-form-field .mat-select-trigger span {
-  font-size: 10rem !important; /* Ajusta este valor al tamaño de fuente deseado */
-}
+
 
 
 /*
