@@ -28,6 +28,8 @@ export class ExportExamComponent {
 
     if (this.selectedFormat === 'Aiken') {
       exportEndpoint = 'export_aiken';
+    } else if (this.selectedFormat === 'GIFT') {
+      exportEndpoint = 'export_gift';
     } else {
       exportEndpoint = 'export_pdf';
     }
