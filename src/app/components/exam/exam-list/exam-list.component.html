@@ -1,4 +1,4 @@
-<div *ngIf="!this.loading" class="column">
+<div *ngIf="!this.loading && this.examList.length > 0" class="column">
   <table mat-table [dataSource]="examList" class="mat-elevation-z8">
     <!-- Título del examen -->
     <ng-container matColumnDef="title">
@@ -28,8 +28,8 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let exam">
-        <button mat-button color="primary" class="btn btn-primary" (click)="viewExam(exam.id)">
-          Ver Examen
+        <button mat-icon-button color="primary" class="btn btn-primary" (click)="viewExam(exam.id)">
+          <mat-icon>more_horiz</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -40,7 +40,8 @@
 
   <div class="padding-lg">
     <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="addExam(this.id)">
-      Configurar examen
+      <mat-icon>add</mat-icon>
+      Configurar
     </button>
   </div>
 </div>
@@ -54,6 +55,10 @@
   <p>No se encontraron exámenes.</p>
   <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="addExam(this.id)">
     <mat-icon>add</mat-icon>
-    Configurar Examen
+    Configurar
+  </button>
+  <button mat-button color="secondary" class="padding-lg btn btn-primary" (click)="viewSubject(this.id)">
+    <mat-icon>undo</mat-icon>
+    Volver
   </button>
 </div>

@@ -11,7 +11,10 @@
     </div>
     <div class="row gap-sm padding-sm">
       <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
-      <button mat-raised-button color="primary" class="btn btn-accent" (click)="this.importResult()">Importar</button>
+      <button mat-raised-button color="primary" class="btn btn-primary" (click)="this.importResult()">
+        <mat-icon>publish</mat-icon>
+        Importar
+      </button>
     </div>
   </mat-dialog-content>
 </div>

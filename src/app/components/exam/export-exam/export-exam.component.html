@@ -17,7 +17,10 @@
     <div class="row gap-sm padding-sm">
 
       <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
-      <button mat-raised-button color="primary" class="btn btn-accent" (click)="this.exportExam()">Exportar</button>
+      <button mat-raised-button color="primary" class="btn btn-primary" (click)="this.exportExam()">
+        <mat-icon>download</mat-icon>
+        Exportar
+      </button>
     </div>
   </mat-dialog-content>
 </div>

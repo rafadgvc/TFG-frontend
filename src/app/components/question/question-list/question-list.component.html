@@ -49,10 +49,16 @@
   <mat-icon style="font-size: 10rem; width: 10rem; height: 10rem;">search_off</mat-icon>
   <p>No se encontraron preguntas.</p>
   <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="addQuestion()">
-    Añadir Pregunta
+   <mat-icon>add</mat-icon>
+    Añadir
   </button>
-  <button mat-button color="accent" class="padding-lg btn btn-accent" (click)="openAddQuestionsModal()">
-    Importar Preguntas
+  <button mat-button color="accent" class="padding-lg btn btn-primary" (click)="openAddQuestionsModal()">
+    <mat-icon>publish</mat-icon>
+    Importar
+  </button>
+  <button mat-button color="secondary" class="padding-lg btn btn-primary" (click)="viewSubject(this.id)">
+    <mat-icon>undo</mat-icon>
+    Volver
   </button>
 </div>
 
@@ -73,7 +79,7 @@
       </button>
     </div>
     <div class="padding-xs">
-      <button mat-button color="secondary" class="padding-lg btn btn-secondary" (click)="viewSubject(this.id)">
+      <button mat-button color="secondary" class="padding-lg btn btn-primary" (click)="viewSubject(this.id)">
         <mat-icon>undo</mat-icon>
         Volver
       </button>

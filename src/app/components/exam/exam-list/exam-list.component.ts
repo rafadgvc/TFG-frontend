@@ -52,7 +52,10 @@ export class ExamListComponent implements OnInit{
   }
 
   addExam(subjectId: number): void {
-    // TODO: Cambiar a añadir examen
     this.router.navigate(['/add-exam/' + subjectId]);
+  }
+
+  viewSubject(subjectId: number): void {
+    this.router.navigate(['/subject/' + subjectId]);
   }
 }

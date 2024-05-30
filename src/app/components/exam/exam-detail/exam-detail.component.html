@@ -33,14 +33,29 @@
 
 
   <div class="row horizontal-center gap-sm padding-lg">
-      <button mat-button color="primary" class="btn btn-primary"  (click)="editExam()">Editar examen</button>
-      <button mat-button color="primary" class="btn btn-accent"  (click)="exportExam()">Exportar examen</button>
+      <button mat-button color="primary" class="btn btn-primary"  (click)="editExam()">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button>
+      <button mat-button color="primary" class="btn btn-primary"  (click)="exportExam()">
+        <mat-icon>download</mat-icon>
+        Exportar
+      </button>
     <div *ngIf="!this.exam?.connected">
-      <button mat-button color="primary" class="btn btn-accent" (click)="importResults()">Importar resultados</button>
+      <button mat-button color="primary" class="btn btn-primary" (click)="importResults()">
+        <mat-icon>publish</mat-icon>
+        Importar resultados
+      </button>
     </div>
-      <button mat-button color="warn" class="btn btn-danger" (click)="deleteExam()">Borrar examen</button>
+      <button mat-button color="warn" class="btn btn-danger" (click)="deleteExam()">
+        <mat-icon>delete</mat-icon>
+        Borrar
+      </button>
     <div *ngIf="this.exam?.connected">
-      <button mat-button color="warn" class="btn btn-danger" (click)="deleteResults()">Borrar resultados</button>
+      <button mat-button color="warn" class="btn btn-danger" (click)="deleteResults()">
+        <mat-icon>delete</mat-icon>
+        Borrar resultados
+      </button>
     </div>
 
   </div>

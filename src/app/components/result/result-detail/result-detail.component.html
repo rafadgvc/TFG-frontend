@@ -28,7 +28,10 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <button mat-raised-button class="btn btn-primary" (click)="resetFilters()">Limpiar filtros</button>
+  <button mat-button class="btn btn-primary" (click)="resetFilters()">
+    <mat-icon>restart_alt</mat-icon>
+    Limpiar filtros
+  </button>
 
   <div class="padding summary">
     <p><strong>Media de puntuación:</strong> {{ calculateAveragePoints(dataSource.filteredData) }}</p>

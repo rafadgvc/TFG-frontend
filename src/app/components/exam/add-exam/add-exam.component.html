@@ -109,8 +109,14 @@
           </div>
 
           <div class="padding">
-            <button mat-raised-button type="button" class="btn btn-primary btn-modal" [disabled]="section.invalid" (click)="openExamSection(i)">Seleccionar Preguntas</button>
-            <button mat-raised-button type="button" class="btn btn-danger btn-modal" (click)="removeSection(i)">Borrar Sección</button>
+            <button mat-raised-button type="button" class="btn btn-primary" [disabled]="section.invalid" (click)="openExamSection(i)">
+              <mat-icon>alt_route</mat-icon>
+              Seleccionar
+            </button>
+            <button mat-raised-button type="button" class="btn btn-danger" (click)="removeSection(i)">
+              <mat-icon>delete</mat-icon>
+              Borrar Sección
+            </button>
           </div>
         </div>
       </div>
@@ -120,13 +126,22 @@
 
     <div class="padding-sm row">
       <div class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary"(click)="addSection()">Añadir Sección</button>
+        <button mat-raised-button type="button" class="btn btn-primary"(click)="addSection()">
+          <mat-icon>add</mat-icon>
+          Añadir Sección
+        </button>
       </div>
       <div class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary btn-modal" (click)="generateRemainingQuestions()">Generar Preguntas</button>
+        <button mat-raised-button type="button" class="btn btn-primary btn-modal" (click)="generateRemainingQuestions()">
+          <mat-icon>draw</mat-icon>
+          Generar Preguntas
+        </button>
       </div>
       <div class="padding-sm">
-        <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="examForm.invalid" (click)="submitForm()">Crear Examen</button>
+        <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="examForm.invalid" (click)="submitForm()">
+          <mat-icon>add</mat-icon>
+          Crear
+        </button>
       </div>
     </div>
   </form>

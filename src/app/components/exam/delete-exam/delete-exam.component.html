@@ -13,7 +13,10 @@
     </div>
     <div class="row gap-sm padding-sm">
       <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
-      <button mat-raised-button color="primary" class="btn btn-danger" (click)="this.deleteExam()">Borrar</button>
+      <button mat-raised-button color="primary" class="btn btn-danger" (click)="this.deleteExam()">
+        <mat-icon>delete</mat-icon>
+        Borrar
+      </button>
     </div>
   </mat-dialog-content>
 </div>
