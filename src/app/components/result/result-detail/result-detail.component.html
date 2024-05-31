@@ -2,9 +2,18 @@
   <div class="row">
     <mat-form-field class="form-group">
       <mat-label>Seleccionar examen</mat-label>
-      <mat-select [(ngModel)]="selectedExamId" (selectionChange)="applyFilter()">
-        <mat-option *ngFor="let exam of exams" [value]="exam.id">
-          {{ exam.title }}
+      <mat-select [(ngModel)]="selectedExamTitle" (selectionChange)="applyFilter()">
+        <mat-option *ngFor="let exam of examTitles" [value]="exam">
+          {{ exam }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-group">
+      <mat-label>Seleccionar pregunta</mat-label>
+      <mat-select [(ngModel)]="selectedQuestionTitle" (selectionChange)="applyFilter()">
+        <mat-option *ngFor="let question of questionTitles" [value]="question">
+          {{ question }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -14,16 +23,6 @@
       <mat-select [(ngModel)]="selectedTaker" (selectionChange)="applyFilter()">
         <mat-option *ngFor="let taker of takers" [value]="taker">
           {{ taker }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="form-group">
-      <mat-label>Seleccionar nodo</mat-label>
-      <mat-select [(ngModel)]="selectedNode" (selectionChange)="applyFilter()">
-        <mat-option [value]="null">Todos los nodos</mat-option>
-        <mat-option *ngFor="let node of nodeList" [value]="node.name">
-          {{ node.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -41,40 +40,34 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   <table mat-table [dataSource]="this.dataSource" class="mat-elevation-z8">
-    <!-- Examen -->
-    <ng-container matColumnDef="exam">
-      <th mat-header-cell *matHeaderCellDef> Examen </th>
-      <td mat-cell *matCellDef="let result"> {{result.exam.title}} </td>
-    </ng-container>
-
     <!-- Alumno -->
     <ng-container matColumnDef="taker">
       <th mat-header-cell *matHeaderCellDef> Alumno </th>
       <td mat-cell *matCellDef="let result"> {{result.taker}} </td>
     </ng-container>
 
+    <!-- Examen -->
+    <ng-container matColumnDef="exam">
+      <th mat-header-cell *matHeaderCellDef> Examen </th>
+      <td mat-cell *matCellDef="let result"> {{result.exam_title}} </td>
+    </ng-container>
+
     <!-- Pregunta -->
     <ng-container matColumnDef="question">
       <th mat-header-cell *matHeaderCellDef> Pregunta </th>
-      <td mat-cell *matCellDef="let result"> {{result.question.title }} </td>
-    </ng-container>
-
-    <!-- Nodo de la pregunta -->
-    <ng-container matColumnDef="node">
-      <th mat-header-cell *matHeaderCellDef> Nodo </th>
-      <td mat-cell *matCellDef="let result"> {{ this.formatNodes(result.question.nodes) }} </td>
+      <td mat-cell *matCellDef="let result"> {{result.question_title }} </td>
     </ng-container>
 
     <!-- Tiempo del examen -->
     <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef> Tiempo Estimado </th>
-      <td mat-cell *matCellDef="let result"> {{this.formatTime(result.question.time)}} </td>
+      <td mat-cell *matCellDef="let result"> {{this.formatTime(result.time)}} </td>
     </ng-container>
 
     <!-- Puntos de la pregunta -->
     <ng-container matColumnDef="points">
       <th mat-header-cell *matHeaderCellDef> Puntuación obtenida </th>
-      <td mat-cell *matCellDef="let result"> {{this.formatPoints(result.question.points)}} </td>
+      <td mat-cell *matCellDef="let result"> {{this.formatPoints(result.points)}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

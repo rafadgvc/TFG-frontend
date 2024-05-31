@@ -9,6 +9,7 @@ import {Result} from "../../../models/result";
 import {MatTableDataSource} from "@angular/material/table";
 import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
 import {MatPaginator} from "@angular/material/paginator";
+import {ResultService} from "../../../services/result.service";
 
 @Component({
   selector: 'app-result-detail',
@@ -17,121 +18,68 @@ import {MatPaginator} from "@angular/material/paginator";
 })
 export class ResultDetailComponent{
   // Results to be shown
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   results: Result[] = [];
-  exams: Exam[] = [];
+  examTitles: string[] = [];
+  questionTitles: string[] = [];
   takers: number[] = [];
-  selectedExamId: number | null = null;
+  selectedExamTitle: string | null = null;
   selectedTaker: number | null = null;
-  selectedNode: string | null = null;
-  dataSource: MatTableDataSource<Result> = new MatTableDataSource<Result>();
+  selectedQuestionTitle: string | null = null;
+  dataSource = new MatTableDataSource<Result>();
   nodeList: HierarchyNode[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   id: number = 1;
-  displayedColumns: string[] = ['exam', 'taker', 'question', 'node', 'time', 'points'];
+  displayedColumns: string[] = ['taker', 'exam', 'question', 'time', 'points'];
 
   constructor(
-    private questionService: QuestionService,
+    private resultService: ResultService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router
   ) {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
+      this.populateResults();
 
-      this.populateResults(this.id);
-      this.loadExams();
-      this.loadTakers();
-      if (this.dataSource != undefined)
-        this.dataSource.filterPredicate = this.customFilter;
-        this.dataSource.paginator = this.paginator;
     });
   }
 
-  populateResults(examId: number){
-    // TODO: Llamar al servicio para obtener los resultados según el id
-    const preheatedQuestions: Question[] = [
-        new Question(1, "¿Cuál es la capital de Francia?", 2, 30, "multiple_choice",true),
-        new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 20, "true_false",true, new AnswerList([new Answer(1,'1', 0), new Answer(2, '2', 0), new Answer(3, '3', 0), new Answer(4, '4', 1)])),
-        new Question(3, "¿Qué año fue la Revolución Francesa?", 3, 40, "open_answer",true),
-        new Question(4, "¿Cuál es el resultado de 2 + 2?", 1, 15, "open_answer",true),
-        new Question(5, "¿Quién escribió 'Don Quijote de la Mancha'?", 2, 25, "multiple_choice",true),
-        new Question(6, "¿Cuál es el símbolo químico del agua?", 2, 30, "multiple_choice",true),
-        new Question(7, "¿Cuál es el planeta más grande del sistema solar?", 3, 35, "open_answer",true),
-        new Question(8, "¿Cuál es el río más largo del mundo?", 2, 30, "true_false",true),
-        new Question(9, "¿Quién pintó la Mona Lisa?", 3, 40, "open_answer",true),
-    ];
-    const preheatedNodes: HierarchyNode[] = [
-      new HierarchyNode(1, "Fundamentos de Bases de Datos", NaN),
-      new HierarchyNode(2, "Conceptos Básicos", 1),
-      new HierarchyNode(3, "Operadores SQL", 1),
-      new HierarchyNode(4, "Álgebra Relacional", 1),
-      new HierarchyNode(5, "Tabla", 2),
-      new HierarchyNode(6, "Columna", 5),
-      new HierarchyNode(7, "Fila", 5),
-      new HierarchyNode(8, "Selección", 2),
-      new HierarchyNode(9, "Proyección", 2),
-    ];
-    this.nodeList = preheatedNodes;
-
-    const preheatedResponses: Question[][] = [
-        [
-            new Question(1, "¿Cuál es la capital de Francia?", 2, 38, "multiple_choice",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[4]])),
-            new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 22, "true_false",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[3]])),
-            new Question(3, "¿Qué año fue la Revolución Francesa?", 3, 42, "open_answer",true, new AnswerList([]), 0, new HierarchyNodeList([this.nodeList[3]])),
-            new Question(4, "¿Cuál es el resultado de 2 + 2?", 1, 18, "open_answer",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[5]])),
-            new Question(5, "¿Quién escribió 'Don Quijote de la Mancha'?", 2, 22, "multiple_choice",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[5]])),
-            new Question(6, "¿Cuál es el símbolo químico del agua?", 2, 37, "multiple_choice",true, new AnswerList([]), 0, new HierarchyNodeList([this.nodeList[4]])),
-            new Question(7, "¿Cuál es el planeta más grande del sistema solar?", 3, 38, "open_answer",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[3]])),
-            new Question(8, "¿Cuál es el río más largo del mundo?", 2, 34, "true_false",true, new AnswerList([]), 0, new HierarchyNodeList([this.nodeList[3]])),
-            new Question(9, "¿Quién pintó la Mona Lisa?", 3, 31, "open_answer",true, new AnswerList([]), 0, new HierarchyNodeList([this.nodeList[6]])),
-        ],
-        [
-            new Question(1, "¿Cuál es la capital de Francia?", 2, 20, "multiple_choice",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[4]])),
-            new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 10, "true_false",true, new AnswerList([]), 0, new HierarchyNodeList([this.nodeList[3]])),
-            new Question(3, "¿Qué año fue la Revolución Francesa?", 3, 50, "open_answer",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[3]])),
-            new Question(4, "¿Cuál es el resultado de 2 + 2?", 1, 15, "open_answer",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[5]])),
-            new Question(5, "¿Quién escribió 'Don Quijote de la Mancha'?", 2, 15, "multiple_choice",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[5]])),
-            new Question(6, "¿Cuál es el símbolo químico del agua?", 2, 34, "multiple_choice",true, new AnswerList([]), 0, new HierarchyNodeList([this.nodeList[4]])),
-            new Question(7, "¿Cuál es el planeta más grande del sistema solar?", 3, 22, "open_answer",true, new AnswerList([]), 0, new HierarchyNodeList([this.nodeList[3]])),
-            new Question(8, "¿Cuál es el río más largo del mundo?", 2, 19, "true_false",true, new AnswerList([]), 0, new HierarchyNodeList([this.nodeList[3]])),
-            new Question(9, "¿Quién pintó la Mona Lisa?", 3, 34, "open_answer",true, new AnswerList([]), 1, new HierarchyNodeList([this.nodeList[6]])),
-        ]
-    ];
-
-    const exam = new Exam(1, "Ordinaria 2016", 5, 120, new QuestionList(preheatedQuestions), 1);
-
-    // Iterar sobre cada conjunto de respuestas precalentadas y crear un Result para cada una
-    for (let i = 0; i < 10; i++) {
-        const responses = preheatedResponses[i % 2];
-        for (let j = 0; j < responses.length; j++) {
-            const response = responses[j];
-            this.results.push(new Result(j + 1, i + 1, exam, response));
+  populateResults(){
+    this.resultService.getSubjectResults(200).subscribe(
+      resultList => {
+        this.results = resultList.items;
+        this.dataSource = new MatTableDataSource(this.results);
+        this.loadSelectedFilters();
+        if (this.dataSource != undefined) {
+          this.dataSource.filterPredicate = this.customFilter;
+          this.dataSource.paginator = this.paginator;
         }
+      },
+    );
+  }
+
+  loadSelectedFilters() {
+    for (let i = 0; i < this.results.length; i++){
+      const res : Result = this.results[i];
+      if (this.takers.find((taker) => taker == res.taker) === undefined )
+        this.takers.push(res.taker)
+      if (this.examTitles.find((title) => title == res.exam_title) === undefined )
+        this.examTitles.push(res.exam_title)
+      if (this.questionTitles.find((title) => title == res.question_title) === undefined )
+        this.questionTitles.push(res.question_title)
+
     }
-    this.dataSource = new MatTableDataSource(this.results);
-  }
-
-  loadExams() {
-    // TODO: Llamar al servicio para obtener los exámenes según el id
-    const preheatedExams: Exam[] = [
-      new Exam(1, "Ordinaria 2016", 5, 120, new QuestionList([]), 1)
-    ];
-    this.exams = preheatedExams;
-  }
-
-  loadTakers() {
-    // TODO: Llamar al servicio para obtener los alumnos según el id
-    const preheatedTakers: number[] = [1, 2,3,4,5,6,7,8,9,10];
-    this.takers = preheatedTakers;
+    this.takers.sort((a, b) => a - b);
   }
 
   applyFilter() {
     if (this.dataSource) {
       this.dataSource.filter = JSON.stringify({
-        examId: this.selectedExamId,
-        taker: this.selectedTaker,
-        node: this.selectedNode
+        questionTitle: this.selectedQuestionTitle,
+        examTitle: this.selectedExamTitle,
+        taker: this.selectedTaker
       });
     }
   }
@@ -139,14 +87,15 @@ export class ResultDetailComponent{
   customFilter(data: Result, filter: string): boolean {
   const searchTerms = JSON.parse(filter);
   return <boolean>(
-    (searchTerms.examId === null || data.exam?.id === searchTerms.examId) &&
-    (searchTerms.taker === null || data.taker === searchTerms.taker) &&
-    (searchTerms.node === null || data.question?.nodes?.items.some(node => node.name === searchTerms.node))
+    (searchTerms.questionTitle === null || data.question_title === searchTerms.questionTitle) &&
+    (searchTerms.examTitle === null || data.exam_title === searchTerms.examTitle) &&
+    (searchTerms.taker === null || data.taker === searchTerms.taker)
   );
 }
 
   resetFilters() {
-    this.selectedExamId = null;
+    this.selectedQuestionTitle = null;
+    this.selectedExamTitle = null;
     this.selectedTaker = null;
     this.applyFilter();
   }
@@ -159,19 +108,10 @@ export class ResultDetailComponent{
     return ("" + time + " min");
   }
 
-  formatNodes(nodes: HierarchyNodeList): string{
-    let res = "";
-    res = res + nodes.items.at(0)?.name;
-    for (let i = 1; i < nodes.total; i++){
-      res = res + ", " + nodes.items.at(i)?.name;
-    }
-    return res;
-  }
-
   calculateAveragePoints(filteredResults: Result[]): number {
     const totalPoints = filteredResults.reduce((acc, curr) => {
-      if (curr.question?.points) {
-        return acc + curr.question.points;
+      if (curr.points) {
+        return acc + curr.points;
       } else {
         return acc;
       }
@@ -185,8 +125,8 @@ export class ResultDetailComponent{
 
   calculateAverageTime(filteredResults: Result[]): number {
     const totalTime = filteredResults.reduce((acc, curr) => {
-      if (curr.question) {
-        return acc + curr.question.time;
+      if (curr.time) {
+        return acc + curr.time;
       } else {
         return acc;
       }
