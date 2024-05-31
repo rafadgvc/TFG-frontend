@@ -4,7 +4,7 @@ import {AuthService} from "./auth.service";
 import {catchError, map, Observable, of, throwError} from "rxjs";
 import {HierarchyNode, HierarchyNodeList} from "../models/hierarchy-node";
 import {Exam, ExamList} from "../models/exam";
-import {QuestionList} from "../models/question";
+import {Question, QuestionList} from "../models/question";
 import {Section} from "../models/section";
 
 @Injectable({
@@ -122,6 +122,12 @@ export class ExamService {
         console.error(`Error exporting exam to ${endpoint}:`, error);
         return throwError(`Error exporting exam to ${endpoint}`);
       })
+    );
+  }
+
+  deleteExam(id: number): Observable<any>{
+    return this.http.delete<Exam>(this.examUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Exam>(`delete Exam`))
     );
   }
 

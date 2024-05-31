@@ -50,14 +50,18 @@ export class ExamDetailComponent implements OnInit {
   exportExam(): void {
     const dialogRef = this.dialog.open(ExportExamComponent, {
       width: '400px',
-      data: {exam: this.exam}
+      data: {
+        exam: this.exam
+      }
     });
   }
 
   deleteExam(): void {
     const dialogRef = this.dialog.open(DeleteExamComponent, {
       width: '400px',
-      data: {}
+      data: {
+        exam: this.exam
+      }
     });
   }
 
