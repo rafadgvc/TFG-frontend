@@ -27,15 +27,16 @@ export class ResultService {
     );
   }
 
-  addQuestion(question: Question): Observable<Question>{
-    return this.http.post<Question>(this.resultUrl, question, {headers: this.headers, withCredentials: true}).pipe(
-      catchError(this.handleError<Question>(`add Question`))
-    );
-  }
+   importResults(formData: FormData): Observable<ResultList> {
+      // No necesitamos headers aquí ya que FormData manejará el Content-Type automáticamente
+      return this.http.post<ResultList>(`${this.resultUrl}/upload`, formData, { headers: this.headers, withCredentials: true }).pipe(
+        catchError(this.handleError<ResultList>('importResults'))
+      );
+    }
 
   deleteResults(id: number): Observable<any>{
     return this.http.delete<Question>(this.resultUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
-      catchError(this.handleError<Question>(`delete Question`))
+      catchError(this.handleError<Question>(`delete Results`))
     );
   }
 

@@ -64,7 +64,9 @@ export class ExamDetailComponent implements OnInit {
   importResults(): void {
     const dialogRef = this.dialog.open(ImportResultComponent, {
       width: '400px',
-      data: {}
+      data: {
+        exam: this.exam
+      }
     });
   }
 

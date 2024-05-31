@@ -31,6 +31,6 @@ export class DeleteResultComponent {
           this.router.navigate(['/exam-list/'+ this.exam.subject_id]);
         }
       );
-
   }
+
 }
