@@ -71,7 +71,9 @@ export class ExamDetailComponent implements OnInit {
   deleteResults(): void {
     const dialogRef = this.dialog.open(DeleteResultComponent, {
       width: '400px',
-      data: {}
+      data: {
+        exam: this.exam
+      }
     });
   }
 

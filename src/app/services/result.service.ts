@@ -33,8 +33,8 @@ export class ResultService {
     );
   }
 
-  deleteQuestion(question: Question): Observable<any>{
-    return this.http.delete<Question>(this.resultUrl + '/' + question.id, {headers: this.headers, withCredentials: true}).pipe(
+  deleteResults(id: number): Observable<any>{
+    return this.http.delete<Question>(this.resultUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<Question>(`delete Question`))
     );
   }
