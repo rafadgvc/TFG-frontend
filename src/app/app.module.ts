@@ -51,7 +51,6 @@ import {ExportExamComponent} from "./components/exam/export-exam/export-exam.com
 import {ImportResultComponent} from "./components/result/import-result/import-result.component";
 import {DeleteResultComponent} from "./components/result/delete-result/delete-result.component";
 import {ResultDetailComponent} from "./components/result/result-detail/result-detail.component";
-import {ImportQuestionsComponent} from "./components/question/import-questions/import-questions.component";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatTooltip} from "@angular/material/tooltip";
 import { MatIconModule } from '@angular/material/icon';
@@ -91,7 +90,6 @@ import {MatCheckbox} from "@angular/material/checkbox";
     ImportResultComponent,
     DeleteResultComponent,
     ResultDetailComponent,
-    ImportQuestionsComponent,
     DisableQuestionComponent,
     ExamSectionModalComponent
   ],

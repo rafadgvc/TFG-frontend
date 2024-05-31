@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Question } from "../../../models/question";
 import { QuestionService } from "../../../services/question.service";
-import { ImportQuestionsComponent } from "../import-questions/import-questions.component";
 
 @Component({
   selector: 'app-question-list',
@@ -63,16 +62,5 @@ export class QuestionListComponent implements OnInit{
 
   addQuestion(): void {
     this.router.navigate(['/add-question/' + this.id]);
-  }
-
-  openAddQuestionsModal(): void {
-    const dialogRef = this.dialog.open(ImportQuestionsComponent, {
-      width: '400px',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.loadQuestionSubjects(this.id);
-    });
   }
 }
