@@ -61,7 +61,7 @@
   </div>
 
   <div *ngIf="this.exam?.connected">
-    <app-result-detail></app-result-detail>
+    <app-result-detail [exam]="exam"></app-result-detail>
   </div>
 </div>
 

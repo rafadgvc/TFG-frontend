@@ -1,23 +1,20 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Exam} from "../../../models/exam";
-import {QuestionService} from "../../../services/question.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {Question, QuestionList} from "../../../models/question";
-import {Answer, AnswerList} from "../../../models/answer";
 import {Result} from "../../../models/result";
 import {MatTableDataSource} from "@angular/material/table";
-import {HierarchyNode, HierarchyNodeList} from "../../../models/hierarchy-node";
 import {MatPaginator} from "@angular/material/paginator";
 import {ResultService} from "../../../services/result.service";
 
 @Component({
   selector: 'app-result-detail',
   templateUrl: './result-detail.component.html',
-  styleUrl: './result-detail.component.css'
+  styleUrls: ['./result-detail.component.css']
 })
-export class ResultDetailComponent{
-  // Results to be shown
+export class ResultDetailComponent implements OnInit {
+
+  @Input() exam?: Exam;  // Agrega esta línea para aceptar el objeto Exam
 
   results: Result[] = [];
   examTitles: string[] = [];
@@ -27,7 +24,6 @@ export class ResultDetailComponent{
   selectedTaker: number | null = null;
   selectedQuestionTitle: string | null = null;
   dataSource = new MatTableDataSource<Result>();
-  nodeList: HierarchyNode[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   id: number = 1;
@@ -38,18 +34,21 @@ export class ResultDetailComponent{
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router
-  ) {
-    this.route.params.subscribe(params => {
-      this.id = +params['id'];
-      this.populateResults();
+  ) {}
 
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.id = (this.exam?.subject_id !== undefined) ? this.exam.subject_id : 0;
+      this.selectedExamTitle = (this.exam?.title !== undefined) ? this.exam.title : null;
+      this.populateResults();
     });
   }
 
-  populateResults(){
-    this.resultService.getSubjectResults(200).subscribe(
+  populateResults() {
+    this.resultService.getSubjectResults(this.id).subscribe(
       resultList => {
         this.results = resultList.items;
+        this.results.sort((a, b) => a.taker - b.taker);
         this.dataSource = new MatTableDataSource(this.results);
         this.loadSelectedFilters();
         if (this.dataSource != undefined) {
@@ -85,13 +84,13 @@ export class ResultDetailComponent{
   }
 
   customFilter(data: Result, filter: string): boolean {
-  const searchTerms = JSON.parse(filter);
-  return <boolean>(
-    (searchTerms.questionTitle === null || data.question_title === searchTerms.questionTitle) &&
-    (searchTerms.examTitle === null || data.exam_title === searchTerms.examTitle) &&
-    (searchTerms.taker === null || data.taker === searchTerms.taker)
-  );
-}
+    const searchTerms = JSON.parse(filter);
+    return <boolean>(
+      (searchTerms.questionTitle === null || data.question_title === searchTerms.questionTitle) &&
+      (searchTerms.examTitle === null || data.exam_title === searchTerms.examTitle) &&
+      (searchTerms.taker === null || data.taker === searchTerms.taker)
+    );
+  }
 
   resetFilters() {
     this.selectedQuestionTitle = null;
@@ -100,11 +99,11 @@ export class ResultDetailComponent{
     this.applyFilter();
   }
 
-  formatPoints(points: number): string{
-    return ("" + points*100 + " %");
+  formatPoints(points: number): string {
+    return ("" + points * 100 + " %");
   }
 
-  formatTime(time: number): string{
+  formatTime(time: number): string {
     return ("" + time + " min");
   }
 
@@ -137,7 +136,4 @@ export class ResultDetailComponent{
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-
-
-
 }
