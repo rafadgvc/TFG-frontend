@@ -30,7 +30,7 @@
 
               <mat-form-field appearance="fill" class="form-group">
                 <mat-label>Nodo de la Jerarquía</mat-label>
-                <mat-select formControlName="node">
+                <mat-select formControlName="node" multiple>
                   <mat-option *ngFor="let node of hierarchyNodes" [value]="node.id">
                     {{ node.name }}
                   </mat-option>

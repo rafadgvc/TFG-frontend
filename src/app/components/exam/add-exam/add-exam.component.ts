@@ -157,7 +157,7 @@ export class AddExamComponent {
 
   populateSection(id: number): void {
     const sectionData = this.sections.at(id).value;
-    this.sectionList[id].node_id = sectionData.node;
+    this.sectionList[id].node_ids = sectionData.node;
     this.sectionList[id].difficulty = sectionData.difficulty;
     this.sectionList[id].time = sectionData.time;
     this.sectionList[id].repeat = sectionData.isNew;
@@ -177,8 +177,6 @@ export class AddExamComponent {
 
   openExamSection(id: number): void {
     this.populateSection(id);
-    let nodeId = this.sectionList[id].node_id ?? NaN;
-    console.log(<number>this.sectionList[id].question_number, <number>this.sectionList[id].questions?.items.length);
     let maxQuestions = (this.sectionList[id].questions !== undefined) ?
       <number>this.sectionList[id].question_number - <number>this.sectionList[id].questions?.items.length :
       <number>this.sectionList[id].question_number;
@@ -187,7 +185,6 @@ export class AddExamComponent {
       data: {
         section: this.sectionList[id],
         subjectId: this.id,
-        nodeId: nodeId,
         maxQuestions: maxQuestions,
       }
     });

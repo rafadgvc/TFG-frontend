@@ -41,10 +41,13 @@ export class ExamService {
   }
 
   getQuestionsToSelect(section: Section): Observable<QuestionList> {
+    console.log(section)
     let params = new HttpParams();
 
-    if (section.node_id !== undefined && !isNaN(section.node_id)) {
-      params = params.set('node_id', section.node_id.toString());
+    if (section.node_ids !== undefined && section.node_ids.length > 0) {
+      section.node_ids.forEach(id => {
+        params = params.append('node_ids', id.toString());
+      });
     }
     if (section.type !== undefined) {
       section.type.forEach(type => {
@@ -79,8 +82,10 @@ export class ExamService {
   generateRemainingQuestions(section: Section, remaining: number): Observable<QuestionList> {
     let params = new HttpParams();
 
-    if (section.node_id !== undefined && !isNaN(section.node_id)) {
-      params = params.set('node_id', section.node_id.toString());
+    if (section.node_ids !== undefined && section.node_ids.length > 0) {
+      section.node_ids.forEach(id => {
+        params = params.append('node_ids', id.toString());
+      });
     }
     if (section.type !== undefined) {
       section.type.forEach(type => {

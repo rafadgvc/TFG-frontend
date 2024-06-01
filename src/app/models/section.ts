@@ -2,7 +2,7 @@ import {Question, QuestionList} from "./question";
 
 export class Section {
   id: number;
-  node_id?: number;
+  node_ids?: number[];
   question_number?: number;
   type?: string[];
   difficulty?: number;
@@ -13,7 +13,7 @@ export class Section {
 
   constructor (
     id: number,
-    node_id?: number,
+    node_ids?: number[],
     question_number?: number,
     type?: string[],
     difficulty?: number,
@@ -23,7 +23,7 @@ export class Section {
     exclude_ids?: number[],
   ){
     this.id = id;
-    this.node_id = node_id;
+    this.node_ids = node_ids;
     this.question_number = question_number;
     this.type = type;
     this.difficulty = difficulty;

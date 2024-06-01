@@ -14,7 +14,7 @@ import { Section } from "../../../models/section";
 })
 export class ExamSectionModalComponent {
   subjectId: number = 0;
-  nodeId: number = 0;
+  nodeIds: number[] = [];
   loading: boolean = true;
   section: Section;
   questionList: Question[] = [];
@@ -32,7 +32,6 @@ export class ExamSectionModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.subjectId = this.data.subjectId;
-    this.nodeId = this.data.nodeId;
     this.section = this.data.section;
     this.maxQuestions = this.data.maxQuestions; // Recibir el número máximo de preguntas permitidas
     this.searchQuestions();

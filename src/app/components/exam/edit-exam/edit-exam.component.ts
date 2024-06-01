@@ -77,12 +77,12 @@ export class EditExamComponent {
     )
     for (let a = 0; a < this.selectedQuestions.length; a++){
       let question = this.selectedQuestions[a];
+      let nodeId = (question.node_ids?.at(0) !== undefined) ? question.node_ids.at(0) : NaN;
       if(question.section_number !== undefined && question.section_number > sectionCount){
         sectionCount = question.section_number;
-        let nodeId = (question.node_ids?.at(0) !== undefined) ? question.node_ids.at(0) : NaN;
         this.sectionList.push(new Section(sectionCount, undefined, 1, undefined, undefined, undefined, undefined,new QuestionList([])))
         this.sections.push(this.formBuilder.group({
-          node: [nodeId, [Validators.required]],
+          node: [[], [Validators.required]],
           questionNumber: [1, [Validators.required, Validators.min(1)]],
           type: [[]],
           difficulty: [NaN, [Validators.min(1), Validators.max(10)]],
@@ -95,7 +95,12 @@ export class EditExamComponent {
       else {
         this.sections.at(this.sections.length - 1).get('questionNumber')?.patchValue(this.sections.at(this.sections.length - 1).get('questionNumber')?.value + 1)
       }
+      let nodes = this.sections.at(this.sections.length - 1).get('node')?.value;
+      console.log(nodes);
+      nodes.push(nodeId);
+      this.sections.at(this.sections.length - 1).get('node')?.patchValue( nodes)
        this.sectionList[this.sectionList.length - 1].questions?.items.push(question)
+
         this.sections.at(this.sections.length - 1).updateValueAndValidity();
         this.examForm.updateValueAndValidity();
     }
@@ -200,7 +205,7 @@ export class EditExamComponent {
 
   populateSection(id: number): void {
     const sectionData = this.sections.at(id).value;
-    this.sectionList[id].node_id = sectionData.node;
+    this.sectionList[id].node_ids = sectionData.node;
     this.sectionList[id].difficulty = sectionData.difficulty;
     this.sectionList[id].time = sectionData.time;
     this.sectionList[id].repeat = sectionData.isNew;
@@ -220,8 +225,6 @@ export class EditExamComponent {
 
   openExamSection(id: number): void {
     this.populateSection(id);
-    let nodeId = this.sectionList[id].node_id ?? NaN;
-    console.log(<number>this.sectionList[id].question_number, <number>this.sectionList[id].questions?.items.length);
     let maxQuestions = (this.sectionList[id].questions !== undefined) ?
       <number>this.sectionList[id].question_number - <number>this.sectionList[id].questions?.items.length :
       <number>this.sectionList[id].question_number;
@@ -230,7 +233,6 @@ export class EditExamComponent {
       data: {
         section: this.sectionList[id],
         subjectId: this.id,
-        nodeId: nodeId,
         maxQuestions: maxQuestions,
       }
     });
