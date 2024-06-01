@@ -201,6 +201,14 @@ h5 {
     font-size: 1rem !important;
   }
 }
+
+.long-form-group {
+  margin-bottom: 2rem;
+  width: 56rem;
+  span {
+    font-size: 1rem !important;
+  }
+}
 mat-select {
   span {
     font-size: 1rem !important;
@@ -421,20 +429,35 @@ th:last-child, td:last-child {
   max-width: 70rem;
 }
 
-html{
+html {
   --mdc-checkbox-selected-icon-color: #007fc0;
-  --mdc-checkbox-selected-focus-icon-color:  #007fc0;
-    /* --mdc-checkbox-selected-hover-icon-color: #ff4081; */
-    --mdc-checkbox-selected-icon-color: #007fc0;
-    --mdc-checkbox-selected-pressed-icon-color: #007fc0;
-    --mdc-checkbox-unselected-focus-icon-color: #212121;
-    --mdc-checkbox-unselected-hover-icon-color: #212121;
-    --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
-    --mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
-    --mdc-checkbox-selected-focus-state-layer-color: #007fc0;
-    --mdc-checkbox-selected-hover-state-layer-color: #007fc0;
-    --mdc-checkbox-selected-pressed-state-layer-color: #007fc0;
+  --mdc-checkbox-selected-focus-icon-color: #007fc0;
+  /* --mdc-checkbox-selected-hover-icon-color: #ff4081; */
+  --mdc-checkbox-selected-icon-color: #007fc0;
+  --mdc-checkbox-selected-pressed-icon-color: #007fc0;
+  --mdc-checkbox-unselected-focus-icon-color: #212121;
+  --mdc-checkbox-unselected-hover-icon-color: #212121;
+  --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
+  --mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
+  --mdc-checkbox-selected-focus-state-layer-color: #007fc0;
+  --mdc-checkbox-selected-hover-state-layer-color: #007fc0;
+  --mdc-checkbox-selected-pressed-state-layer-color: #007fc0;
 }
+  html .mat-mdc-slide-toggle.mat-accent {
+     --mdc-switch-selected-focus-state-layer-color: #007fc0;
+     --mdc-switch-selected-handle-color: #007fc0;
+     --mdc-switch-selected-hover-state-layer-color: #007fc0;
+     --mdc-switch-selected-pressed-state-layer-color: #007fc0;
+     --mdc-switch-selected-focus-handle-color: #007fc0;
+     --mdc-switch-selected-hover-handle-color: #007fc0;
+     --mdc-switch-selected-pressed-handle-color: #007fc0;
+     --mdc-switch-selected-focus-track-color: #007fc0;
+     --mdc-switch-selected-hover-track-color: #007fc0;
+     --mdc-switch-selected-pressed-track-color: #007fc0;
+     --mdc-switch-selected-track-color: #007fc0;
+}
+
+
 
 /*
 color palette:

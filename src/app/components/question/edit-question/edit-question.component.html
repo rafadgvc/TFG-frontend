@@ -4,71 +4,73 @@
   </div>
   <form [formGroup]="questionForm" class="form">
     <h4>General</h4>
-    <div class="row gap horizontal-center">
+    <div>
+      <div class="row gap horizontal-center">
 
-      <!--    Tipo-->
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Tipo de la pregunta</mat-label>
-        <mat-select
-          formControlName="type"
-          matTooltip="Las preguntas parametrizadas permitirán añadir varias preguntas parecidas en las que cambia solo una frase de la pregunta y de la respuesta"
-          matTooltipPosition="left"
-        >
-          <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
-            {{ type }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="questionForm.get('type')?.hasError('required')">
-          Este campo es requerido
-        </mat-error>
-      </mat-form-field>
+        <!--    Tipo-->
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Tipo de la pregunta</mat-label>
+          <mat-select
+            formControlName="type"
+            matTooltip="Las preguntas parametrizadas permitirán añadir varias preguntas parecidas en las que cambia solo una frase de la pregunta y de la respuesta"
+            matTooltipPosition="left"
+          >
+            <mat-option *ngFor="let type of types" [value]="type.toUpperCase()">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="questionForm.get('type')?.hasError('required')">
+            Este campo es requerido
+          </mat-error>
+        </mat-form-field>
 
-      <!-- Selector de Nodos -->
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Nodos de la Jerarquía</mat-label>
-        <mat-select formControlName="nodes" multiple>
-          <mat-option *ngFor="let node of hierarchyNodes" [value]="node.id">
-            {{ node.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="questionForm.get('nodes')?.hasError('required')">
-          Selecciona al menos un nodo.
-        </mat-error>
-      </mat-form-field>
+        <!-- Selector de Nodos -->
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Nodos de la Jerarquía</mat-label>
+          <mat-select formControlName="nodes" multiple>
+            <mat-option *ngFor="let node of hierarchyNodes" [value]="node.id">
+              {{ node.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="questionForm.get('nodes')?.hasError('required')">
+            Selecciona al menos un nodo.
+          </mat-error>
+        </mat-form-field>
 
-      <!--    Dificultad-->
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Dificultad</mat-label>
-        <input matInput formControlName="difficulty" type="number">
-        <mat-error *ngIf="questionForm.get('difficulty')?.hasError('required')">
-          Este campo es requerido
-        </mat-error>
-        <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
-        questionForm.get('difficulty')?.hasError('min') ">
-          El mínimo de este campo es 1
-        </mat-error>
-        <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
-        questionForm.get('difficulty')?.hasError('max') ">
-          El máximo de este campo es 10
-        </mat-error>
-      </mat-form-field>
+        <!--    Dificultad-->
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Dificultad</mat-label>
+          <input matInput formControlName="difficulty" type="number">
+          <mat-error *ngIf="questionForm.get('difficulty')?.hasError('required')">
+            Este campo es requerido
+          </mat-error>
+          <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
+          questionForm.get('difficulty')?.hasError('min') ">
+            El mínimo de este campo es 1
+          </mat-error>
+          <mat-error *ngIf="!questionForm.get('difficulty')?.hasError('required') &&
+          questionForm.get('difficulty')?.hasError('max') ">
+            El máximo de este campo es 10
+          </mat-error>
+        </mat-form-field>
 
-      <!--    Tiempo estimado-->
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Tiempo Estimado</mat-label>
-        <input matInput formControlName="time" type="number">
-        <mat-error *ngIf="questionForm.get('time')?.hasError('required')">
-          Este campo es requerido
-        </mat-error>
-        <mat-error *ngIf="!questionForm.get('time')?.hasError('required') &&
-        questionForm.get('time')?.hasError('min') ">
-          El mínimo de este campo es 1
-        </mat-error>
-      </mat-form-field>
+        <!--    Tiempo estimado-->
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Tiempo Estimado</mat-label>
+          <input matInput formControlName="time" type="number">
+          <mat-error *ngIf="questionForm.get('time')?.hasError('required')">
+            Este campo es requerido
+          </mat-error>
+          <mat-error *ngIf="!questionForm.get('time')?.hasError('required') &&
+          questionForm.get('time')?.hasError('min') ">
+            El mínimo de este campo es 1
+          </mat-error>
+        </mat-form-field>
 
-
-      <!--    Cuerpo-->
-          <mat-form-field appearance="fill" class="form-group">
+      </div>
+      <div class="horizontal-center">
+        <!--    Cuerpo-->
+          <mat-form-field appearance="fill" class="long-form-group">
             <mat-label>Enunciado</mat-label>
             <input *ngIf="questionForm.get('isParametrized')?.value === true "
               matInput formControlName="title"
@@ -81,7 +83,7 @@
               Este campo es requerido
             </mat-error>
           </mat-form-field>
-
+      </div>
     </div>
 
 
