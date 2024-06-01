@@ -115,18 +115,6 @@ export class NodeListComponent implements OnInit{
     this.router.navigate(['/node/' + nodeId]);
   }
 
-  openAddQuestionModal(nodeId: number): void {
-    const dialogRef = this.dialog.open(AddQuestionComponent, {
-      width: '800px',
-      maxHeight: '700px',
-      data: { nodeId: nodeId }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Lógica después de cerrar el diálogo
-    });
-  }
-
   calculateNodeLevel (currentNode: any): number {
     let level = 1;
     let currentParentId = currentNode.parent_id;

@@ -7,9 +7,6 @@
           <button mat-icon-button color="primary" class="btn btn-primary" (click)="viewNode(node.id)">
             <mat-icon>more_horiz</mat-icon>
           </button>
-          <button mat-icon-button color="primary" class="btn btn-primary" (click)="openAddQuestionModal(node.id)">
-            <mat-icon>question_mark</mat-icon>
-          </button>
           <button mat-icon-button color="primary" class="btn btn-primary" (click)="openAddNodeModal(node.id)">
             <mat-icon>library_add</mat-icon>
           </button>
@@ -26,7 +23,7 @@
     </div>
 
     <div class="padding-xs">
-      <button mat-button color="primary" class="padding-lg btn btn-secondary" (click)="viewSubject()">
+      <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="viewSubject()">
         <mat-icon>undo</mat-icon>
         Volver
       </button>
@@ -44,5 +41,9 @@
   <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="openAddNodeModal()">
     <mat-icon>add</mat-icon>
     Añadir
+  </button>
+  <button mat-button color="primary" class="padding-lg btn btn-primary" (click)="viewSubject()">
+    <mat-icon>undo</mat-icon>
+    Volver
   </button>
 </div>
