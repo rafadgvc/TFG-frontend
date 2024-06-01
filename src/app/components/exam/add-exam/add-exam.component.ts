@@ -22,7 +22,7 @@ import { SnackbarService } from "../../../services/snackbar.service";
 @Component({
   selector: 'app-add-exam',
   templateUrl: './add-exam.component.html',
-  styleUrls: ['./add-exam.component.css'] // Asegúrate de que aquí sea 'styleUrls' en lugar de 'styleUrl'
+  styleUrl: './add-exam.component.css'
 })
 export class AddExamComponent {
   id: number = 0;
@@ -98,6 +98,7 @@ export class AddExamComponent {
           for (let j = 0; j < total; j++) {
             let question = this.sectionList[i].questions?.items[j];
             if (question !== undefined) {
+              question.section_number = i + 1;
               questionList.items.push(question);
               questionIds.push(question.id);
             }

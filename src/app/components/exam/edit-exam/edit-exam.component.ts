@@ -1,9 +1,23 @@
 import { Component } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Question, QuestionList} from "../../../models/question";
-import {Answer, AnswerList} from "../../../models/answer";
 import {Exam} from "../../../models/exam";
+import {HierarchyNode} from "../../../models/hierarchy-node";
+import {Section} from "../../../models/section";
+import {NodeService} from "../../../services/node.service";
+import {ExamService} from "../../../services/exam_service";
+import {MatDialog} from "@angular/material/dialog";
+import {SnackbarService} from "../../../services/snackbar.service";
+import {ExamSectionModalComponent} from "../exam-section-modal/exam-section-modal.component";
 
 @Component({
   selector: 'app-edit-exam',
@@ -11,87 +25,295 @@ import {Exam} from "../../../models/exam";
   styleUrl: './edit-exam.component.css'
 })
 export class EditExamComponent {
+  id: number = 0;
   exam?: Exam;
   examForm: FormGroup;
-  questions: FormArray;
-  types: string[] = ['Test', 'Desarrollo', 'Parametrizada']
+  sections: FormArray;
+  types: string[] = ['Test', 'Desarrollo'];
+  hierarchyNodes: HierarchyNode[] = [];
+  sectionList: Section[] = [];
+  selectedQuestions: Question[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
+    private nodeService: NodeService,
+    private examService: ExamService,
     private router: Router,
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private snackbarService: SnackbarService
   ) {
-    const preheatedQuestions: Question[] = [
-      new Question(1, "¿Cuál es la capital de Francia?", 2, 30, "multiple_choice",true),
-      new Question(2, "¿Cuántos lados tiene un cuadrado?", 1, 20, "true_false",true, new AnswerList([new Answer(1,'1', 0), new Answer(2, '2', 0), new Answer(3, '3', 0), new Answer(4, '4', 1)])),
-      new Question(3, "¿Qué año fue la Revolución Francesa?", 3, 40, "open_answer",true),
-      new Question(4, "¿Cuál es el resultado de 2 + 2?", 1, 15, "open_answer",true),
-      new Question(5, "¿Quién escribió 'Don Quijote de la Mancha'?", 2, 25, "multiple_choice",true),
-      new Question(6, "¿Cuál es el símbolo químico del agua?", 2, 30, "multiple_choice",true),
-      new Question(7, "¿Cuál es el planeta más grande del sistema solar?", 3, 35, "open_answer",true),
-      new Question(8, "¿Cuál es el río más largo del mundo?", 2, 30, "true_false",true),
-      new Question(9, "¿Quién pintó la Mona Lisa?", 3, 40, "open_answer",true),
-    ];
-    this.exam = new Exam(1, "Ordinaria 2016", 5, 120, new QuestionList(preheatedQuestions), 1);
-  this.examForm = this.formBuilder.group({
-    title: [this.exam.title, Validators.required],
-    difficulty: [this.exam.difficulty, [Validators.min(1), Validators.max(10)]],
-    time: [this.exam.time, [Validators.min(1)]],
-    questions: this.formBuilder.array([]),
-    size:[this.exam.questions?.total, [Validators.required, Validators.min(1)]]
-  });
-  this.questions = this.examForm.get('questions') as FormArray;
+    this.sections = this.formBuilder.array([], this.validateSectionQuestions());
 
-  for (const question of this.exam?.questions?.items || []) {
-    if (question instanceof Question) {
-        this.questions.push(this.formBuilder.group({
-            node: [''],
-            difficulty: [question.difficulty, [Validators.min(1), Validators.max(10)]],
-            time: [question.time, [Validators.min(1)]]
-        }));
+    this.examForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      sections: this.sections
+    });
+    this.activatedRoute.params.subscribe(params => {
+      this.id = +params['id'];
+      this.examService.getExam(this.id).subscribe(exam => {
+        this.exam = exam;
+        this.populateExamForm();
+      });
+
+    });
+  }
+
+  populateExamForm(): void {
+    // Llamar al servicio para obtener los nodos correspondientes
+    if (this.exam?.subject_id !== undefined) {
+      this.nodeService.getSubjectNodes(this.exam?.subject_id).subscribe(nodes => {
+        this.hierarchyNodes = nodes.items;
+      });
     }
-  }
-}
+    this.examForm.get('title')?.patchValue(this.exam?.title);
+    this.selectedQuestions = (this.exam?.questions?.items !== undefined) ? this.exam?.questions.items : [];
+    let sectionCount = 0;
+    this.selectedQuestions.sort((a, b): number => {
+      let as = (a.section_number !== undefined) ? a.section_number : 0;
+      let bs = (b.section_number !== undefined) ? b.section_number : 0;
+      return as - bs;
+    }
+    )
+    for (let a = 0; a < this.selectedQuestions.length; a++){
+      let question = this.selectedQuestions[a];
+      if(question.section_number !== undefined && question.section_number > sectionCount){
+        sectionCount = question.section_number;
+        let nodeId = (question.node_ids?.at(0) !== undefined) ? question.node_ids.at(0) : NaN;
+        this.sectionList.push(new Section(sectionCount, undefined, 1, undefined, undefined, undefined, undefined,new QuestionList([])))
+        this.sections.push(this.formBuilder.group({
+          node: [nodeId, [Validators.required]],
+          questionNumber: [1, [Validators.required, Validators.min(1)]],
+          type: [[]],
+          difficulty: [NaN, [Validators.min(1), Validators.max(10)]],
+          time: [NaN, [Validators.required, Validators.min(1)]],
+          isParametrized: [false],
+          isNew: [false],
+          questions: [[]]
+        }))
+      }
+      else {
+        this.sections.at(this.sections.length - 1).get('questionNumber')?.patchValue(this.sections.at(this.sections.length - 1).get('questionNumber')?.value + 1)
+      }
+       this.sectionList[this.sectionList.length - 1].questions?.items.push(question)
+        this.sections.at(this.sections.length - 1).updateValueAndValidity();
+        this.examForm.updateValueAndValidity();
+    }
 
-  addQuestion() {
-    this.questions.push(this.formBuilder.group({
-      node: [''],
-      difficulty: ['', [Validators.min(1), Validators.max(10)]],
-      time: ['', [Validators.min(1)]]
+  }
+
+  addSection() : void {
+    this.sections.push(this.formBuilder.group({
+      node: ['', [Validators.required]],
+      questionNumber: ['', [Validators.required, Validators.min(1)]],
+      type: [[]],
+      difficulty: [NaN, [Validators.min(1), Validators.max(10)]],
+      time: [NaN, [Validators.required, Validators.min(1)]],
+      isParametrized: [false],
+      isNew: [false],
+      questions: [[]]  // Añadimos un campo para almacenar las preguntas
     }));
+    this.sectionList.push(new Section(this.sectionList.length));
   }
 
-  removeQuestion(index: number) {
-    this.questions.removeAt(index);
+  removeSection(index: number) {
+    this.sections.removeAt(index);
+    this.sectionList.splice(index, 1);
+    this.examForm.updateValueAndValidity();
   }
 
-  onSubmit() {
+  get sectionsControls() {
+    return (this.examForm.get('sections') as FormArray).controls;
+  }
+
+  submitForm(): void {
     if (this.examForm.valid) {
-      const questionData = this.examForm.value;
-      const question = new Question(
-        0, // Assign ID appropriately
-        questionData.title,
-        questionData.difficulty,
-        questionData.time,
-        questionData.type,
-        true,
-        new AnswerList(questionData.answers)
+      const examData = this.examForm.value;
+      let questionIds: number[] = [];
+      let questionList = new QuestionList([]);
+
+      const sectionNumber = this.sectionList.length;
+
+      for (let i = 0; i < sectionNumber; i++) {
+        let total = this.sectionList[i].questions?.items.length;
+        if (total !== undefined) {
+          for (let j = 0; j < total; j++) {
+            let question = this.sectionList[i].questions?.items[j];
+            if (question !== undefined) {
+              question.section_number = i + 1;
+              questionList.items.push(question);
+              questionIds.push(question.id);
+            }
+          }
+        }
+      }
+      console.log(questionIds);
+
+      const exam  = new Exam(
+        this.id,
+        examData.title,
+        this.exam?.difficulty,
+        this.exam?.time,
+        questionList,
+        this.exam?.subject_id,
+        this.exam?.connected,
+        questionList.items.length
       );
-      // Now you can use 'question' object to save or do whatever you want
-      console.log(question);
+      this.exam = exam;
+      console.log(this.exam)
+      this.examService.editExam(this.exam).subscribe(
+        () => {
+          this.snackbarService.showSuccess('Examen modificado correctamente.');
+          this.router.navigate(['/exam-list/' + this.exam?.subject_id]);
+        }
+      );
     } else {
       console.log('Invalid form');
     }
   }
 
-  get questionsControls() {
-    return (this.examForm.get('questions') as FormArray).controls;
+  generateRemainingQuestions(): void {
+    for (let i = 0; i < this.sectionList.length; i++) {
+      this.populateSection(i);
+
+      let wantedQuestions = this.sectionList[i].question_number ?? 0;
+      let currentQuestions = this.sectionList[i].questions?.items.length ?? 0;
+
+      if (wantedQuestions > currentQuestions) {
+        this.examService.generateRemainingQuestions(this.sectionList[i], wantedQuestions - currentQuestions).subscribe(
+          questionList => {
+            if (!this.sectionList[i].questions) {
+              this.sectionList[i].questions = questionList;
+            } else {
+              for (let a = 0; a < questionList.total; a++) {
+                this.sectionList[i].questions?.items.push(questionList.items[a]);
+                this.selectedQuestions.push(questionList.items[a]);
+              }
+            }
+            this.sections.at(i).updateValueAndValidity();
+          }
+        );
+      }
+    }
+    this.examForm.updateValueAndValidity();
   }
 
-  submitForm(): void {
-    if (this.examForm.valid) {
-      // TODO: Añadir creación del examen
-      this.router.navigate(['/home']);
+  populateSection(id: number): void {
+    const sectionData = this.sections.at(id).value;
+    this.sectionList[id].node_id = sectionData.node;
+    this.sectionList[id].difficulty = sectionData.difficulty;
+    this.sectionList[id].time = sectionData.time;
+    this.sectionList[id].repeat = sectionData.isNew;
+    this.sectionList[id].type = sectionData.type;
+    this.sectionList[id].question_number = sectionData.questionNumber;
+    let excluded = this.sectionList[id].exclude_ids;
 
+    if (!excluded || excluded.length < this.selectedQuestions.length) {
+      if (!this.sectionList[id].exclude_ids) {
+        this.sectionList[id].exclude_ids = [];
+      }
+      for (let i = 0; i < this.selectedQuestions.length; i++) {
+        this.sectionList[id].exclude_ids?.push(this.selectedQuestions[i].id);
+      }
     }
+  }
+
+  openExamSection(id: number): void {
+    this.populateSection(id);
+    let nodeId = this.sectionList[id].node_id ?? NaN;
+    console.log(<number>this.sectionList[id].question_number, <number>this.sectionList[id].questions?.items.length);
+    let maxQuestions = (this.sectionList[id].questions !== undefined) ?
+      <number>this.sectionList[id].question_number - <number>this.sectionList[id].questions?.items.length :
+      <number>this.sectionList[id].question_number;
+    const dialogRef = this.dialog.open(ExamSectionModalComponent, {
+      width: '950px',
+      data: {
+        section: this.sectionList[id],
+        subjectId: this.id,
+        nodeId: nodeId,
+        maxQuestions: maxQuestions,
+      }
+    });
+    dialogRef.afterClosed().subscribe((result: QuestionList) => {
+      if (result && result.total > 0) {
+        if (!this.sectionList[id].questions) {
+          this.sectionList[id].questions = new QuestionList([]);
+        }
+        for (let a = 0; a < result.total; a++) {
+          this.sectionList[id].questions?.items.push(result.items[a]);
+          this.selectedQuestions.push(result.items[a]);
+        }
+        this.sections.at(id).updateValueAndValidity();
+        this.examForm.updateValueAndValidity();
+      }
+    });
+  }
+
+  calculateAverageDifficulty(): string {
+    let avg = 0;
+    let total = 0;
+    for (let i = 0; i < this.sectionList.length; i++) {
+      let questions = this.sectionList[i].questions;
+      if (questions) {
+        for (let j = 0; j < questions.items.length; j++) {
+          avg += questions.items[j].difficulty;
+          total++;
+        }
+      }
+    }
+    avg /= total;
+    return `${avg.toFixed(3)} / 10`;
+  }
+
+  calculateTotalTime(): string {
+    let total = 0;
+    for (let i = 0; i < this.sectionList.length; i++) {
+      let questions = this.sectionList[i].questions;
+      if (questions) {
+        for (let j = 0; j < questions.items.length; j++) {
+          total += questions.items[j].time;
+        }
+      }
+    }
+    return `${total} min`;
+  }
+
+  calculateTotalQuestions(): string {
+    let total = 0;
+    for (let i = 0; i < this.sectionList.length; i++) {
+      let questions = this.sectionList[i].questions;
+      if (questions) {
+        total += questions.items.length;
+      }
+    }
+    return `${total}`;
+  }
+
+  eliminateQuestion(questionId: number, sectionId: number) {
+    const section = this.sectionList[sectionId];
+    if (section && section.questions) {
+      const questionIndex = section.questions.items.findIndex(q => q.id === questionId);
+      if (questionIndex > -1) {
+        section.questions.items.splice(questionIndex, 1);
+      }
+      this.sections.at(sectionId).updateValueAndValidity();
+    }
+    this.examForm.updateValueAndValidity();
+  }
+
+  validateSectionQuestions(): ValidatorFn {
+    return (formArray: AbstractControl): ValidationErrors | null => {
+      const sections = formArray as FormArray;
+      const size = (this.sectionList.length < sections.length) ? this.sectionList.length : sections.length;
+      for (let i = 0; i < size; i++) {
+        const section = sections.at(i);
+        const questionNumber = section.get('questionNumber')?.value;
+        const questions = (this.sectionList[i].questions === undefined) ? 0 : <number>this.sectionList[i].questions?.items.length;
+        if (questionNumber <= 0 || questions !== questionNumber) {
+          return { invalidQuestionNumber: true };
+        }
+      }
+      return null;
+    };
   }
 }

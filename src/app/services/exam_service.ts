@@ -131,6 +131,13 @@ export class ExamService {
     );
   }
 
+  editExam(exam: Exam): Observable<Exam>{
+    console.log(exam);
+    return this.http.put<Exam>(this.examUrl + '/' +  exam.id, exam, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError<Exam>(`edit Exam`))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

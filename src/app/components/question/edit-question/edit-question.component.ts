@@ -242,7 +242,6 @@ export class EditQuestionComponent {
 
       );
       this.question = question;
-      // Now you can use 'question' object to save or do whatever you want
       this.questionService.editQuestion(question).subscribe(
         () => {
           this.snackbarService.showSuccess('Pregunta modificada correctamente.');
