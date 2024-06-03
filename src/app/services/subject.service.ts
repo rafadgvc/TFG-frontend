@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subject, SubjectList } from "../models/subject";
 import { AuthService } from "./auth.service";
@@ -18,7 +18,7 @@ export class SubjectService {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private snackbarService: SnackbarService // Inyecta el servicio de Snackbar
+    private snackbarService: SnackbarService
   ) {}
 
   getSubject(id: number): Observable<Subject> {
@@ -28,33 +28,49 @@ export class SubjectService {
   }
 
   getUserSubjects(): Observable<SubjectList> {
-    return this.http.get<SubjectList>(this.subjectUrl + '/user-subjects',  { headers: this.headers, withCredentials: true }).pipe(
-      catchError(this.handleError<SubjectList>(`getSubjectList`))
+    return this.http.get<SubjectList>(this.subjectUrl + '/user-subjects', { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError<SubjectList>(`getUserSubjects`))
     );
   }
 
-  addSubject(subject: Subject): Observable<Subject>{
-    return this.http.post<Subject>(this.subjectUrl, subject, {headers: this.headers, withCredentials: true}).pipe(
+  addSubject(subject: Subject): Observable<Subject> {
+    return this.http.post<Subject>(this.subjectUrl, subject, { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<Subject>(`addSubject`))
     );
   }
 
-  updateSubject(subject: Subject): Observable<Subject>{
-    return this.http.put<Subject>(this.subjectUrl + '/' + subject.id, subject, {headers: this.headers, withCredentials: true}).pipe(
-      catchError(this.handleError<Subject>(`update Subject`))
+  updateSubject(subject: Subject): Observable<Subject> {
+    return this.http.put<Subject>(this.subjectUrl + '/' + subject.id, subject, { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError<Subject>(`updateSubject`))
     );
   }
 
-  deleteSubject(subject: Subject): Observable<any>{
-    return this.http.delete<Subject>(this.subjectUrl + '/' + subject.id, {headers: this.headers, withCredentials: true}).pipe(
-      catchError(this.handleError<Subject>(`delete Subject`))
+  deleteSubject(subject: Subject): Observable<any> {
+    return this.http.delete<Subject>(this.subjectUrl + '/' + subject.id, { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError<Subject>(`deleteSubject`))
     );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
-      this.snackbarService.showError('Ocurrió un error. Por favor, inténtalo de nuevo.'); // Muestra mensaje de error
+      if (error.status === 401) {
+        // Unauthorized error
+        this.snackbarService.showError('No estás autorizado para realizar esta acción. Por favor, inicie sesión.');
+      }
+      else if (error.status === 400) {
+        this.snackbarService.showError('El recurso que pide no existe o no está disponible.');
+      }
+      else if (error.status === 404) {
+        this.snackbarService.showError('El recurso que pide no existe o no está disponible.');
+      }
+      else if (error.status === 422) {
+        this.snackbarService.showError('Los datos con los que ha hecho esa acción no son válidos. Repita el proceso');
+      }
+      else{
+        // General error message
+        this.snackbarService.showError('Ocurrió un error. Por favor, inténtelo de nuevo.');
+      }
+
       return of(result as T);
     };
   }

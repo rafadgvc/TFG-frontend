@@ -3,6 +3,7 @@ import {catchError, map, Observable, of} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {HierarchyNode, HierarchyNodeList} from "../models/hierarchy-node";
 import {AuthService} from "./auth.service";
+import {SnackbarService} from "./snackbar.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class NodeService {
   private headers = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackbarService: SnackbarService
   ) { }
 
   getNode(id: number): Observable<HierarchyNode> {
@@ -49,9 +51,23 @@ export class NodeService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to snackbar
-      console.error(error); // log to console instead
+      if (error.status === 401) {
+        // Unauthorized error
+        this.snackbarService.showError('No estás autorizado para realizar esta acción. Por favor, inicie sesión.');
+      }
+      else if (error.status === 400) {
+        this.snackbarService.showError('El recurso que pide no existe o no está disponible.');
+      }
+      else if (error.status === 404) {
+        this.snackbarService.showError('El recurso que pide no existe o no está disponible.');
+      }
+      else if (error.status === 422) {
+        this.snackbarService.showError('Los datos con los que ha hecho esa acción no son válidos. Repita el proceso');
+      }
+      else{
+        // General error message
+        this.snackbarService.showError('Ocurrió un error. Por favor, inténtelo de nuevo.');
+      }
 
       return of(result as T);
     };

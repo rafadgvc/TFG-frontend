@@ -5,6 +5,7 @@ import {Question, QuestionList} from "../models/question";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {ResultList} from "../models/result";
+import {SnackbarService} from "./snackbar.service";
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class ResultService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackbarService: SnackbarService
   ) { }
 
 
@@ -28,7 +30,6 @@ export class ResultService {
   }
 
    importResults(formData: FormData): Observable<ResultList> {
-      // No necesitamos headers aquí ya que FormData manejará el Content-Type automáticamente
       return this.http.post<ResultList>(`${this.resultUrl}/upload`, formData, { headers: this.headers, withCredentials: true }).pipe(
         catchError(this.handleError<ResultList>('importResults'))
       );
@@ -43,9 +44,23 @@ export class ResultService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to snackbar
-      console.error(error); // log to console instead
+      if (error.status === 401) {
+        // Unauthorized error
+        this.snackbarService.showError('No estás autorizado para realizar esta acción. Por favor, inicie sesión.');
+      }
+      else if (error.status === 400) {
+        this.snackbarService.showError('El recurso que pide no existe o no está disponible.');
+      }
+      else if (error.status === 404) {
+        this.snackbarService.showError('El recurso que pide no existe o no está disponible.');
+      }
+      else if (error.status === 422) {
+        this.snackbarService.showError('Los datos con los que ha hecho esa acción no son válidos. Repita el proceso');
+      }
+      else{
+        // General error message
+        this.snackbarService.showError('Ocurrió un error. Por favor, inténtelo de nuevo.');
+      }
 
       return of(result as T);
     };
