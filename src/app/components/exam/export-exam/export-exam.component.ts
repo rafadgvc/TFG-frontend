@@ -30,6 +30,8 @@ export class ExportExamComponent {
       exportEndpoint = 'export_aiken';
     } else if (this.selectedFormat === 'GIFT') {
       exportEndpoint = 'export_gift';
+    } else if (this.selectedFormat === 'MoodleXML') {
+      exportEndpoint = 'export_moodlexml';
     } else {
       exportEndpoint = 'export_pdf';
     }
