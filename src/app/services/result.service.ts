@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-
-import {catchError, map, Observable, of} from 'rxjs';
-import {Question, QuestionList} from "../models/question";
+import {catchError, Observable, of} from 'rxjs';
+import {Question} from "../models/question";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {ResultList} from "../models/result";
@@ -12,7 +11,7 @@ import {SnackbarService} from "./snackbar.service";
 })
 export class ResultService {
 
-  private resultUrl = 'http://localhost:5000/result';  // URL to API
+  private resultUrl = 'http://localhost:5000/result';
   private accessToken = this.authService.getAccessTokenCookie();
   private headers = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
 
@@ -45,7 +44,6 @@ export class ResultService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {
-        // Unauthorized error
         this.snackbarService.showError('No estás autorizado para realizar esta acción. Por favor, inicie sesión.');
       }
       else if (error.status === 400) {
@@ -58,7 +56,6 @@ export class ResultService {
         this.snackbarService.showError('Los datos con los que ha hecho esa acción no son válidos. Repita el proceso');
       }
       else{
-        // General error message
         this.snackbarService.showError('Ocurrió un error. Por favor, inténtelo de nuevo.');
       }
 

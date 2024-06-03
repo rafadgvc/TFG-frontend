@@ -1,5 +1,5 @@
 import {AnswerList} from "./answer";
-import {HierarchyNode, HierarchyNodeList} from "./hierarchy-node";
+import {HierarchyNodeList} from "./hierarchy-node";
 import {QuestionParameterList} from "./question-parameter";
 
 export class Question{

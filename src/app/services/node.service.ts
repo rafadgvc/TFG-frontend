@@ -9,7 +9,7 @@ import {SnackbarService} from "./snackbar.service";
   providedIn: 'root'
 })
 export class NodeService {
-  private nodeUrl = 'http://localhost:5000/node';  // URL to API
+  private nodeUrl = 'http://localhost:5000/node';
   private accessToken = this.authService.getAccessTokenCookie();
   private headers = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
   constructor(
@@ -52,7 +52,6 @@ export class NodeService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {
-        // Unauthorized error
         this.snackbarService.showError('No estás autorizado para realizar esta acción. Por favor, inicie sesión.');
       }
       else if (error.status === 400) {
@@ -65,7 +64,6 @@ export class NodeService {
         this.snackbarService.showError('Los datos con los que ha hecho esa acción no son válidos. Repita el proceso');
       }
       else{
-        // General error message
         this.snackbarService.showError('Ocurrió un error. Por favor, inténtelo de nuevo.');
       }
 

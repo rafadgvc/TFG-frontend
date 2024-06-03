@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {QuestionDetailComponent} from "./components/question/question-detail/question-detail.component";
 import {AddQuestionComponent} from "./components/question/add-question/add-question.component";
 import {UserSignupComponent} from "./components/user-signup/user-signup.component";
 import {LoginComponent} from "./components/login/login.component";

@@ -9,7 +9,7 @@ import {SnackbarService} from "./snackbar.service";
 })
 export class UserService {
 
-  private userUrl = 'http://localhost:5000/user';  // URL to API
+  private userUrl = 'http://localhost:5000/user';
 
   constructor(
     private http: HttpClient,
@@ -27,7 +27,6 @@ export class UserService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {
-        // Unauthorized error
         this.snackbarService.showError('No estás autorizado para realizar esta acción. Por favor, inicie sesión.');
       }
       else if (error.status === 400) {
@@ -40,7 +39,6 @@ export class UserService {
         this.snackbarService.showError('Los datos con los que ha hecho esa acción no son válidos. Repita el proceso');
       }
       else{
-        // General error message
         this.snackbarService.showError('Ocurrió un error. Por favor, inténtelo de nuevo.');
       }
 

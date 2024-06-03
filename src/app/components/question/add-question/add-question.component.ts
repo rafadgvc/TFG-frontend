@@ -49,8 +49,7 @@ export class AddQuestionComponent {
   this.addGroup();
 
   this.activatedRoute.params.subscribe(params => {
-      this.id = +params['id']; // Convertir a número
-      // Llamar al servicio para obtener los nodos correspondientes
+      this.id = +params['id'];
       this.nodeService.getSubjectNodes(this.id).subscribe(nodes => {
         this.hierarchyNodes = nodes.items;
       });

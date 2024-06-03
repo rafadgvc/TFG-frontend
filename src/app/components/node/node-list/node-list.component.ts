@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import {HierarchyNode, HierarchyNodeList} from '../../../models/hierarchy-node';
+import {HierarchyNode} from '../../../models/hierarchy-node';
 import { AddNodeComponent } from '../add-node/add-node.component';
-import {AddQuestionComponent} from "../../question/add-question/add-question.component";
 import {NodeService} from "../../../services/node.service";
 
 @Component({
@@ -30,7 +29,6 @@ export class NodeListComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      // Llamar al servicio para obtener la pregunta según el id
       if (this.id != null) {
         this.loadHierarchySubjectNodes(this.id);
       }
@@ -85,7 +83,7 @@ export class NodeListComponent implements OnInit{
       }
     };
 
-    // Calcula maxDepth para cada nodo raíz
+
     for (const node of treeNodes) {
       calculateMaxDepth(node, 1);
     }
@@ -134,10 +132,10 @@ export class NodeListComponent implements OnInit{
   };
 
   calculateNodeBackground(node: any): string {
-  // Función auxiliar para calcular el nivel de un nodo en el árbol
 
-  const rootColor: number[] = [255, 255, 255]; // Blanco
-  const deepestColor: number[] = [209, 43, 46]; // #ee6c4d
+
+  const rootColor: number[] = [255, 255, 255];
+  const deepestColor: number[] = [209, 43, 46];
 
 
   const nodeLevel = this.calculateNodeLevel(node);
@@ -161,7 +159,7 @@ export class NodeListComponent implements OnInit{
     this.router.navigate(['/subject/' + this.id]);
   }
 
-  // Función auxiliar para buscar el nodo y calcular su profundidad
+
   dfs = (currentNode: any, targetNode: any, currentDepth: number): number | null => {
     if (currentNode.id === targetNode.id) {
       currentNode.level = currentDepth;
@@ -193,12 +191,12 @@ export class NodeListComponent implements OnInit{
 
   onNodeExpand(event: any) {
     const node = event.node;
-    node.expanded = true; // Actualiza el estado del nodo a expandido
+    node.expanded = true;
   }
 
   onNodeCollapse(event: any) {
     const node = event.node;
-    node.expanded = false; // Actualiza el estado del nodo a contraído
+    node.expanded = false;
   }
 }
 

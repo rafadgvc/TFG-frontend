@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Question, QuestionList} from "../../../models/question";
-import {QuestionService} from "../../../services/question.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {AddQuestionComponent} from "../../question/add-question/add-question.component";
 import {Exam} from "../../../models/exam";
 import {ExamService} from "../../../services/exam_service";
 
@@ -30,7 +27,6 @@ export class ExamListComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      // Llamar al servicio para obtener la pregunta según el id
       if (this.id != null) {
         this.loadSubjectExams(this.id);
       }

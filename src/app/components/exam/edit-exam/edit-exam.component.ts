@@ -60,7 +60,6 @@ export class EditExamComponent {
   }
 
   populateExamForm(): void {
-    // Llamar al servicio para obtener los nodos correspondientes
     if (this.exam?.subject_id !== undefined) {
       this.nodeService.getSubjectNodes(this.exam?.subject_id).subscribe(nodes => {
         this.hierarchyNodes = nodes.items;
@@ -116,7 +115,7 @@ export class EditExamComponent {
       time: [NaN, [Validators.required, Validators.min(1)]],
       isParametrized: [false],
       isNew: [false],
-      questions: [[]]  // Añadimos un campo para almacenar las preguntas
+      questions: [[]]
     }));
     this.sectionList.push(new Section(this.sectionList.length));
   }

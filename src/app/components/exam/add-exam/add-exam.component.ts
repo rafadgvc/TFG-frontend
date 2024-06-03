@@ -44,7 +44,6 @@ export class AddExamComponent {
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.id = +params['id'];
-      // Llamar al servicio para obtener los nodos correspondientes
       this.nodeService.getSubjectNodes(this.id).subscribe(nodes => {
         this.hierarchyNodes = nodes.items;
       });
@@ -69,7 +68,7 @@ export class AddExamComponent {
       time: [NaN, [Validators.required, Validators.min(1)]],
       isParametrized: [false],
       isNew: [false],
-      questions: [[]]  // Añadimos un campo para almacenar las preguntas
+      questions: [[]]
     }));
     this.sectionList.push(new Section(this.sectionList.length));
   }

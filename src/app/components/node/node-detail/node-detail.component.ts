@@ -12,10 +12,8 @@ import {NodeService} from "../../../services/node.service";
   styleUrl: './node-detail.component.css'
 })
 export class NodeDetailComponent implements OnInit{
-  // Node to be shown
   node?: HierarchyNode;
 
-  // TODO: Añadir estadísticas del nodo
 
   id?: number;
 
@@ -30,7 +28,6 @@ export class NodeDetailComponent implements OnInit{
   ngOnInit():void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      // Llamar al servicio para obtener la pregunta según el id
       if (this.id != null) {
         this.loadNode(this.id);
       }
@@ -38,7 +35,6 @@ export class NodeDetailComponent implements OnInit{
   }
 
   loadNode(id: number) {
-    // Llamar al servicio para obtener el nodo según el id
     this.nodeService.getNode(id).subscribe(node => {
       this.node = node;
     });

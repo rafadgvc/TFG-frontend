@@ -14,8 +14,6 @@ import {ExamService} from "../../../services/exam_service";
   styleUrls: ['./exam-detail.component.css']
 })
 export class ExamDetailComponent implements OnInit {
-
-  // Exam to be shown
   exam?: Exam;
 
   id: number = 1;

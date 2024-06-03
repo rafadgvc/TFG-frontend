@@ -23,13 +23,4 @@ export class SubjectList {
     this.items = items;
     this.total = items.length;
   }
-
-  static fromApiResponse(apiResponse: any): Subject {
-    // Mapear los nombres de las propiedades manualmente
-    return new Subject(
-      apiResponse.id,
-      apiResponse.name,
-      apiResponse.question_number // Asignar el valor a questionNumber
-    );
-  }
 }

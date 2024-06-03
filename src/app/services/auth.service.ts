@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { CookieService } from 'ngx-cookie-service';
 
@@ -32,8 +32,8 @@ export class AuthService {
   logout(): Observable<any> {
     return this.http.post<any>(
       this.authUrl + '/logout',
-      null, // No se envía ningún cuerpo en la solicitud
-      { withCredentials: true } // Asegúrate de enviar las cookies en la solicitud
+      null,
+      { withCredentials: true }
     );
   }
 

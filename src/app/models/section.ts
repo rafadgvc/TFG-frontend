@@ -1,4 +1,4 @@
-import {Question, QuestionList} from "./question";
+import {QuestionList} from "./question";
 
 export class Section {
   id: number;

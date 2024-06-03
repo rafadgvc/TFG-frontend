@@ -12,11 +12,7 @@ import {SubjectModifyComponent} from "../subject-modify/subject-modify.component
   styleUrl: './subject-detail.component.css'
 })
 export class SubjectDetailComponent implements OnInit{
-  // Subject to be shown
   subject?: Subject;
-
-  // TODO: Añadir estadísticas de la asignatura
-
   id?: number;
 
   constructor(
@@ -29,7 +25,6 @@ export class SubjectDetailComponent implements OnInit{
   ngOnInit():void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      // Llamar al servicio para obtener la pregunta según el id
       if (this.id != null) {
         this.loadSubject(this.id);
       }

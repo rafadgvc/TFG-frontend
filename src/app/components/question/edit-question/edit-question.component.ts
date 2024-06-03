@@ -50,8 +50,7 @@ export class EditQuestionComponent {
   this.groups = this.questionForm.get('groups') as FormArray;
 
   this.activatedRoute.params.subscribe(params => {
-      this.id = +params['id']; // Convertir a número
-      // Llamar al servicio para obtener los nodos correspondientes
+      this.id = +params['id'];
       this.questionService.getQuestion(this.id).subscribe(question =>{
         this.question = question;
         this.populateQuestionForm();

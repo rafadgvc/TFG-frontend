@@ -1,6 +1,5 @@
 import {QuestionList} from "./question";
 
-
 export class Exam{
   id: number;
   title: string;

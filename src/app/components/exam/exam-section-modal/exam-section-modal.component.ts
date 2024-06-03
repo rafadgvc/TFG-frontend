@@ -22,8 +22,8 @@ export class ExamSectionModalComponent {
   dataSource = new MatTableDataSource<Question>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   selection: { [key: number]: boolean } = {};
-  maxQuestions: number; // Número máximo de preguntas permitidas
-  selectedCount: number = 0; // Contador de preguntas seleccionadas
+  maxQuestions: number;
+  selectedCount: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<ExamSectionModalComponent>,
@@ -33,7 +33,7 @@ export class ExamSectionModalComponent {
   ) {
     this.subjectId = this.data.subjectId;
     this.section = this.data.section;
-    this.maxQuestions = this.data.maxQuestions; // Recibir el número máximo de preguntas permitidas
+    this.maxQuestions = this.data.maxQuestions;
     this.searchQuestions();
   }
 
@@ -46,7 +46,6 @@ export class ExamSectionModalComponent {
         this.loading = false;
         this.dataSource.paginator = this.paginator;
 
-        // Inicializa el objeto de selección con los ids de las preguntas
         this.questionList.forEach(question => {
           this.selection[question.id] = false;
         });

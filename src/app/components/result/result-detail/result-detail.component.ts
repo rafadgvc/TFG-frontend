@@ -14,8 +14,7 @@ import {ResultService} from "../../../services/result.service";
 })
 export class ResultDetailComponent implements OnInit {
 
-  @Input() exam?: Exam;  // Agrega esta línea para aceptar el objeto Exam
-
+  @Input() exam?: Exam;
   results: Result[] = [];
   examTitles: string[] = [];
   questionTitles: string[] = [];

@@ -1,6 +1,3 @@
-
-import {getLocaleExtraDayPeriodRules} from "@angular/common";
-
 export class QuestionParameter {
   id: number;
   value: string;
