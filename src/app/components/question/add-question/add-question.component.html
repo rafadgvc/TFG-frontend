@@ -3,7 +3,7 @@
     <h2>Añadir pregunta</h2>
   </div>
   <form [formGroup]="questionForm" class="form">
-    <h4>General</h4>
+    <h3>Datos de la Pregunta</h3>
     <div>
       <div class="row gap horizontal-center">
 
@@ -66,10 +66,9 @@
             El mínimo de este campo es 1
           </mat-error>
         </mat-form-field>
-
-
-
       </div>
+
+      <h3>Enunciado</h3>
       <div class="horizontal-center">
        <!--    Cuerpo-->
         <mat-form-field appearance="fill" class="long-form-group">
@@ -91,12 +90,20 @@
 
     <!-- Respuestas si es de tipo test o de tipo desarrollo-->
     <div  *ngIf="questionForm.get('type')?.value === 'TEST' || questionForm.get('type')?.value === 'DESARROLLO'"
-          formArrayName="answers" class="padding">
-      <h4>Respuestas</h4>
-      <div class="row gap horizontal-center">
+          formArrayName="answers"
+          class="padding color-container"
+    >
+      <div class="row horizontal-center-spaced">
+        <h3>Respuestas</h3>
+        <div class="vertical-center">
+          <button mat-raised-button type="button" class="btn btn-primary" (click)="addAnswer()"> <mat-icon>add</mat-icon> Añadir</button>
+        </div>
+      </div>
+      <div class="column vertical-center">
         <div *ngFor="let answer of answersControls; let i = index">
-          <div [formGroupName]="i">
-            <mat-form-field appearance="fill">
+          <div class="horizontal-center gap row padding white-container" [formGroupName]="i">
+
+            <mat-form-field appearance="fill" class="long-form-group">
               <mat-label>Respuesta {{i + 1}}</mat-label>
               <input matInput formControlName="body">
 
@@ -104,6 +111,7 @@
                 Este campo es requerido
               </mat-error>
             </mat-form-field>
+
 
             <div *ngIf="questionForm.get('type')?.value === 'TEST'">
               <mat-form-field appearance="fill">
@@ -129,7 +137,6 @@
           </div>
         </div>
       </div>
-      <button mat-raised-button type="button" class="btn btn-primary" (click)="addAnswer()"> <mat-icon>add</mat-icon> Añadir</button>
     </div>
 
       <!-- Toggle de pregunta parametrizada    -->
@@ -137,50 +144,60 @@
         <mat-slide-toggle formControlName="isParametrized">Parametrizada</mat-slide-toggle>
       </div>
 
-    <div  *ngIf="questionForm.get('isParametrized')?.value === true" formArrayName="groups" class="form-group">
-      <h4>Parámetros</h4>
-      <div *ngFor="let group of groupsControls; let i = index">
+    <div *ngIf="questionForm.get('isParametrized')?.value === true"
+         formArrayName="groups"
+         class="padding color-container"
+    >
+      <div class="row horizontal-center-spaced">
+        <h3>Parámetros</h3>
+        <div class="padding vertical-center">
+          <button mat-raised-button type="button" class="btn btn-primary" (click)="addGroup()"> <mat-icon>add</mat-icon> Añadir Grupo</button>
+        </div>
+      </div>
+
+      <div class="white-container" *ngFor="let group of groupsControls; let i = index">
         <div [formGroupName]="i">
-          <h4>Grupo de parámetros {{i + 1}}</h4>
-          <div class="row gap horizontal-center">
-            <mat-form-field *ngIf="this.parameterNumber >= 1" appearance="fill">
-              <mat-label>param1</mat-label>
-              <input matInput formControlName="param1">
-            </mat-form-field>
+          <div class="padding-sm">
+            <h4>Grupo de parámetros {{i + 1}}</h4>
+            <div class="row gap horizontal-center">
+              <mat-form-field *ngIf="this.parameterNumber >= 1" appearance="fill">
+                <mat-label>param1</mat-label>
+                <input matInput formControlName="param1">
+              </mat-form-field>
 
-             <mat-form-field *ngIf="this.parameterNumber >= 2" appearance="fill">
-               <mat-label>param2</mat-label>
-               <input matInput formControlName="param2">
-            </mat-form-field>
+               <mat-form-field *ngIf="this.parameterNumber >= 2" appearance="fill">
+                 <mat-label>param2</mat-label>
+                 <input matInput formControlName="param2">
+              </mat-form-field>
 
-             <mat-form-field *ngIf="this.parameterNumber >= 3" appearance="fill">
-               <mat-label>param3</mat-label>
-               <input matInput formControlName="param3">
-            </mat-form-field>
+               <mat-form-field *ngIf="this.parameterNumber >= 3" appearance="fill">
+                 <mat-label>param3</mat-label>
+                 <input matInput formControlName="param3">
+              </mat-form-field>
 
-            <mat-form-field *ngIf="this.parameterNumber >= 4" appearance="fill">
-               <mat-label>param4</mat-label>
-               <input matInput formControlName="param4">
-            </mat-form-field>
+              <mat-form-field *ngIf="this.parameterNumber >= 4" appearance="fill">
+                 <mat-label>param4</mat-label>
+                 <input matInput formControlName="param4">
+              </mat-form-field>
 
-            <mat-form-field *ngIf="this.parameterNumber >= 5" appearance="fill">
-               <mat-label>param5</mat-label>
-               <input matInput formControlName="param5">
-            </mat-form-field>
+              <mat-form-field *ngIf="this.parameterNumber >= 5" appearance="fill">
+                 <mat-label>param5</mat-label>
+                 <input matInput formControlName="param5">
+              </mat-form-field>
 
-            <mat-form-field *ngIf="this.parameterNumber >= 6" appearance="fill">
-               <mat-label>param6</mat-label>
-               <input matInput formControlName="param6">
-            </mat-form-field>
+              <mat-form-field *ngIf="this.parameterNumber >= 6" appearance="fill">
+                 <mat-label>param6</mat-label>
+                 <input matInput formControlName="param6">
+              </mat-form-field>
 
-            <mat-form-field *ngIf="this.parameterNumber >= 7" appearance="fill">
-               <mat-label>param7</mat-label>
-               <input matInput formControlName="param7">
-            </mat-form-field>
-
+              <mat-form-field *ngIf="this.parameterNumber >= 7" appearance="fill">
+                 <mat-label>param7</mat-label>
+                 <input matInput formControlName="param7">
+              </mat-form-field>
+            </div>
           </div>
           <div class="padding row gap-sm">
-            <div *ngIf="this.parameterNumber <= 7">
+            <div *ngIf="this.parameterNumber < 7">
               <button mat-raised-button type="button" class="btn btn-primary" (click)="addParameter()"> <mat-icon>add</mat-icon> Añadir Parámetro</button>
             </div>
             <div *ngIf="this.parameterNumber > 1">
@@ -188,11 +205,7 @@
             </div>
             <button mat-raised-button type="button" class="btn btn-danger btn-modal" (click)="removeGroup(i)"> <mat-icon>delete</mat-icon> Borrar Grupo</button>
           </div>
-
         </div>
-      </div>
-      <div class="padding">
-        <button mat-raised-button type="button" class="btn btn-primary" (click)="addGroup()"> <mat-icon>add</mat-icon> Añadir Grupo</button>
       </div>
     </div>
 

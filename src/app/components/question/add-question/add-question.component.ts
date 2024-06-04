@@ -45,7 +45,6 @@ export class AddQuestionComponent {
   this.groups = this.questionForm.get('groups') as FormArray;
 
   this.addAnswer();
-  this.addAnswer();
   this.addGroup();
 
   this.activatedRoute.params.subscribe(params => {

@@ -22,11 +22,11 @@
 
     <!-- Secciones del examen -->
     <div formArrayName="sections" class="form-group">
-      <div *ngFor="let section of sectionsControls; let i = index">
+      <div *ngFor="let section of sectionsControls; let i = index" class="padding color-container">
         <h3>Sección {{i + 1}}</h3>
         <div [formGroupName]="i">
-          <div class="column">
-          <div class="row gap horizontal-center">
+          <div class="column padding white-container">
+            <div class="row gap horizontal-center">
 
               <mat-form-field appearance="fill" class="form-group">
                 <mat-label>Nodo de la Jerarquía</mat-label>
@@ -94,28 +94,29 @@
 
             </div>
           </div>
-
-          <div *ngIf="this.sectionList[i].questions" class="column">
-            <h4>Preguntas de la sección {{i + 1}}</h4>
-            <div *ngFor="let question of this.sectionList[i].questions?.items; let j = index" class="padding-sm section-questions">
-              <div class="question-title">
-                <p>{{ question.title }}</p>
+          <div class="padding white-container">
+            <div *ngIf="this.sectionList[i].questions" class="column">
+              <h4>Preguntas de la sección {{i + 1}}</h4>
+              <div *ngFor="let question of this.sectionList[i].questions?.items; let j = index" class="padding-sm section-questions">
+                <div class="question-title">
+                  <p>{{ question.title }}</p>
+                </div>
+                <button mat-icon-button color="primary" class="btn btn-primary" (click)="eliminateQuestion(question.id, i)">
+                  <mat-icon>close</mat-icon>
+                </button>
               </div>
-              <button mat-icon-button color="primary" class="btn btn-primary" (click)="eliminateQuestion(question.id, i)">
-                <mat-icon>close</mat-icon>
+            </div>
+
+            <div class="padding">
+              <button mat-raised-button type="button" class="btn btn-primary" [disabled]="section.invalid" (click)="openExamSection(i)">
+                <mat-icon>alt_route</mat-icon>
+                Seleccionar
+              </button>
+              <button mat-raised-button type="button" class="btn btn-danger" (click)="removeSection(i)">
+                <mat-icon>delete</mat-icon>
+                Borrar Sección
               </button>
             </div>
-          </div>
-
-          <div class="padding">
-            <button mat-raised-button type="button" class="btn btn-primary" [disabled]="section.invalid" (click)="openExamSection(i)">
-              <mat-icon>alt_route</mat-icon>
-              Seleccionar
-            </button>
-            <button mat-raised-button type="button" class="btn btn-danger" (click)="removeSection(i)">
-              <mat-icon>delete</mat-icon>
-              Borrar Sección
-            </button>
           </div>
         </div>
       </div>
