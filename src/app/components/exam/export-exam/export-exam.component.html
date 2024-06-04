@@ -15,6 +15,9 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <div *ngIf="selectedFormat === 'Aiken'" class="padding-sm black">
+      <p><strong>Advertencia.</strong> Sólo se exportarán las preguntas de tipo test.</p>
+    </div>
     <div class="row gap-sm padding-sm">
 
       <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
