@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {catchError, map, Observable, of} from 'rxjs';
 import {Question, QuestionList} from "../models/question";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {SnackbarService} from "./snackbar.service";
+import {ResultList} from "../models/result";
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +59,23 @@ export class QuestionService {
       catchError(this.handleError<Question>(`edit Question`))
     );
   }
+
+  importQuestions(formData: FormData, subject_id: number, difficulty: number = 1, time: number = 1): Observable<QuestionList> {
+
+    let params = new HttpParams();
+
+
+      params = params.append('subject_id', subject_id.toString());
+      params = params.append('difficulty', difficulty.toString());
+      params = params.append('time', time.toString());
+      return this.http.post<QuestionList>(`${this.questionUrl}/upload`, formData, {
+        headers: this.headers,
+        withCredentials: true,
+        params: params
+      }).pipe(
+        catchError(this.handleError<QuestionList>('importQuestions'))
+      );
+    }
 
 
   private handleError<T>(operation = 'operation', result?: T) {

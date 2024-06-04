@@ -1,0 +1,40 @@
+<div class="padding-sm column">
+  <h2 class="center">Importar Banco</h2>
+  <mat-dialog-content>
+    <div class="padding-xs">
+      <p>
+        Seleccione el archivo de banco de preguntas.
+      </p>
+    </div>
+    <div class="padding-xs">
+       <input type="file" class="" (change)="onFileSelected($event)" accept=".csv">
+    </div>
+    <div class="row horizontal-center-spaced">
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>Formato</mat-label>
+        <mat-select [(value)]="selectedFormat">
+          <mat-option value="CSV">CSV</mat-option>
+          <mat-option value="Aiken">Aiken</mat-option>
+        </mat-select>
+      </mat-form-field>
+       <!--    Dificultad-->
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Dificultad</mat-label>
+          <input matInput [(ngModel)]="selectedDifficulty" type="number">
+        </mat-form-field>
+
+        <!--    Tiempo estimado-->
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Tiempo Estimado</mat-label>
+          <input matInput [(ngModel)]="selectedTime" type="number">
+        </mat-form-field>
+    </div>
+    <div class="row gap-sm padding-sm">
+      <button mat-button type="button" class="text-button" (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" class="btn btn-primary" (click)="this.importQuestions()">
+        <mat-icon>publish</mat-icon>
+        Importar
+      </button>
+    </div>
+  </mat-dialog-content>
+</div>

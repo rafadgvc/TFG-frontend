@@ -60,6 +60,7 @@ import {DisableQuestionComponent} from "./components/question/disable-question/d
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {ExamSectionModalComponent} from "./components/exam/exam-section-modal/exam-section-modal.component";
 import {MatCheckbox} from "@angular/material/checkbox";
+import {ImportQuestionComponent} from "./components/question/import-question/import-question.component";
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
     DeleteResultComponent,
     ResultDetailComponent,
     DisableQuestionComponent,
-    ExamSectionModalComponent
+    ExamSectionModalComponent,
+    ImportQuestionComponent,
   ],
     imports: [
         BrowserModule,
