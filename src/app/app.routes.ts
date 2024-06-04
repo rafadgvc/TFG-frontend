@@ -15,21 +15,19 @@ import {AddExamComponent} from "./components/exam/add-exam/add-exam.component";
 import {EditExamComponent} from "./components/exam/edit-exam/edit-exam.component";
 
 export const routes: Routes = [
-  { path: 'signup', component: UserSignupComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'question/:id', component: EditQuestionComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'subject/:id', component: SubjectDetailComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'add-question/:id', component: AddQuestionComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'edit-question/:id', component: EditQuestionComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'question-list/:id', component: QuestionListComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'node-list/:id', component: NodeListComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'node/:id', component: NodeDetailComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'exam-list/:id', component: ExamListComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'exam/:id', component: ExamDetailComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'add-exam/:id', component: AddExamComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'edit-exam/:id', component: EditExamComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: 'home', component: SubjectListComponent, canActivate: [AuthGuard.prototype.canActivate] },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login', pathMatch: 'full' }
+  {path: 'signup', component: UserSignupComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'question/:id', component: EditQuestionComponent, canActivate: [AuthGuard]},
+  {path: 'subject/:id', component: SubjectDetailComponent, canActivate: [AuthGuard]},
+  {path: 'add-question/:id', component: AddQuestionComponent, canActivate: [AuthGuard]},
+  {path: 'edit-question/:id', component: EditQuestionComponent, canActivate: [AuthGuard]},
+  {path: 'question-list/:id', component: QuestionListComponent, canActivate: [AuthGuard]},
+  {path: 'node-list/:id', component: NodeListComponent, canActivate: [AuthGuard]},
+  {path: 'node/:id', component: NodeDetailComponent, canActivate: [AuthGuard]},
+  {path: 'exam-list/:id', component: ExamListComponent, canActivate: [AuthGuard]},
+  {path: 'exam/:id', component: ExamDetailComponent, canActivate: [AuthGuard]},
+  {path: 'add-exam/:id', component: AddExamComponent, canActivate: [AuthGuard]},
+  {path: 'edit-exam/:id', component: EditExamComponent, canActivate: [AuthGuard]},
+  {path: 'home', component: SubjectListComponent, canActivate: [AuthGuard]}
 
 ];
