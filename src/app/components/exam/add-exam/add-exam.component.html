@@ -20,15 +20,14 @@
         <p><strong>Total de preguntas:</strong> {{ this.calculateTotalQuestions() }}</p>
       </div>
       <div class="padding column">
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Años de diferencia</mat-label>
-        <input matInput formControlName="years" type="number">
-        <mat-error *ngIf="examForm.get('years')?.hasError('min')">
-          El mínimo de este campo es 1
-        </mat-error>
-      </mat-form-field>
-
-    </div>
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Años de diferencia</mat-label>
+          <input matInput formControlName="years" type="number">
+          <mat-error *ngIf="examForm.get('years')?.hasError('min')">
+            El mínimo de este campo es 1
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
 
 

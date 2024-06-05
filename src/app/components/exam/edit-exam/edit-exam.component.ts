@@ -47,6 +47,7 @@ export class EditExamComponent {
 
     this.examForm = this.formBuilder.group({
       title: ['', Validators.required],
+      years: [NaN, Validators.min(1)],
       sections: this.sections
     });
     this.activatedRoute.params.subscribe(params => {
@@ -95,7 +96,6 @@ export class EditExamComponent {
         this.sections.at(this.sections.length - 1).get('questionNumber')?.patchValue(this.sections.at(this.sections.length - 1).get('questionNumber')?.value + 1)
       }
       let nodes = this.sections.at(this.sections.length - 1).get('node')?.value;
-      console.log(nodes);
       nodes.push(nodeId);
       this.sections.at(this.sections.length - 1).get('node')?.patchValue( nodes)
        this.sectionList[this.sectionList.length - 1].questions?.items.push(question)
@@ -151,7 +151,6 @@ export class EditExamComponent {
           }
         }
       }
-      console.log(questionIds);
 
       const exam  = new Exam(
         this.id,
@@ -164,7 +163,6 @@ export class EditExamComponent {
         questionList.items.length
       );
       this.exam = exam;
-      console.log(this.exam)
       this.examService.editExam(this.exam).subscribe(
         () => {
           this.snackbarService.showSuccess('Examen modificado correctamente.');
@@ -316,5 +314,19 @@ export class EditExamComponent {
       }
       return null;
     };
+  }
+
+  compareExams(): void {
+    const years = (this.examForm.get('years')?.value !== undefined) ? this.examForm.get('years')?.value : 0;
+    this.examService.getRecentQuestions(this.id, years).subscribe(questions => {
+      const questionIds = questions.items.map(q => q.id);
+      this.sectionList.forEach(section => {
+        section.questions?.items.forEach(question => {
+          if (questionIds.includes(question.id)) {
+            question.repeated = true;
+          }
+        });
+      });
+    });
   }
 }
