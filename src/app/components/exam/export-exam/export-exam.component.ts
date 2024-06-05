@@ -33,6 +33,8 @@ export class ExportExamComponent {
       exportEndpoint = 'export_gift';
     } else if (this.selectedFormat === 'MoodleXML') {
       exportEndpoint = 'export_moodlexml';
+    }else if (this.selectedFormat === 'ODT') {
+      exportEndpoint = 'export_odt';
     } else {
       exportEndpoint = 'export_pdf';
     }
