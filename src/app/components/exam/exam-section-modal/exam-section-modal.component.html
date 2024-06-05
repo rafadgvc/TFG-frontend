@@ -1,10 +1,10 @@
 <div class="padding-lg">
   <h2> Seleccionar Preguntas</h2>
   <div *ngIf="!loading && questionList.length > 0" class="column">
-    <table mat-table [dataSource]="this.dataSource" class="mat-elevation-z8">
+    <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="this.dataSource" class="mat-elevation-z8">
       <!-- Cuerpo de la pregunta -->
       <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef> Pregunta </th>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Pregunta </th>
         <td mat-cell *matCellDef="let question"> {{question.title}} </td>
       </ng-container>
 

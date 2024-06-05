@@ -61,6 +61,7 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {ExamSectionModalComponent} from "./components/exam/exam-section-modal/exam-section-modal.component";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {ImportQuestionComponent} from "./components/question/import-question/import-question.component";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -134,7 +135,8 @@ import {ImportQuestionComponent} from "./components/question/import-question/imp
         MatProgressBar,
         MatSlideToggle,
         MatPaginatorModule,
-        MatTableModule, MatCheckbox
+        MatTableModule, MatCheckbox,
+        MatSortModule
     ],
   providers: [],
   bootstrap: [AppComponent]
