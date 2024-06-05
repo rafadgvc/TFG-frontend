@@ -221,8 +221,20 @@ h5 {
   }
 }
 
+.initial-height {
+  height: 10rem; /* ajusta la altura según sea necesario */
+}
+
+.medium-form-group{
+  width: 56rem;
+  span {
+    font-size: 1rem !important;
+  }
+}
+
 .long-form-group {
   width: 56rem;
+  height: 11rem;
   span {
     font-size: 1rem !important;
   }

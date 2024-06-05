@@ -84,13 +84,12 @@
         <!--    Cuerpo-->
           <mat-form-field appearance="fill" class="long-form-group">
             <mat-label>Enunciado</mat-label>
-            <input *ngIf="questionForm.get('isParametrized')?.value === true "
-              matInput formControlName="title"
-              matTooltip="Escribe '##param1##' donde quieras que se inserte el parámetro 1, '##param2##' para el parámetro 2..."
+            <textarea matInput formControlName="title"
+              [matTooltip]="questionForm.get('isParametrized')?.value ? 'Escribe \'##param1##\' donde quieras que se inserte el parámetro 1, \'##param2##\' para el parámetro 2...' : ''"
               matTooltipPosition="below"
-            >
-            <input *ngIf="questionForm.get('isParametrized')?.value === false"
-                   matInput formControlName="title">
+              [rows]="5"
+              class="initial-height">
+            </textarea>
             <mat-error *ngIf="questionForm.get('title')?.hasError('required')">
               Este campo es requerido
             </mat-error>
@@ -115,14 +114,19 @@
           <div class="horizontal-center gap row padding white-container" [formGroupName]="i">
             <mat-form-field appearance="fill" class="long-form-group">
               <mat-label>Respuesta {{i + 1}}</mat-label>
-              <input matInput formControlName="body">
+              <textarea matInput formControlName="body"
+                [matTooltip]="questionForm.get('isParametrized')?.value ? 'Escribe \'##param1##\' donde quieras que se inserte el parámetro 1, \'##param2##\' para el parámetro 2...' : ''"
+                matTooltipPosition="below"
+                [rows]="5"
+                class="initial-height">
+              </textarea>
 
               <mat-error *ngIf="answersControls.at(i)?.get('body')?.hasError('required')">
                 Este campo es requerido
               </mat-error>
             </mat-form-field>
 
-            <div *ngIf="questionForm.get('type')?.value === 'TEST'">
+            <div *ngIf="questionForm.get('type')?.value === 'TEST'" class="vertical-center">
               <mat-form-field appearance="fill">
                 <mat-label>Puntuación</mat-label>
                 <input matInput formControlName="points" type="number">
@@ -140,7 +144,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="padding">
+            <div class="padding vertical-center">
               <button mat-raised-button type="button" class="btn btn-danger" (click)="removeAnswer(i)"> <mat-icon>delete</mat-icon> Borrar </button>
             </div>
           </div>

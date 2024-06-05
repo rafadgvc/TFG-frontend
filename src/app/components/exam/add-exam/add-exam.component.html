@@ -5,7 +5,7 @@
   <form [formGroup]="examForm" class="form">
     <div class="horizontal-center">
       <!--    Título del examen -->
-      <mat-form-field appearance="fill" class="long-form-group">
+      <mat-form-field appearance="fill" class="medium-form-group">
         <mat-label>Título</mat-label>
         <input matInput formControlName="title">
         <mat-error *ngIf="examForm.get('title')?.hasError('required')">
