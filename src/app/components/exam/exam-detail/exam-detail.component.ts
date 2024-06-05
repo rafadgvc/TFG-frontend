@@ -73,6 +73,6 @@ export class ExamDetailComponent implements OnInit {
   }
 
   formatPoints(points: number): string {
-    return ("" + points * 100 + " %");
+    return ("" + points + " %");
   }
 }
