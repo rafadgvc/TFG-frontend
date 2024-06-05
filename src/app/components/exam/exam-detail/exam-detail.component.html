@@ -17,10 +17,10 @@
         <div *ngIf="question.type.toUpperCase() !== 'DESARROLLO' && answer.points <= 0 ">
           <p class="error-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
         </div>
-        <div *ngIf="question.type.toUpperCase() !== 'DESARROLLO' && answer.points > 0  && answer.points < 1">
+        <div *ngIf="question.type.toUpperCase() !== 'DESARROLLO' && answer.points > 0  && answer.points < 100">
           <p class="warn-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
         </div>
-        <div *ngIf="question.type.toUpperCase() !== 'DESARROLLO' && answer.points === 1">
+        <div *ngIf="question.type.toUpperCase() !== 'DESARROLLO' && answer.points === 100">
           <p class="success-text"><strong>{{ answer.body }}</strong> ({{ formatPoints(answer.points) }})</p>
         </div>
         <div *ngIf="question.type.toUpperCase() === 'DESARROLLO'">
