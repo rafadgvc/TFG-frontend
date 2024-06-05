@@ -27,7 +27,12 @@
         <!-- Selector de Nodos -->
         <mat-form-field appearance="fill" class="form-group">
           <mat-label>Nodos de la Jerarquía</mat-label>
-          <mat-select formControlName="nodes" multiple>
+          <mat-select
+            formControlName="nodes"
+            multiple
+            matTooltip="Selecciona los nodos a los que se relaciona la pregunta."
+            matTooltipPosition="left"
+          >
             <mat-option *ngFor="let node of hierarchyNodes" [value]="node.id">
               {{ node.name }}
             </mat-option>
@@ -38,7 +43,10 @@
         </mat-form-field>
 
         <!--    Dificultad-->
-        <mat-form-field appearance="fill" class="form-group">
+        <mat-form-field appearance="fill" class="form-group"
+          matTooltip="Elija la dificultad aproximada del 1 (mínima) al 10 (máxima)."
+          matTooltipPosition="right"
+        >
           <mat-label>Dificultad</mat-label>
           <input matInput formControlName="difficulty" type="number">
           <mat-error *ngIf="questionForm.get('difficulty')?.hasError('required')">
@@ -55,7 +63,10 @@
         </mat-form-field>
 
         <!--    Tiempo estimado-->
-        <mat-form-field appearance="fill" class="form-group">
+        <mat-form-field appearance="fill" class="form-group"
+          matTooltip="Elija el tiempo aproximado en minutos en realizar la pregunta."
+          matTooltipPosition="right"
+        >
           <mat-label>Tiempo Estimado</mat-label>
           <input matInput formControlName="time" type="number">
           <mat-error *ngIf="questionForm.get('time')?.hasError('required')">
@@ -76,7 +87,7 @@
           <input *ngIf="questionForm.get('isParametrized')?.value === true "
             matInput formControlName="title"
             matTooltip="Escribe '##param1##' donde quieras que se inserte el parámetro 1, '##param2##' para el parámetro 2..."
-            matTooltipPosition="right"
+            matTooltipPosition="below"
           >
           <input *ngIf="questionForm.get('isParametrized')?.value === false"
                  matInput formControlName="title">

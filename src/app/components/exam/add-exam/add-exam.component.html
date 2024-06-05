@@ -20,7 +20,10 @@
         <p><strong>Total de preguntas:</strong> {{ this.calculateTotalQuestions() }}</p>
       </div>
       <div class="padding column">
-        <mat-form-field appearance="fill" class="form-group">
+        <mat-form-field appearance="fill" class="form-group"
+          matTooltip="Si quiere comparar las preguntas seleccionadas con las de exámenes anteriores, seleccione los años de diferencia con los que se quiere comprobar."
+          matTooltipPosition="left"
+        >
           <mat-label>Años de diferencia</mat-label>
           <input matInput formControlName="years" type="number">
           <mat-error *ngIf="examForm.get('years')?.hasError('min')">
@@ -41,7 +44,11 @@
 
               <mat-form-field appearance="fill" class="form-group">
                 <mat-label>Nodo de la Jerarquía</mat-label>
-                <mat-select formControlName="node" multiple>
+                <mat-select formControlName="node"
+                  matTooltip="Elija los nodos de los que seleccionar las preguntas."
+                  matTooltipPosition="left"
+                  multiple
+                >
                   <mat-option *ngFor="let node of hierarchyNodes" [value]="node.id">
                     {{ node.name }}
                   </mat-option>
@@ -52,7 +59,10 @@
               </mat-form-field>
 
               <!--    Número de preguntas-->
-              <mat-form-field appearance="fill" class="form-group">
+              <mat-form-field appearance="fill" class="form-group"
+                matTooltip="Elija el número de preguntas para esta sección."
+                matTooltipPosition="right"
+              >
                 <mat-label>Número de preguntas</mat-label>
                 <input matInput formControlName="questionNumber" type="number">
                 <mat-error *ngIf="section.get('questionNumber')?.hasError('required')">
@@ -68,7 +78,11 @@
               <!--    Tipo-->
               <mat-form-field appearance="fill" class="form-group">
                 <mat-label>Tipo de la pregunta</mat-label>
-                <mat-select formControlName="type" multiple>
+                <mat-select formControlName="type"
+                  matTooltip="Elija el tipo de pregunta para priorizar en la sección."
+                  matTooltipPosition="below"
+                  multiple
+                >
                   <mat-option *ngFor="let type of types" [value]="type.toLowerCase()">
                     {{ type }}
                   </mat-option>
@@ -76,7 +90,10 @@
               </mat-form-field>
 
               <!--    Dificultad-->
-              <mat-form-field appearance="fill" class="form-group">
+              <mat-form-field appearance="fill" class="form-group"
+                matTooltip="Elija la dificultad aproximada de las preguntas de la sección."
+                matTooltipPosition="below"
+              >
                 <mat-label>Dificultad</mat-label>
                 <input matInput formControlName="difficulty" type="number">
                 <mat-error *ngIf="!section.get('difficulty')?.hasError('required') &&
@@ -90,7 +107,10 @@
               </mat-form-field>
 
               <!--    Tiempo estimado-->
-              <mat-form-field appearance="fill" class="form-group">
+              <mat-form-field appearance="fill" class="form-group"
+                matTooltip="Elija el tiempo aproximado de cada pregunta de la sección."
+                matTooltipPosition="below"
+              >
                 <mat-label>Tiempo Estimado</mat-label>
                 <input matInput formControlName="time" type="number">
                 <mat-error *ngIf="!section.get('time')?.hasError('required') &&
@@ -100,7 +120,9 @@
               </mat-form-field>
 
               <div class="form-group padding">
-                <mat-slide-toggle formControlName="isParametrized">Preguntas Parametrizadas</mat-slide-toggle>
+                <mat-slide-toggle formControlName="isParametrized">
+                  Preguntas Parametrizadas
+                </mat-slide-toggle>
               </div>
 
             </div>
@@ -124,7 +146,12 @@
             </div>
 
             <div class="padding">
-              <button mat-raised-button type="button" class="btn btn-primary" [disabled]="section.invalid" (click)="openExamSection(i)">
+              <button mat-raised-button type="button" class="btn btn-primary"
+                [disabled]="section.invalid"
+                (click)="openExamSection(i)"
+                matTooltip="Pulse para seleccionar preguntas específicas para esta sección."
+                matTooltipPosition="below"
+              >
                 <mat-icon>alt_route</mat-icon>
                 Seleccionar
               </button>
@@ -141,7 +168,12 @@
 
     <div class="padding-sm row">
       <div class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary" [disabled]="examForm.get('years')?.invalid" (click)="compareExams()">
+        <button mat-raised-button type="button" class="btn btn-primary"
+          [disabled]="examForm.get('years')?.invalid"
+          (click)="compareExams()"
+          matTooltip="Si quiere comparar las preguntas seleccionadas con las de exámenes anteriores, seleccione los años de diferencia con los que se quiere comprobar."
+          matTooltipPosition="below"
+        >
           <mat-icon>search_on</mat-icon>
           Comparar
         </button>
@@ -153,7 +185,11 @@
         </button>
       </div>
       <div class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary btn-modal" (click)="generateRemainingQuestions()">
+        <button mat-raised-button type="button" class="btn btn-primary btn-modal"
+          (click)="generateRemainingQuestions()"
+          matTooltip="Para cada sección sin sus preguntas seleccionadas, se generarán automáticamente las que falten según los datos seleccionados."
+          matTooltipPosition="below"
+        >
           <mat-icon>draw</mat-icon>
           Generar Preguntas
         </button>
