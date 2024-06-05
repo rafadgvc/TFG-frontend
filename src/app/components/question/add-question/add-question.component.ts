@@ -58,7 +58,7 @@ export class AddQuestionComponent {
   addAnswer() {
     this.answers.push(this.formBuilder.group({
       body: ['', Validators.required],
-      points: [NaN, [Validators.required, Validators.min(-1), Validators.max(1)]]
+      points: [NaN, [Validators.required, Validators.min(-100), Validators.max(100)]]
     }));
   }
 

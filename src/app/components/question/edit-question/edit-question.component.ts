@@ -77,7 +77,7 @@ export class EditQuestionComponent {
       for (let i = 0; i < answerNumber; i++) {
         this.answers.push(this.formBuilder.group({
           body: [this.question?.answers?.items[i].body, Validators.required],
-          points: [(this.question?.answers?.items[i].points === undefined) ? NaN : this.question?.answers?.items[i].points, [Validators.required, Validators.min(-1), Validators.max(1)]]
+          points: [(this.question?.answers?.items[i].points === undefined) ? NaN : this.question?.answers?.items[i].points, [Validators.required, Validators.min(-100), Validators.max(100)]]
         }));
       }
     }
@@ -138,7 +138,7 @@ export class EditQuestionComponent {
   addAnswer() {
     this.answers.push(this.formBuilder.group({
       body: ['', Validators.required],
-      points: [NaN, [Validators.required, Validators.min(-1), Validators.max(1)]]
+      points: [NaN, [Validators.required, Validators.min(-100), Validators.max(100)]]
     }));
   }
 
