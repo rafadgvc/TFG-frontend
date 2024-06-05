@@ -1,7 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {Exam} from "../../../models/exam";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {ResultService} from "../../../services/result.service";
 import {SnackbarService} from "../../../services/snackbar.service";
 import {Router} from "@angular/router";
 import {QuestionService} from "../../../services/question.service";
@@ -13,7 +11,7 @@ import {QuestionService} from "../../../services/question.service";
 })
 export class ImportQuestionComponent {
 
-  selectedFormat: string = 'CSV';
+  selectedFormat: string = 'Aiken';
   selectedDifficulty: number = 1;
   selectedTime : number = 1;
   selectedFile: File | null = null;
@@ -36,8 +34,15 @@ export class ImportQuestionComponent {
     if (this.selectedFile !== null) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
+      let exportEndpoint: string;
 
-      this.questionService.importQuestions(formData, this.subject_id, this.selectedDifficulty, this.selectedTime).subscribe(
+    if (this.selectedFormat === 'Aiken') {
+      exportEndpoint = 'upload_aiken'
+    } else {
+      exportEndpoint = 'upload';
+    }
+
+      this.questionService.importQuestions(formData, exportEndpoint, this.subject_id, this.selectedDifficulty, this.selectedTime).subscribe(
         () => {
           this.snackbarService.showSuccess('Preguntas añadidas correctamente.');
           this.dialogRef.close();

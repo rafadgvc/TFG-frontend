@@ -60,7 +60,7 @@ export class QuestionService {
     );
   }
 
-  importQuestions(formData: FormData, subject_id: number, difficulty: number = 1, time: number = 1): Observable<QuestionList> {
+  importQuestions(formData: FormData, exportEndpoint: string, subject_id: number, difficulty: number = 1, time: number = 1): Observable<QuestionList> {
 
     let params = new HttpParams();
 
@@ -68,7 +68,7 @@ export class QuestionService {
       params = params.append('subject_id', subject_id.toString());
       params = params.append('difficulty', difficulty.toString());
       params = params.append('time', time.toString());
-      return this.http.post<QuestionList>(`${this.questionUrl}/upload`, formData, {
+      return this.http.post<QuestionList>(`${this.questionUrl}/${exportEndpoint}`, formData, {
         headers: this.headers,
         withCredentials: true,
         params: params
