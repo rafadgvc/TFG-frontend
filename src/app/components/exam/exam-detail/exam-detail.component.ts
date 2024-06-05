@@ -54,15 +54,6 @@ export class ExamDetailComponent implements OnInit {
     });
   }
 
-  deleteExam(): void {
-    const dialogRef = this.dialog.open(DeleteExamComponent, {
-      width: '400px',
-      data: {
-        exam: this.exam
-      }
-    });
-  }
-
   importResults(): void {
     const dialogRef = this.dialog.open(ImportResultComponent, {
       width: '400px',

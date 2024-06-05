@@ -31,6 +31,9 @@
         <button mat-icon-button color="primary" class="btn btn-primary" (click)="viewExam(exam.id)">
           <mat-icon>more_horiz</mat-icon>
         </button>
+        <button mat-icon-button color="primary" class="btn btn-danger" (click)="deleteExam(exam)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </td>
     </ng-container>
 
@@ -43,6 +46,10 @@
       <mat-icon>add</mat-icon>
       Configurar
     </button>
+    <button mat-button color="secondary" class="padding-lg btn btn-primary" (click)="viewSubject(this.id)">
+      <mat-icon>undo</mat-icon>
+      Volver
+  </button>
   </div>
 </div>
 

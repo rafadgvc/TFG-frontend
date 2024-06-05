@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {Exam} from "../../../models/exam";
 import {ExamService} from "../../../services/exam_service";
+import {DeleteExamComponent} from "../delete-exam/delete-exam.component";
 
 @Component({
   selector: 'app-exam-list',
@@ -54,4 +55,14 @@ export class ExamListComponent implements OnInit{
   viewSubject(subjectId: number): void {
     this.router.navigate(['/subject/' + subjectId]);
   }
+
+  deleteExam(exam: Exam): void {
+    const dialogRef = this.dialog.open(DeleteExamComponent, {
+      width: '400px',
+      data: {
+        exam: exam
+      }
+    });
+  }
+
 }
