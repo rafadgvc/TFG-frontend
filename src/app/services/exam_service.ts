@@ -144,6 +144,21 @@ export class ExamService {
     );
   }
 
+  getRecentQuestions(subject_id: number, years: number): Observable<QuestionList> {
+
+      let params = new HttpParams();
+        params = params.append('subject_id', subject_id.toString());
+        params = params.append('years', years.toString());
+
+      return this.http.get<QuestionList>(this.examUrl + '/recent-questions',  {
+        headers: this.headers,
+        withCredentials: true,
+        params: params
+      }).pipe(
+        catchError(this.handleError<QuestionList>(`getRecentQuestions`))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {

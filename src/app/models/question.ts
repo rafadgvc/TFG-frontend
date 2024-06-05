@@ -17,6 +17,7 @@ export class Question{
   connected?: boolean;
   question_parameters?: QuestionParameterList;
   section_number?: number;
+  repeated?: boolean;
 
   constructor (
     id: number,
@@ -33,6 +34,7 @@ export class Question{
     connected?: boolean,
     question_parameters?: QuestionParameterList,
     section_number?: number,
+    repeated?: boolean,
   ){
     this.id = id;
     this.title = title;
@@ -48,6 +50,7 @@ export class Question{
     this.connected = connected;
     this.question_parameters = question_parameters;
     this.section_number = section_number;
+    this.repeated = repeated;
   }
 }
 

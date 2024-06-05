@@ -18,6 +18,7 @@ import { ExamSectionModalComponent } from "../exam-section-modal/exam-section-mo
 import { Section } from "../../../models/section";
 import { Exam } from "../../../models/exam";
 import { SnackbarService } from "../../../services/snackbar.service";
+import {QuestionService} from "../../../services/question.service";
 
 @Component({
   selector: 'app-add-exam',
@@ -53,6 +54,7 @@ export class AddExamComponent {
 
     this.examForm = this.formBuilder.group({
       title: ['', Validators.required],
+      years: [NaN, Validators.min(1)],
       sections: this.sections
     });
 
@@ -104,7 +106,6 @@ export class AddExamComponent {
           }
         }
       }
-      console.log(questionIds);
 
       const exam = new Exam(
         NaN,
@@ -268,5 +269,19 @@ export class AddExamComponent {
       }
       return null;
     };
+  }
+
+  compareExams(): void {
+    const years = (this.examForm.get('years')?.value !== undefined) ? this.examForm.get('years')?.value : 0;
+    this.examService.getRecentQuestions(this.id, years).subscribe(questions => {
+      const questionIds = questions.items.map(q => q.id);
+      this.sectionList.forEach(section => {
+        section.questions?.items.forEach(question => {
+          if (questionIds.includes(question.id)) {
+            question.repeated = true;
+          }
+        });
+      });
+    });
   }
 }

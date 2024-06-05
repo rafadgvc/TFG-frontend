@@ -37,9 +37,6 @@ export class ImportQuestionComponent {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
 
-      console.log(this.selectedTime)
-      console.log(this.selectedDifficulty)
-
       this.questionService.importQuestions(formData, this.subject_id, this.selectedDifficulty, this.selectedTime).subscribe(
         () => {
           this.snackbarService.showSuccess('Preguntas añadidas correctamente.');
