@@ -144,13 +144,17 @@ export class ExamService {
     );
   }
 
-  getRecentQuestions(subject_id: number, years: number): Observable<QuestionList> {
+  getRecentQuestions(subject_id: number, previous: number[]): Observable<QuestionList> {
 
       let params = new HttpParams();
         params = params.append('subject_id', subject_id.toString());
-        params = params.append('years', years.toString());
+        if (previous !== undefined && previous.length > 0) {
+          previous.forEach(id => {
+            params = params.append('exam_ids', id.toString());
+          });
+        }
 
-      return this.http.get<QuestionList>(this.examUrl + '/recent-questions',  {
+      return this.http.get<QuestionList>(this.examUrl + '/exam-questions',  {
         headers: this.headers,
         withCredentials: true,
         params: params

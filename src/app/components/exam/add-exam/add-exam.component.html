@@ -20,15 +20,17 @@
         <p><strong>Total de preguntas:</strong> {{ this.calculateTotalQuestions() }}</p>
       </div>
       <div class="padding column">
-        <mat-form-field appearance="fill" class="form-group"
-          matTooltip="Si quiere comparar las preguntas seleccionadas con las de exámenes anteriores, seleccione los años de diferencia con los que se quiere comprobar."
-          matTooltipPosition="left"
-        >
-          <mat-label>Años de diferencia</mat-label>
-          <input matInput formControlName="years" type="number">
-          <mat-error *ngIf="examForm.get('years')?.hasError('min')">
-            El mínimo de este campo es 1
-          </mat-error>
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Exámenes anteriores</mat-label>
+          <mat-select formControlName="previous"
+            matTooltip="Si quiere comparar las preguntas seleccionadas con las de exámenes anteriores,  seleccione los exámenes con los que comparar."
+            matTooltipPosition="left"
+            multiple
+          >
+            <mat-option *ngFor="let exam of exams" [value]="exam.id">
+              {{ exam.title }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>

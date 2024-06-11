@@ -31,6 +31,7 @@ export class AddExamComponent {
   sections: FormArray;
   types: string[] = ['Test', 'Desarrollo'];
   hierarchyNodes: HierarchyNode[] = [];
+  exams: Exam[] = [];
   sectionList: Section[] = [];
   selectedQuestions: Question[] = [];
 
@@ -47,6 +48,9 @@ export class AddExamComponent {
       this.id = +params['id'];
       this.nodeService.getSubjectNodes(this.id).subscribe(nodes => {
         this.hierarchyNodes = nodes.items;
+        this.examService.getSubjectExams(this.id).subscribe(exams=>{
+          this.exams = exams.items;
+        })
       });
     });
 
@@ -54,7 +58,7 @@ export class AddExamComponent {
 
     this.examForm = this.formBuilder.group({
       title: ['', Validators.required],
-      years: [NaN, Validators.min(1)],
+      previous: [[]],
       sections: this.sections
     });
 
@@ -272,8 +276,8 @@ export class AddExamComponent {
   }
 
   compareExams(): void {
-    const years = (this.examForm.get('years')?.value !== undefined) ? this.examForm.get('years')?.value : 0;
-    this.examService.getRecentQuestions(this.id, years).subscribe(questions => {
+    const previous = (this.examForm.get('previous')?.value !== undefined) ? this.examForm.get('previous')?.value : [];
+    this.examService.getRecentQuestions(this.id, previous).subscribe(questions => {
       const questionIds = questions.items.map(q => q.id);
       this.sectionList.forEach(section => {
         section.questions?.items.forEach(question => {
