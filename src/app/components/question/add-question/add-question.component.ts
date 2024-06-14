@@ -111,6 +111,13 @@ export class AddQuestionComponent {
       const groupNumber = this.groupsControls.length;
       if (this.questionForm.get('isParametrized')?.value === true) {
 
+        const title = questionData.title;
+        const answers = questionData.answers.map((answer: any) => answer.body);
+        if (!this.areAllParametersPresent(title, answers, this.parameterNumber)) {
+          this.snackbarService.showError('Faltan parámetros en el enunciado o en las respuestas.');
+          return;
+        }
+
         for (let i = 0; i < groupNumber; i++) {
           for (let j = 1; (j <= this.parameterNumber); j++) {
             let name = `param${j}`;
@@ -134,7 +141,6 @@ export class AddQuestionComponent {
         this.id,
         false,
         question_parameters
-
       );
       this.questionService.addQuestion(question).subscribe(
         () => {
@@ -145,5 +151,46 @@ export class AddQuestionComponent {
     } else {
       console.log('Invalid form');
     }
+  }
+
+  areAllParametersPresent(title: string, answers: string[], parameterNumber: number): boolean {
+    let maxParam = this.getMaxParameterUsed(title);
+
+    for (const answer of answers) {
+      const maxParamInAnswer = this.getMaxParameterUsed(answer);
+      if (maxParamInAnswer > maxParam) {
+        maxParam = maxParamInAnswer;
+      }
+    }
+
+    if (maxParam > parameterNumber) {
+      return false;
+    }
+
+    for (let i = 1; i <= parameterNumber; i++) {
+      const param = `##param${i}##`;
+      const titleHasParam = title.includes(param);
+      const answersHaveParam = answers.some(answer => answer.includes(param));
+
+      if (!titleHasParam && !answersHaveParam) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  getMaxParameterUsed(text: string): number {
+    const paramPattern = /##param(\d+)##/g;
+    let match;
+    let maxParam = 0;
+
+    while ((match = paramPattern.exec(text)) !== null) {
+      const paramNumber = parseInt(match[1], 10);
+      if (paramNumber > maxParam) {
+        maxParam = paramNumber;
+      }
+    }
+
+    return maxParam;
   }
 }
