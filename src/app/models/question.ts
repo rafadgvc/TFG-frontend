@@ -18,6 +18,7 @@ export class Question{
   question_parameters?: QuestionParameterList;
   section_number?: number;
   repeated?: boolean;
+  exam_id?: number;
 
   constructor (
     id: number,
@@ -35,6 +36,7 @@ export class Question{
     question_parameters?: QuestionParameterList,
     section_number?: number,
     repeated?: boolean,
+    exam_id?: number,
   ){
     this.id = id;
     this.title = title;
@@ -51,6 +53,7 @@ export class Question{
     this.question_parameters = question_parameters;
     this.section_number = section_number;
     this.repeated = repeated;
+    this.exam_id = exam_id;
   }
 }
 

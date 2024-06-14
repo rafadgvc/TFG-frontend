@@ -6,7 +6,7 @@ import { QuestionService } from "../../../services/question.service";
 import { Question, QuestionList } from '../../../models/question';
 import { ExamService } from "../../../services/exam_service";
 import { Section } from "../../../models/section";
-import {Sort} from "@angular/material/sort";
+import { Sort } from "@angular/material/sort";
 
 @Component({
   selector: 'app-exam-section-modal',
@@ -45,7 +45,6 @@ export class ExamSectionModalComponent {
       this.dataSource.paginator = this.paginator;
       return;
     }
-
 
     const sortedData = data.sort((a, b) => {
       if (a.title > b.title){
@@ -88,5 +87,13 @@ export class ExamSectionModalComponent {
   selectQuestions() {
     const selectedQuestions = new QuestionList(this.questionList.filter(question => this.selection[question.id]));
     this.dialogRef.close(selectedQuestions);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

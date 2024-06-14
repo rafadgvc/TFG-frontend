@@ -1,4 +1,10 @@
 <div *ngIf="!loading && questionList.length > 0" class="column">
+  <!-- Campo de búsqueda de título -->
+  <mat-form-field appearance="fill" class="medium-small-form-group">
+    <mat-label>Buscar Título de Pregunta</mat-label>
+    <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
+
   <table mat-table [dataSource]="this.dataSource" class="mat-elevation-z8">
     <!-- Cuerpo de la pregunta -->
     <ng-container matColumnDef="title">

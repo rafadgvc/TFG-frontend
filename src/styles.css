@@ -163,7 +163,7 @@ h5 {
 .color-container {
   border-radius: 1em;
   color: #ffffff;
-  background-color: #cb2c30;
+   background-color: rgba(203, 44, 48, 0.55);
 }
 
 .white-container {
@@ -223,6 +223,13 @@ h5 {
 
 .initial-height {
   height: 10rem; /* ajusta la altura según sea necesario */
+}
+
+.medium-small-form-group{
+  width: 55.25rem;
+  span {
+    font-size: 1rem !important;
+  }
 }
 
 .medium-form-group{

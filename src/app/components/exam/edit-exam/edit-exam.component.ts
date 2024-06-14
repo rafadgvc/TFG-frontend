@@ -34,6 +34,7 @@ export class EditExamComponent {
   exams: Exam[] = [];
   sectionList: Section[] = [];
   selectedQuestions: Question[] = [];
+  repeatedQuestions: Question[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,9 +64,10 @@ export class EditExamComponent {
 
   populateExamForm(): void {
     if (this.exam?.subject_id !== undefined) {
-      this.nodeService.getSubjectNodes(this.exam?.subject_id).subscribe(nodes => {
+      const subjectId = this.exam?.subject_id;
+      this.nodeService.getSubjectNodes(subjectId).subscribe(nodes => {
         this.hierarchyNodes = nodes.items;
-        this.examService.getSubjectExams(this.id).subscribe(exams=>{
+        this.examService.getSubjectExams(subjectId).subscribe(exams=>{
           this.exams = exams.items;
         })
       });
@@ -197,11 +199,13 @@ export class EditExamComponent {
               }
             }
             this.sections.at(i).updateValueAndValidity();
+            this.evaluateRepeatedQuestions();
           }
         );
       }
     }
     this.examForm.updateValueAndValidity();
+    this.evaluateRepeatedQuestions();
   }
 
   populateSection(id: number): void {
@@ -248,6 +252,7 @@ export class EditExamComponent {
         }
         this.sections.at(id).updateValueAndValidity();
         this.examForm.updateValueAndValidity();
+        this.evaluateRepeatedQuestions();
       }
     });
   }
@@ -302,6 +307,7 @@ export class EditExamComponent {
       this.sections.at(sectionId).updateValueAndValidity();
     }
     this.examForm.updateValueAndValidity();
+    this.evaluateRepeatedQuestions();
   }
 
   validateSectionQuestions(): ValidatorFn {
@@ -322,15 +328,31 @@ export class EditExamComponent {
 
   compareExams(): void {
     const previous = (this.examForm.get('previous')?.value !== undefined) ? this.examForm.get('previous')?.value : 0;
-    this.examService.getRecentQuestions(this.id, previous).subscribe(questions => {
-      const questionIds = questions.items.map(q => q.id);
-      this.sectionList.forEach(section => {
+    const examId = (this.exam?.subject_id !== undefined) ? this.exam?.subject_id : 0;
+    this.examService.getRecentQuestions(examId, previous).subscribe(questions => {
+      this.repeatedQuestions = questions.items;
+      this.evaluateRepeatedQuestions();
+    });
+  }
+  evaluateRepeatedQuestions(): void {
+    const repeatedIds = this.repeatedQuestions.map(q => q.id);
+    this.sectionList.forEach(section => {
         section.questions?.items.forEach(question => {
-          if (questionIds.includes(question.id)) {
+          const repetition = this.repeatedQuestions.find(q => question.id === q.id)
+          if (repetition !== undefined) {
             question.repeated = true;
+            question.exam_id = repetition.exam_id;
+          }
+          else {
+            question.repeated = false;
+            question.exam_id = undefined;
           }
         });
       });
-    });
+  }
+
+  getQuestionExamTitle(examId: number | undefined): string {
+    const exam = this.exams.find(e => e.id === examId);
+    return exam ? "La pregunta se repite en "  + exam.title + "." : '';
   }
 }

@@ -3,37 +3,53 @@
     <h2>Editar examen</h2>
   </div>
   <form [formGroup]="examForm" class="form">
-    <div class="horizontal-center">
-      <!--    Título del examen -->
-      <mat-form-field appearance="fill" class="medium-form-group">
-        <mat-label>Título</mat-label>
-        <input matInput formControlName="title">
-        <mat-error *ngIf="examForm.get('title')?.hasError('required')">
-          Este campo es requerido
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="horizontal-center-spaced">
-      <div class="padding column">
-        <p><strong>Dificultad estimada media:</strong> {{ this.calculateAverageDifficulty() }}</p>
-        <p><strong>Tiempo total estimado:</strong> {{ this.calculateTotalTime() }}</p>
-        <p><strong>Total de preguntas:</strong> {{ this.calculateTotalQuestions() }}</p>
+    <div class="color-container padding">
+      <div class="white-container padding">
+        <div class="horizontal-center">
+          <!--    Título del examen -->
+          <mat-form-field appearance="fill" class="medium-form-group">
+            <mat-label>Título</mat-label>
+            <input matInput formControlName="title">
+            <mat-error *ngIf="examForm.get('title')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="horizontal-center-spaced">
+          <div class="padding column">
+            <p><strong>Dificultad estimada media:</strong> {{ this.calculateAverageDifficulty() }}</p>
+            <p><strong>Tiempo total estimado:</strong> {{ this.calculateTotalTime() }}</p>
+            <p><strong>Total de preguntas:</strong> {{ this.calculateTotalQuestions() }}</p>
+          </div>
+          <div class="padding column">
+            <mat-form-field appearance="fill" class="form-group">
+              <mat-label>Exámenes anteriores</mat-label>
+              <mat-select formControlName="previous"
+                matTooltip="Si quiere comparar las preguntas seleccionadas con las de exámenes anteriores, seleccione los exámenes con los que comparar."
+                matTooltipPosition="left"
+                multiple
+              >
+                <mat-option *ngFor="let exam of exams" [value]="exam.id">
+                  {{ exam.title }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            </div>
+        </div>
+        <div class="padding">
+          <button mat-raised-button type="button" class="btn btn-primary"
+          [disabled]="examForm.get('years')?.invalid"
+          (click)="compareExams()"
+          matTooltip="Si quiere comparar las preguntas seleccionadas con las de exámenes anteriores, seleccione los años de diferencia con los que se quiere comprobar."
+          matTooltipPosition="below"
+        >
+          <mat-icon>search_on</mat-icon>
+          Comparar
+        </button>
+        </div>
       </div>
-      <div class="padding column">
-        <mat-form-field appearance="fill" class="form-group">
-          <mat-label>Exámenes anteriores</mat-label>
-          <mat-select formControlName="previous"
-            matTooltip="Si quiere comparar las preguntas seleccionadas con las de exámenes anteriores, seleccione los exámenes con los que comparar."
-            matTooltipPosition="left"
-            multiple
-          >
-            <mat-option *ngFor="let exam of exams" [value]="exam.id">
-              {{ exam.title }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
     </div>
+
 
 
     <!-- Secciones del examen -->
@@ -123,30 +139,11 @@
 
               <div class="form-group padding">
                 <mat-slide-toggle formControlName="isParametrized">
-                  Preguntas Parametrizadas
+                  Priorizar Parametrizadas
                 </mat-slide-toggle>
               </div>
 
             </div>
-          </div>
-          <div class="padding white-container">
-            <div *ngIf="this.sectionList[i].questions" class="column">
-              <h4>Preguntas de la sección {{i + 1}}</h4>
-              <div *ngFor="let question of this.sectionList[i].questions?.items; let j = index" class="padding-sm section-questions">
-                <div class="question-title">
-                  <p>{{ question.title }}</p>
-                </div>
-                <div>
-                  <button *ngIf="question.repeated" mat-icon-button color="primary" class="btn btn-danger">
-                    <mat-icon>warning</mat-icon>
-                  </button>
-                  <button mat-icon-button color="primary" class="btn btn-primary" (click)="eliminateQuestion(question.id, i)">
-                    <mat-icon>close</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-
             <div class="padding">
               <button mat-raised-button type="button" class="btn btn-primary"
                 [disabled]="section.invalid"
@@ -163,6 +160,27 @@
               </button>
             </div>
           </div>
+
+            <div *ngIf="this.sectionList[i].questions" class="column padding white-container">
+              <h4>Preguntas de la sección {{i + 1}}</h4>
+              <div *ngFor="let question of this.sectionList[i].questions?.items; let j = index" class="padding-sm section-questions">
+                <div class="question-title">
+                  <p>{{ question.title }}</p>
+                </div>
+                <div>
+                  <button *ngIf="question.repeated" mat-icon-button color="primary"
+                          class="btn btn-danger"
+                          [matTooltip]="getQuestionExamTitle(question.exam_id)"
+                          matTooltipPosition="left"
+                  >
+                    <mat-icon>warning</mat-icon>
+                  </button>
+                  <button mat-icon-button color="primary" class="btn btn-primary" (click)="eliminateQuestion(question.id, i)">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+          </div>
         </div>
       </div>
     </div>
@@ -170,26 +188,19 @@
 
     <div class="padding-sm row">
       <div class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary"
-          [disabled]="examForm.get('years')?.invalid"
-          (click)="compareExams()"
-          matTooltip="Si quiere comparar las preguntas seleccionadas con las de exámenes anteriores, seleccione los años de diferencia con los que se quiere comprobar."
-          matTooltipPosition="below"
-        >
-          <mat-icon>search_on</mat-icon>
-          Comparar
-        </button>
-      </div>
-      <div class="padding-sm">
         <button mat-raised-button type="button" class="btn btn-primary" (click)="addSection()">
           <mat-icon>add</mat-icon>
           Añadir Sección
         </button>
       </div>
       <div class="padding-sm">
-        <button mat-raised-button type="button" class="btn btn-primary btn-modal" (click)="generateRemainingQuestions()">
+        <button mat-raised-button type="button" class="btn btn-primary btn-modal"
+          (click)="generateRemainingQuestions()"
+          matTooltip="Para cada sección sin todas sus preguntas seleccionadas, se generarán automáticamente las que falten según los datos seleccionados."
+          matTooltipPosition="below"
+        >
           <mat-icon>draw</mat-icon>
-          Generar Preguntas
+          Completar
         </button>
       </div>
       <div class="padding-sm">
