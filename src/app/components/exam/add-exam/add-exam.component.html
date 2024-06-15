@@ -165,9 +165,20 @@
               <h4>Preguntas de la sección {{i + 1}}</h4>
               <div *ngFor="let question of this.sectionList[i].questions?.items; let j = index" class="padding-sm section-questions">
                 <div class="question-title">
-                  <p>{{ question.title }}</p>
+                  <p>{{ processQuestionTitle(question) }}</p>
                 </div>
-                <div>
+                <div class="row">
+                  <div class="vertical-center">
+                    <button mat-raised-button *ngIf="question.parametrized"
+                            type="button" class="btn btn-primary"
+                            (click)="changeConfiguration(i, question.id)"
+                            matTooltip="Pulse el botón si quiere cambiar la configuración de parámetros de la pregunta parametrizada."
+                          matTooltipPosition="below"
+                    >
+                      <mat-icon>play_arrow</mat-icon>
+                      Reconfigurar ({{this.getGroup(i, question.id)}})
+                    </button>
+                  </div>
                   <button *ngIf="question.repeated" mat-icon-button color="primary"
                           class="btn btn-danger"
                           [matTooltip]="getQuestionExamTitle(question.exam_id)"

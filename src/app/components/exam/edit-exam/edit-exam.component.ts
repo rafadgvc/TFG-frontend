@@ -355,4 +355,53 @@ export class EditExamComponent {
     const exam = this.exams.find(e => e.id === examId);
     return exam ? "La pregunta se repite en "  + exam.title + "." : '';
   }
+
+  changeConfiguration(sectionId: number, questionId: number): void {
+    const section = this.sectionList[sectionId];
+    if (section && section.questions) {
+      const question = section.questions.items.find(q => q.id === questionId);
+      if (question && question.question_parameters) {
+      let maxGroup = 1;
+      question.question_parameters.items.forEach(param => {
+        if (param.group && param.group > maxGroup) {
+          maxGroup = param.group;
+        }
+      });
+      question.max_group = maxGroup;
+      if (question.group !== undefined && question.group + 1 <= question.max_group) {
+        question.group = question.group + 1;
+      } else {
+        question.group = 1;
+      }
+    }
+    }
+
+    this.sections.at(sectionId).updateValueAndValidity();
+    this.examForm.updateValueAndValidity();
+  }
+
+  getGroup (sectionId: number, questionId: number): string {
+    let res = '-';
+     const section = this.sectionList[sectionId];
+    if (section && section.questions) {
+      const question = section.questions.items.find(q => q.id === questionId);
+      if (question) {
+        res = (question.group === undefined) ? '-' : question.group.toString();
+      }
+    }
+    return res;
+  }
+
+  processQuestionTitle(question: Question): string {
+    let processedTitle = question.title;
+    if (question.parametrized && question.question_parameters && question.question_parameters.items.length > 0) {
+      question.question_parameters.items.forEach(param => {
+        const paramPlaceholder = `##param${param.position}##`;
+        if (param.group == question.group)
+          processedTitle = processedTitle.replace(paramPlaceholder, param.value);
+      });
+    }
+
+    return processedTitle;
+  }
 }
