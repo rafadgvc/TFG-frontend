@@ -162,8 +162,8 @@ h5 {
 
 .color-container {
   border-radius: 1em;
-  color: #ffffff;
-   background-color: rgba(203, 44, 48, 0.55);
+  color:  rgba(203, 44, 48, 1);
+   background-color: rgba(203, 44, 48, 0.15);
 }
 
 .white-container {
