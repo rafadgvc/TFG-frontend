@@ -22,6 +22,7 @@ export class LoginComponent {
     private snackbarService: SnackbarService
   ) {}
 
+  /* Logs in with the form data */
   login(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
@@ -40,8 +41,8 @@ export class LoginComponent {
     }
   }
 
+  /* Navigate to signup component */
   signUp(): void {
       this.router.navigate(['/signup']);
-
   }
 }

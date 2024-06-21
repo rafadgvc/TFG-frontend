@@ -22,18 +22,21 @@ export class ResultService {
   ) { }
 
 
+  /* Gets an Exam's Results */
   getSubjectResults(id: number): Observable<ResultList> {
     return this.http.get<ResultList>(this.resultUrl + '/list/' + id,  { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<ResultList>(`getSubjectResults`))
     );
   }
 
+  /* Imports an Exam's Results */
    importResults(formData: FormData): Observable<ResultList> {
       return this.http.post<ResultList>(`${this.resultUrl}/upload`, formData, { headers: this.headers, withCredentials: true }).pipe(
         catchError(this.handleError<ResultList>('importResults'))
       );
     }
 
+  /* Deletes an Exam's Results */
   deleteResults(id: number): Observable<any>{
     return this.http.delete<Question>(this.resultUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<Question>(`delete Results`))
@@ -41,6 +44,7 @@ export class ResultService {
   }
 
 
+  /* Displays different error messages */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {

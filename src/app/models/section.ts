@@ -8,6 +8,7 @@ export class Section {
   difficulty?: number;
   time? : number;
   repeat?: boolean;
+  parametrized?: boolean;
   questions?: QuestionList;
   exclude_ids?: number[];
 
@@ -19,6 +20,7 @@ export class Section {
     difficulty?: number,
     time? : number,
     repeat?: boolean,
+    parametrized?: boolean,
     questions?: QuestionList,
     exclude_ids?: number[],
   ){
@@ -29,6 +31,7 @@ export class Section {
     this.difficulty = difficulty;
     this.time = time;
     this.repeat = repeat;
+    this.parametrized = parametrized;
     this.questions = questions;
     this.exclude_ids = exclude_ids;
   }

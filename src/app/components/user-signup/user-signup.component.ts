@@ -26,6 +26,7 @@ export class UserSignupComponent {
     });
   }
 
+  /* Registers the user with the form data */
    registerUser() {
     if (this.signupForm.valid) {
       this.user.name = this.signupForm.get('name')?.value;
@@ -39,7 +40,7 @@ export class UserSignupComponent {
     }
   }
 
-
+  /* Validator to check if password and confirmPassword have the same value */
   checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => {
     let pass = group.get('password')?.value;
     let confirmPass = group.get('confirmPassword')?.value

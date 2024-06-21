@@ -23,6 +23,7 @@ export class SubjectDeleteComponent {
     this.subject = this.data.subject;
   }
 
+  /* Deletes the subject */
   deleteSubject(): void {
         this.subjectService.deleteSubject(this.subject).subscribe(
         () => {

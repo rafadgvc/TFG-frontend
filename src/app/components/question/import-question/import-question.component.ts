@@ -26,10 +26,12 @@ export class ImportQuestionComponent {
     this.subject_id = this.data.subject_id;
   }
 
+  /* Selects the first given file */
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
   }
 
+  /* Imports the Questions in the selected file */
   importQuestions(): void {
     if (this.selectedFile !== null) {
       const formData = new FormData();

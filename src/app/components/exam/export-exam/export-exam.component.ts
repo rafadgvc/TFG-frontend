@@ -24,6 +24,7 @@ export class ExportExamComponent {
     this.exam = this.data.exam;
   }
 
+  /* Exports an Exam depending on the selected format */
   exportExam(): void {
     let exportEndpoint: string;
 

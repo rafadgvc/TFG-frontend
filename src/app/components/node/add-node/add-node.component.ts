@@ -32,6 +32,7 @@ export class AddNodeComponent {
     });
   }
 
+  /* Adds a HierarchyNode */
   submitForm() {
     if (this.nodeForm.valid) {
       const nodeData = this.nodeForm.value;

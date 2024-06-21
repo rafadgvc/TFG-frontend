@@ -22,6 +22,7 @@ export class DeleteResultComponent {
     this.exam = this.data.exam;
   }
 
+  /* Deletes the Exam's Results */
   deleteResult(): void {
       this.resultService.deleteResults(this.exam.id).subscribe(
         () => {

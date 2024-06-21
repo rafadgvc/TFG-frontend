@@ -25,6 +25,7 @@ export class SubjectListComponent implements OnInit {
     this.loadUserSubjects();
   }
 
+  /* Gets the list of subjects created by a user */
   loadUserSubjects(): void {
     this.loading = true;
     this.subjectService.getUserSubjects().subscribe(
@@ -35,18 +36,22 @@ export class SubjectListComponent implements OnInit {
     );
   }
 
+  /* Navigates to the subject details of the selected subject */
   viewSubject(subjectId: number): void {
     this.router.navigate(['/subject/' + subjectId]);
   }
 
+  /* Navigates to the question list of the selected subject */
   viewQuestionList(subjectId: number): void {
     this.router.navigate(['/question-list/' + subjectId]);
   }
 
+  /* Navigates to the exam list of the selected subject */
   viewExamList(subjectId: number): void {
     this.router.navigate(['/exam-list/' + subjectId]);
   }
 
+  /* Opens the modal to add a subject */
   openAddSubjectModal(): void {
     const dialogRef = this.dialog.open(AddSubjectComponent, {
       width: '400px',

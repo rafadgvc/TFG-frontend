@@ -26,11 +26,9 @@ export class EditNodeComponent {
     this.nodeForm = this.formBuilder.group({
       name: [this.node.name, Validators.required]
     });
-
-
-
   }
 
+  /* Edits the HierarchyNode */
   submitForm() {
     if (this.nodeForm.valid) {
        this.node.name = this.nodeForm.value.name;

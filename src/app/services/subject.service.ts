@@ -21,36 +21,42 @@ export class SubjectService {
     private snackbarService: SnackbarService
   ) {}
 
+  /* Gets a Subject */
   getSubject(id: number): Observable<Subject> {
     return this.http.get<Subject>(this.subjectUrl + '/' + id, { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<Subject>(`getSubject ${id}`))
     );
   }
 
+  /* Gets a User's Subjects */
   getUserSubjects(): Observable<SubjectList> {
     return this.http.get<SubjectList>(this.subjectUrl + '/user-subjects', { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<SubjectList>(`getUserSubjects`))
     );
   }
 
+  /* Adds a Subject */
   addSubject(subject: Subject): Observable<Subject> {
     return this.http.post<Subject>(this.subjectUrl, subject, { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<Subject>(`addSubject`))
     );
   }
 
+  /* Updates a Subject */
   updateSubject(subject: Subject): Observable<Subject> {
     return this.http.put<Subject>(this.subjectUrl + '/' + subject.id, subject, { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<Subject>(`updateSubject`))
     );
   }
 
+  /* Deletes a Subject */
   deleteSubject(subject: Subject): Observable<any> {
     return this.http.delete<Subject>(this.subjectUrl + '/' + subject.id, { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<Subject>(`deleteSubject`))
     );
   }
 
+  /* Displays different error messages */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {

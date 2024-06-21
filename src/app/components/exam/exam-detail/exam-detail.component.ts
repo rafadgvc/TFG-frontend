@@ -34,6 +34,7 @@ export class ExamDetailComponent implements OnInit {
     });
   }
 
+  /* Gets the Exam */
   populateExam(id: number) {
     this.examService.getExam(id).subscribe(exam => {
       this.exam = exam;
@@ -41,10 +42,12 @@ export class ExamDetailComponent implements OnInit {
     });
   }
 
+  /* Opens a modal to edit the Exam */
   editExam(): void {
     this.router.navigate(['/edit-exam/' + this.exam?.id]);
   }
 
+  /* Opens a modal to export the Exam */
   exportExam(): void {
     const dialogRef = this.dialog.open(ExportExamComponent, {
       width: '400px',
@@ -54,6 +57,7 @@ export class ExamDetailComponent implements OnInit {
     });
   }
 
+  /* Opens a modal to import Results for the Exam */
   importResults(): void {
     const dialogRef = this.dialog.open(ImportResultComponent, {
       width: '400px',
@@ -63,6 +67,7 @@ export class ExamDetailComponent implements OnInit {
     });
   }
 
+  /* Opens a modal to deletes the Exam's Results */
   deleteResults(): void {
     const dialogRef = this.dialog.open(DeleteResultComponent, {
       width: '400px',
@@ -72,6 +77,7 @@ export class ExamDetailComponent implements OnInit {
     });
   }
 
+  /* Formats the points to be seen as a percentage */
   formatPoints(points: number): string {
     return ("" + points + " %");
   }

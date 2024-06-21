@@ -17,6 +17,7 @@ export class AuthService {
     private cookieService: CookieService
   ) {}
 
+  /* Logs in */
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(
       this.authUrl + '/login',
@@ -25,10 +26,12 @@ export class AuthService {
     );
   }
 
+  /* Gets the access token in the cookie */
   getAccessTokenCookie(): string {
     return this.cookieService.get('access_token_cookie');
   }
 
+  /* Logs out */
   logout(): Observable<any> {
     return this.http.post<any>(
       this.authUrl + '/logout',
@@ -37,10 +40,12 @@ export class AuthService {
     );
   }
 
+  /* Checks if a user is logged in */
   isLoggedIn(): Observable<boolean> {
     return this.isLoggedInSubject.asObservable();
   }
 
+  /* Updates the user's logged in status */
   updateAuthStatus(isLoggedIn: boolean) {
     this.isLoggedInSubject.next(isLoggedIn);
   }

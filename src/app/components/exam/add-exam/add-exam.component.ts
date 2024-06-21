@@ -66,6 +66,7 @@ export class AddExamComponent {
     this.addSection();
   }
 
+  /* Adds a Section to the form */
   addSection() {
     this.sections.push(this.formBuilder.group({
       node: ['', [Validators.required]],
@@ -80,6 +81,7 @@ export class AddExamComponent {
     this.sectionList.push(new Section(this.sectionList.length));
   }
 
+  /* Removes a Section from the form */
   removeSection(index: number) {
     this.sections.removeAt(index);
     this.sectionList.splice(index, 1);
@@ -90,6 +92,7 @@ export class AddExamComponent {
     return (this.examForm.get('sections') as FormArray).controls;
   }
 
+  /* Creates an Exam with the form data */
   submitForm(): void {
     if (this.examForm.valid) {
       const examData = this.examForm.value;
@@ -134,6 +137,7 @@ export class AddExamComponent {
     }
   }
 
+  /* Generates the remaining Questions for every Section in the form with the specified parameters */
   generateRemainingQuestions(): void {
     for (let i = 0; i < this.sectionList.length; i++) {
       this.populateSection(i);
@@ -162,6 +166,7 @@ export class AddExamComponent {
     this.evaluateRepeatedQuestions();
   }
 
+  /* Updates the Section's value with the Section form data */
   populateSection(id: number): void {
     const sectionData = this.sections.at(id).value;
     this.sectionList[id].node_ids = sectionData.node;
@@ -170,6 +175,7 @@ export class AddExamComponent {
     this.sectionList[id].repeat = sectionData.isNew;
     this.sectionList[id].type = sectionData.type;
     this.sectionList[id].question_number = sectionData.questionNumber;
+    this.sectionList[id].parametrized = sectionData.isParametrized;
     let excluded = this.sectionList[id].exclude_ids;
 
     if (!excluded || excluded.length < this.selectedQuestions.length) {
@@ -182,6 +188,7 @@ export class AddExamComponent {
     }
   }
 
+  /* Opens a modal to select specific Questions for the Section */
   openExamSection(id: number): void {
     this.populateSection(id);
     let maxQuestions = (this.sectionList[id].questions !== undefined) ?
@@ -211,6 +218,7 @@ export class AddExamComponent {
     });
   }
 
+  /* Calculates the average estimated difficulty for the currently selected Questions */
   calculateAverageDifficulty(): string {
     let avg = 0;
     let total = 0;
@@ -227,6 +235,7 @@ export class AddExamComponent {
     return `${avg.toFixed(3)} / 10`;
   }
 
+  /* Calculates the total estimated time for the currently selected Questions */
   calculateTotalTime(): string {
     let total = 0;
     for (let i = 0; i < this.sectionList.length; i++) {
@@ -240,6 +249,7 @@ export class AddExamComponent {
     return `${total} min`;
   }
 
+  /* Calculates the total number of currently selected Questions */
   calculateTotalQuestions(): string {
     let total = 0;
     for (let i = 0; i < this.sectionList.length; i++) {
@@ -251,6 +261,7 @@ export class AddExamComponent {
     return `${total}`;
   }
 
+  /* Removes a Question from a Section */
   eliminateQuestion(questionId: number, sectionId: number) {
     const section = this.sectionList[sectionId];
     if (section && section.questions) {
@@ -264,6 +275,7 @@ export class AddExamComponent {
     this.evaluateRepeatedQuestions();
   }
 
+  /* Checks if the number of selected Questions matches the specified number of Questions for the Section */
   validateSectionQuestions(): ValidatorFn {
     return (formArray: AbstractControl): ValidationErrors | null => {
       const sections = formArray as FormArray;
@@ -280,6 +292,7 @@ export class AddExamComponent {
     };
   }
 
+  /* Gets the selected Exams' Questions */
   compareExams(): void {
     const previous = (this.examForm.get('previous')?.value !== undefined) ? this.examForm.get('previous')?.value : [];
     this.examService.getRecentQuestions(this.id, previous).subscribe(questions => {
@@ -288,6 +301,7 @@ export class AddExamComponent {
     });
   }
 
+  /* Checks for every Question if it is related to a selected Exam */
   evaluateRepeatedQuestions(): void {
     const repeatedIds = this.repeatedQuestions.map(q => q.id);
     this.sectionList.forEach(section => {
@@ -305,11 +319,13 @@ export class AddExamComponent {
       });
   }
 
+  /* Returns the Exam in which the Question is repeated, if it is a repeated Question */
   getQuestionExamTitle(examId: number | undefined): string {
     const exam = this.exams.find(e => e.id === examId);
     return exam ? "La pregunta se repite en "  + exam.title + "." : '';
   }
 
+  /* If a Question is parametrized, it selects a new group of QuestionParameters */
   changeConfiguration(sectionId: number, questionId: number): void {
     const section = this.sectionList[sectionId];
     if (section && section.questions) {
@@ -334,6 +350,7 @@ export class AddExamComponent {
     this.examForm.updateValueAndValidity();
   }
 
+  /* If a Question is parametrized, it gets the currently selected group */
   getGroup (sectionId: number, questionId: number): string {
     let res = '-';
      const section = this.sectionList[sectionId];
@@ -346,6 +363,7 @@ export class AddExamComponent {
     return res;
   }
 
+  /* If a Question is parametrized, it gets the title applying the parameters' values */
   processQuestionTitle(question: Question): string {
     let processedTitle = question.title;
     if (question.parametrized && question.question_parameters && question.question_parameters.items.length > 0) {

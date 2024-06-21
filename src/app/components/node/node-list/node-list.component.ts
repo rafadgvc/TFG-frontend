@@ -35,6 +35,7 @@ export class NodeListComponent implements OnInit{
     });
   }
 
+  /* Gets a subject's HierarchyNodes */
   loadHierarchySubjectNodes(id: number): void {
     this.loading = true;
     this.nodeService.getSubjectNodes(id).subscribe(
@@ -48,6 +49,7 @@ export class NodeListComponent implements OnInit{
 
   }
 
+  /* Converts a HierarchyNode array to a tree */
   convertToTreeNodeList(nodes: HierarchyNode[]): any[] {
     const nodeMap = new Map<number, any>();
 
@@ -91,6 +93,7 @@ export class NodeListComponent implements OnInit{
     return treeNodes;
   }
 
+  /* Opens a modal to add a HierarchyNode */
   openAddNodeModal(id: number = NaN): void {
     const dialogRef = this.dialog.open(AddNodeComponent, {
       width: '800px',
@@ -109,10 +112,12 @@ export class NodeListComponent implements OnInit{
     });
   }
 
+  /* Opens a modal to view a specific HierarchyNode */
   viewNode(nodeId: number): void {
     this.router.navigate(['/node/' + nodeId]);
   }
 
+  /* Calculates a HierarchyNode's depth */
   calculateNodeLevel (currentNode: any): number {
     let level = 1;
     let currentParentId = currentNode.parent_id;
@@ -131,6 +136,7 @@ export class NodeListComponent implements OnInit{
     return level;
   };
 
+  /* Calculates a HierarchyNode's colour depending on its depth */
   calculateNodeBackground(node: any): string {
 
 
@@ -155,6 +161,7 @@ export class NodeListComponent implements OnInit{
   return colorHex;
 }
 
+  /* Opens a modal to view the HierarchyNodes' subject */
   viewSubject(): void {
     this.router.navigate(['/subject/' + this.id]);
   }
@@ -176,6 +183,7 @@ export class NodeListComponent implements OnInit{
     return null;
   };
 
+  /* Calculates a HierarchyNode's left margin depending on its depth */
   calculateMarginLeft(node: any): number {
 
     const baseMargin = 1;
@@ -189,11 +197,13 @@ export class NodeListComponent implements OnInit{
     return baseMargin * depth;
   }
 
+  /* Sets a node as expanded to display its children */
   onNodeExpand(event: any) {
     const node = event.node;
     node.expanded = true;
   }
 
+  /* Sets a node an not expanded to not display its children */
   onNodeCollapse(event: any) {
     const node = event.node;
     node.expanded = false;

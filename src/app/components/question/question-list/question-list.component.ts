@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Question } from "../../../models/question";
 import { QuestionService } from "../../../services/question.service";
-import {ImportResultComponent} from "../../result/import-result/import-result.component";
 import {ImportQuestionComponent} from "../import-question/import-question.component";
 
 @Component({
@@ -42,6 +41,7 @@ export class QuestionListComponent implements OnInit{
     this.dataSource.paginator = this.paginator;
   }
 
+  /* Gets the Subject's Questions */
   loadQuestionSubjects(id: number): void {
     this.loading = true;
     this.questionService.getSubjectQuestions(id).subscribe(
@@ -54,18 +54,22 @@ export class QuestionListComponent implements OnInit{
     );
   }
 
+  /* Navigates to the Questions' Subject */
   viewSubject(subjectId: number): void {
     this.router.navigate(['/subject/' + subjectId]);
   }
 
+  /* Navigates to a Question's details */
   viewQuestion(questionId: number): void {
     this.router.navigate(['/question/' + questionId]);
   }
 
+  /* Navigates to add a Question */
   addQuestion(): void {
     this.router.navigate(['/add-question/' + this.id]);
   }
 
+  /* Opens a modal to import Questions */
   importQuestions(): void {
     const dialogRef = this.dialog.open(ImportQuestionComponent, {
       width: '600px',
@@ -74,6 +78,8 @@ export class QuestionListComponent implements OnInit{
       }
     });
   }
+
+  /* Applies a filter when searching for a Question */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

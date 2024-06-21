@@ -58,6 +58,7 @@ export class EditQuestionComponent {
     });
   }
 
+  /* Populates the form with the Question's data */
   populateQuestionForm(): void {
     if (this.question?.subject_id !== undefined) {
       this.nodeService.getSubjectNodes(this.question?.subject_id).subscribe(nodes => {
@@ -116,25 +117,13 @@ export class EditQuestionComponent {
             ? this.question?.question_parameters?.items[i * parameterNumber + 6].value
             : ''
           ],
-          param8: [(8 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 7].value !== undefined)
-            ? this.question?.question_parameters?.items[i * parameterNumber + 7].value
-            : ''
-          ],
-          param9: [(9 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 8].value !== undefined)
-            ? this.question?.question_parameters?.items[i * parameterNumber + 8].value
-            : ''
-
-          ],
-          param10: [(10 <= parameterNumber && this.question?.question_parameters?.items[i * parameterNumber + 9].value !== undefined)
-            ? this.question?.question_parameters?.items[i * parameterNumber + 9].value
-            : ''
-          ],
 
         }));
       }
     }
   }
 
+  /* Adds an Answer to the form */
   addAnswer() {
     this.answers.push(this.formBuilder.group({
       body: ['', Validators.required],
@@ -142,6 +131,7 @@ export class EditQuestionComponent {
     }));
   }
 
+  /* Adds a new group of QuestionParameters to the form */
   addGroup() {
     this.groups.push(this.formBuilder.group({
       param1: [''],
@@ -151,22 +141,25 @@ export class EditQuestionComponent {
       param5: [''],
       param6: [''],
       param7: [''],
-      param8: [''],
-      param9: [''],
-      param10: [''],
     }));
   }
 
+  /* Removes an Answer from the form */
   removeAnswer(index: number) {
     this.answers.removeAt(index);
   }
 
+  /* Removes a group of QuestionParameters from the form */
   removeGroup(index: number) {
     this.groups.removeAt(index);
   }
+
+  /* Adds a QuestionParameter to each group of QuestionParameters in the form */
   addParameter(){
     this.parameterNumber += 1;
   }
+
+  /* Removes a QuestionParameter from each group of QuestionParameters in the form */
   removeParameter(){
     this.parameterNumber -= 1;
   }
@@ -179,6 +172,7 @@ export class EditQuestionComponent {
     return (this.questionForm.get('groups') as FormArray).controls;
   }
 
+  /* Opens a modal to delete the Question */
   deleteQuestion(): void {
     const dialogRef = this.dialog.open(DeleteQuestionComponent, {
       width: '400px',
@@ -188,6 +182,7 @@ export class EditQuestionComponent {
     });
   }
 
+  /* Opens a modal to disable the Question */
   disableQuestion(): void {
     const dialogRef = this.dialog.open(DisableQuestionComponent, {
       width: '400px',
@@ -202,6 +197,7 @@ export class EditQuestionComponent {
     });
   }
 
+  /* Edits the Question */
   submitForm(): void {
     if (this.questionForm.valid) {
       const questionData = this.questionForm.value;
@@ -257,7 +253,9 @@ export class EditQuestionComponent {
       console.log('Invalid form');
     }
   }
-areAllParametersPresent(title: string, answers: string[], parameterNumber: number): boolean {
+
+  /* Checks if the Question has all ##param## in the title and the answer's content, and if it matches with the number of QuestionParameters */
+  areAllParametersPresent(title: string, answers: string[], parameterNumber: number): boolean {
     let maxParam = this.getMaxParameterUsed(title);
 
     for (const answer of answers) {
@@ -283,6 +281,7 @@ areAllParametersPresent(title: string, answers: string[], parameterNumber: numbe
     return true;
   }
 
+  /* Gets the number of parameters used in the Question and Answer's content */
   getMaxParameterUsed(text: string): number {
     const paramPattern = /##param(\d+)##/g;
     let match;

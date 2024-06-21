@@ -13,8 +13,6 @@ import {NodeService} from "../../../services/node.service";
 })
 export class NodeDetailComponent implements OnInit{
   node?: HierarchyNode;
-
-
   id?: number;
 
   constructor(
@@ -34,12 +32,14 @@ export class NodeDetailComponent implements OnInit{
     });
   }
 
+  /* Gets the HierarchyNode */
   loadNode(id: number) {
     this.nodeService.getNode(id).subscribe(node => {
       this.node = node;
     });
   }
 
+  /* Opens a modal to edit the HierarchyNode */
   editNode(): void {
     const dialogRef = this.dialog.open(EditNodeComponent, {
       width: '800px',
@@ -56,6 +56,7 @@ export class NodeDetailComponent implements OnInit{
     });
   }
 
+  /* Opens a modal to delete the HierarchyNode */
   deleteNode(): void {
     const dialogRef = this.dialog.open(DeleteNodeComponent, {
       width: '400px',

@@ -31,12 +31,14 @@ export class SubjectDetailComponent implements OnInit{
     });
   }
 
+  /* Gets the selected subject */
   loadSubject(id: number) {
     this.subjectService.getSubject(id).subscribe(subject => {
         this.subject = subject;
       });
   }
 
+  /* Opens a modal to edit the subject */
   editSubject(): void {
     const dialogRef = this.dialog.open(SubjectModifyComponent, {
       width: '400px',
@@ -52,6 +54,7 @@ export class SubjectDetailComponent implements OnInit{
     });
   }
 
+  /* Opens a modal to delete the subject */
   deleteSubject(): void {
     const dialogRef = this.dialog.open(SubjectDeleteComponent, {
       width: '400px',
@@ -61,14 +64,17 @@ export class SubjectDetailComponent implements OnInit{
     });
   }
 
+  /* Navigates to the question list of the selected subject */
   viewQuestionList(): void {
     this.router.navigate(['/question-list/' + this.id]);
   }
 
+  /* Navigates to the node list of the selected subject */
   viewNodeList(): void {
     this.router.navigate(['/node-list/' + this.id]);
   }
 
+  /* Navigates to the exam list of the selected subject */
   viewExamList(): void {
     this.router.navigate(['/exam-list/' + this.id]);
   }

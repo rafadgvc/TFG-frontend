@@ -31,6 +31,7 @@ export class QuestionDetailComponent implements OnInit{
     });
   }
 
+  /* Gets the Question */
   populateQuestion(id: number){
     this.questionService.getQuestion(id).subscribe(question => {
       this.question = question;
@@ -41,10 +42,12 @@ export class QuestionDetailComponent implements OnInit{
     });
   }
 
+  /* Opens a modal to edit the Question */
   editQuestion(): void {
     this.router.navigate(['/edit-question/' + this.question?.id]);
   }
 
+  /* Opens a modal to delete the Question */
   deleteQuestion(): void {
     const dialogRef = this.dialog.open(DeleteQuestionComponent, {
       width: '400px',
@@ -54,6 +57,7 @@ export class QuestionDetailComponent implements OnInit{
     });
   }
 
+  /* Opens a modal to disable the Question */
   disableQuestion(): void {
     const dialogRef = this.dialog.open(DisableQuestionComponent, {
       width: '400px',
@@ -68,6 +72,7 @@ export class QuestionDetailComponent implements OnInit{
     });
   }
 
+  /* Formats the points to be seen as a percentage */
   formatPoints(points: number): string{
     return ("" + points + " %");
   }

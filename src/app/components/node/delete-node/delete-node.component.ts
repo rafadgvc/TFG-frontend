@@ -24,6 +24,7 @@ export class DeleteNodeComponent {
     this.node = this.data.node;
   }
 
+  /* Deletes the HierarchyNode */
   deleteNode(): void {
       this.nodeService.deleteNode(this.node).subscribe(
         () => {

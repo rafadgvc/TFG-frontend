@@ -34,6 +34,7 @@ export class ExamListComponent implements OnInit{
     });
   }
 
+  /* Gets the Subject's Exams */
   loadSubjectExams(id: number): void {
     this.loading = true;
     this.examService.getSubjectExams(id).subscribe(
@@ -44,18 +45,22 @@ export class ExamListComponent implements OnInit{
     );
   }
 
+  /* Navigates to an Exam's details */
   viewExam(examId: number): void {
     this.router.navigate(['/exam/' + examId]);
   }
 
+  /* Navigates to add an Exam */
   addExam(subjectId: number): void {
     this.router.navigate(['/add-exam/' + subjectId]);
   }
 
+  /* Navigates to the Exam's Subject */
   viewSubject(subjectId: number): void {
     this.router.navigate(['/subject/' + subjectId]);
   }
 
+  /* Opens a modal to delete an Exam */
   deleteExam(exam: Exam): void {
     const dialogRef = this.dialog.open(DeleteExamComponent, {
       width: '400px',

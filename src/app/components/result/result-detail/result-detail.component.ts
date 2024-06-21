@@ -43,6 +43,7 @@ export class ResultDetailComponent implements OnInit {
     });
   }
 
+  /* Gets the Exam's Results */
   populateResults() {
     this.resultService.getSubjectResults(this.id).subscribe(
       resultList => {
@@ -58,6 +59,7 @@ export class ResultDetailComponent implements OnInit {
     );
   }
 
+  /* Loads the selected filters */
   loadSelectedFilters() {
     for (let i = 0; i < this.results.length; i++){
       const res : Result = this.results[i];
@@ -72,6 +74,7 @@ export class ResultDetailComponent implements OnInit {
     this.takers.sort((a, b) => a - b);
   }
 
+  /* Applies the selected filters */
   applyFilter() {
     if (this.dataSource) {
       this.dataSource.filter = JSON.stringify({
@@ -82,6 +85,7 @@ export class ResultDetailComponent implements OnInit {
     }
   }
 
+  /* Determines if a Result fulfills the filters */
   customFilter(data: Result, filter: string): boolean {
     const searchTerms = JSON.parse(filter);
     return <boolean>(
@@ -91,6 +95,7 @@ export class ResultDetailComponent implements OnInit {
     );
   }
 
+  /* Resets the filters */
   resetFilters() {
     this.selectedQuestionTitle = null;
     this.selectedExamTitle = null;
@@ -98,14 +103,17 @@ export class ResultDetailComponent implements OnInit {
     this.applyFilter();
   }
 
+  /* Formats the points as a percentage */
   formatPoints(points: number): string {
     return ("" + points + " %");
   }
 
+  /* Formats the time */
   formatTime(time: number): string {
     return ("" + time + " min");
   }
 
+  /* Calculates the average points */
   calculateAveragePoints(filteredResults: Result[]): number {
     const totalPoints = filteredResults.reduce((acc, curr) => {
       if (curr.points) {
@@ -117,10 +125,12 @@ export class ResultDetailComponent implements OnInit {
     return filteredResults.length > 0 ? totalPoints / filteredResults.length : 0;
   }
 
+  /* Calculates the total displayed Results */
   calculateTotalResults(filteredResults: Result[]): number {
     return filteredResults.length;
   }
 
+  /* Calculates the average time */
   calculateAverageTime(filteredResults: Result[]): number {
     const totalTime = filteredResults.reduce((acc, curr) => {
       if (curr.time) {

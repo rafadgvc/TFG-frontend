@@ -26,6 +26,7 @@ export class AddSubjectComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  /* Gets the form data and adds the subject */
   submitForm(): void {
     if (this.subjectForm.valid) {
       const subjectName = this.subjectForm.value.name;

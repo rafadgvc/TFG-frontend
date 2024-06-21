@@ -21,8 +21,9 @@ export class DeleteQuestionComponent {
     private snackbarService: SnackbarService
   ){
     this.question = this.data.question;
-
   }
+
+  /* Deletes the Question */
   deleteQuestion(): void {
       this.questionService.deleteQuestion(this.question).subscribe(
         () => {

@@ -22,6 +22,7 @@ export class ExamService {
   ) {
   }
 
+  /* Gets an exam */
   getExam(id: number): Observable<Exam> {
     return this.http.get<Exam>(this.examUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
       map(exam => exam),
@@ -29,18 +30,21 @@ export class ExamService {
     )
   }
 
+  /* Adds an Exam */
   addExam(exam: Exam): Observable<Exam> {
     return this.http.post<Exam>(this.examUrl, exam, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<Exam>(`add Exam`))
     );
   }
 
+  /* Gets a Subject's Exams */
   getSubjectExams(id: number): Observable<ExamList> {
     return this.http.get<ExamList>(this.examUrl + '/list/'+ id,  { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<ExamList>(`Exam List`))
     );
   }
 
+  /* Gets Questions to select for a Section in an Exam */
   getQuestionsToSelect(section: Section): Observable<QuestionList> {
     console.log(section)
     let params = new HttpParams();
@@ -64,6 +68,9 @@ export class ExamService {
     if (section.repeat !== undefined) {
       params = params.set('repeat', section.repeat.toString());
     }
+    if (section.parametrized !== undefined) {
+      params = params.set('parametrized', section.parametrized.toString());
+    }
     if (section.exclude_ids !== undefined && section.exclude_ids.length > 0) {
       section.exclude_ids.forEach(id => {
         params = params.append('exclude_ids', id.toString());
@@ -80,6 +87,7 @@ export class ExamService {
     );
   }
 
+  /* Gets Questions to complete a Section in an Exam */
   generateRemainingQuestions(section: Section, remaining: number): Observable<QuestionList> {
     let params = new HttpParams();
 
@@ -102,6 +110,9 @@ export class ExamService {
     if (section.repeat !== undefined) {
       params = params.set('repeat', section.repeat.toString());
     }
+    if (section.parametrized !== undefined) {
+      params = params.set('parametrized', section.parametrized.toString());
+    }
     if (section.exclude_ids !== undefined && section.exclude_ids.length > 0) {
       section.exclude_ids.forEach(id => {
         params = params.append('exclude_ids', id.toString());
@@ -118,6 +129,7 @@ export class ExamService {
     );
   }
 
+  /* Exports an Exam */
   exportExam(id: number, endpoint: string): Observable<Blob> {
     return this.http.get(`${this.examUrl}/${id}/${endpoint}`, {
       headers: this.headers,
@@ -131,12 +143,14 @@ export class ExamService {
     );
   }
 
+  /* Deletes an Exam */
   deleteExam(id: number): Observable<any>{
     return this.http.delete<Exam>(this.examUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<Exam>(`delete Exam`))
     );
   }
 
+  /* Updates an Exam */
   editExam(exam: Exam): Observable<Exam>{
     console.log(exam);
     return this.http.put<Exam>(this.examUrl + '/' +  exam.id, exam, {headers: this.headers, withCredentials: true}).pipe(
@@ -144,6 +158,7 @@ export class ExamService {
     );
   }
 
+  /* Gets selected Exams' Questions */
   getRecentQuestions(subject_id: number, previous: number[]): Observable<QuestionList> {
 
       let params = new HttpParams();
@@ -163,6 +178,7 @@ export class ExamService {
       );
   }
 
+  /* Displays different error messages */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {

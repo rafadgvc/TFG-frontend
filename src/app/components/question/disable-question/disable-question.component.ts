@@ -22,8 +22,9 @@ export class DisableQuestionComponent {
     private snackbarService: SnackbarService
   ){
     this.question = this.data.question;
-
   }
+
+  /* Disables the Question */
   disableQuestion(): void {
       this.questionService.disableQuestion(this.question).subscribe(
         () => {
@@ -31,6 +32,5 @@ export class DisableQuestionComponent {
           this.dialogRef.close();
         }
       );
-
   }
 }

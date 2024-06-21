@@ -27,6 +27,7 @@ export class SubjectModifyComponent {
     });
   }
 
+  /* Edits the subject */
   submitForm(): void {
     if (this.subjectForm.valid) {
       this.subject.name = this.subjectForm.value.name;

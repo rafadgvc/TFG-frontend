@@ -38,6 +38,7 @@ export class ExamSectionModalComponent {
     this.searchQuestions();
   }
 
+  /* Sorts the Questions in the table */
   sortData(sort: Sort) {
     const data = this.questionList.slice();
     if (!sort.active || sort.direction === '') {
@@ -58,6 +59,7 @@ export class ExamSectionModalComponent {
     this.dataSource.paginator = this.paginator;
   }
 
+  /* Filters the Questions in the table depending on the written terms */
   searchQuestions(): void {
     this.loading = true;
     this.examService.getQuestionsToSelect(this.section).subscribe(
@@ -74,6 +76,7 @@ export class ExamSectionModalComponent {
     );
   }
 
+  /* Controls how many Questions can be selected */
   toggleSelection(questionId: number): void {
     if (this.selection[questionId]) {
       this.selectedCount--;
@@ -84,11 +87,13 @@ export class ExamSectionModalComponent {
     }
   }
 
+  /* Returns the selected Questions and closes the modal */
   selectQuestions() {
     const selectedQuestions = new QuestionList(this.questionList.filter(question => this.selection[question.id]));
     this.dialogRef.close(selectedQuestions);
   }
 
+  /* Applies the filter when searching */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -55,6 +55,7 @@ export class AddQuestionComponent {
     });
 }
 
+  /* Adds an Answer to the form */
   addAnswer() {
     this.answers.push(this.formBuilder.group({
       body: ['', Validators.required],
@@ -62,6 +63,7 @@ export class AddQuestionComponent {
     }));
   }
 
+  /* Adds a new group of QuestionParameters to the form */
   addGroup() {
     this.groups.push(this.formBuilder.group({
       param1: [''],
@@ -71,22 +73,25 @@ export class AddQuestionComponent {
       param5: [''],
       param6: [''],
       param7: [''],
-      param8: [''],
-      param9: [''],
-      param10: [''],
     }));
   }
 
+  /* Removes an Answer from the form */
   removeAnswer(index: number) {
     this.answers.removeAt(index);
   }
 
+  /* Removes a group of QuestionParameters from the form */
   removeGroup(index: number) {
     this.groups.removeAt(index);
   }
+
+  /* Adds a QuestionParameter to each group of QuestionParameters in the form */
   addParameter(){
     this.parameterNumber += 1;
   }
+
+  /* Removes a QuestionParameter from each group of QuestionParameters in the form */
   removeParameter(){
     this.parameterNumber -= 1;
   }
@@ -99,6 +104,7 @@ export class AddQuestionComponent {
     return (this.questionForm.get('groups') as FormArray).controls;
   }
 
+  /* Creates the Question */
   submitForm(): void {
     if (this.questionForm.valid) {
       const questionData = this.questionForm.value;
@@ -153,6 +159,7 @@ export class AddQuestionComponent {
     }
   }
 
+  /* Checks if the Question has all ##param## in the title and the answer's content, and if it matches with the number of QuestionParameters */
   areAllParametersPresent(title: string, answers: string[], parameterNumber: number): boolean {
     let maxParam = this.getMaxParameterUsed(title);
 
@@ -179,6 +186,7 @@ export class AddQuestionComponent {
     return true;
   }
 
+  /* Gets the number of parameters used in the Question and Answer's content */
   getMaxParameterUsed(text: string): number {
     const paramPattern = /##param(\d+)##/g;
     let match;

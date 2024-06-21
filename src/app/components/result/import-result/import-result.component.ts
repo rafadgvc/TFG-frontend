@@ -24,10 +24,12 @@ export class ImportResultComponent {
     this.exam = this.data.exam;
   }
 
+  /* Selects the first given file */
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
   }
 
+  /* Imports the Exam's Results from the selected file */
   importResult(): void {
     if (this.selectedFile !== null) {
       const formData = new FormData();

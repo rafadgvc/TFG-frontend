@@ -17,6 +17,7 @@ export class UserService {
   ) { }
 
 
+  /* Registers a user */
   signup(user: User): Observable<User> {
     return this.http.post<User>(this.userUrl + '/signup', user).pipe(
       map(User => user),
@@ -24,6 +25,7 @@ export class UserService {
     )
   }
 
+  /* Displays different error messages */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {

@@ -18,6 +18,7 @@ export class NodeService {
     private snackbarService: SnackbarService
   ) { }
 
+  /* Gets a HierarchyNode */
   getNode(id: number): Observable<HierarchyNode> {
     return this.http.get<HierarchyNode>(this.nodeUrl + '/' + id, {headers: this.headers, withCredentials: true}).pipe(
       map(node => node),
@@ -25,30 +26,35 @@ export class NodeService {
     )
   }
 
+  /* Adds a HierarchyNode */
   addNode(node: HierarchyNode): Observable<HierarchyNode>{
     return this.http.post<HierarchyNode>(this.nodeUrl, node, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<HierarchyNode>(`add Node`))
     );
   }
 
+  /* Updates a HierarchyNode */
   updateNode(node: HierarchyNode): Observable<HierarchyNode>{
     return this.http.put<HierarchyNode>(this.nodeUrl + '/' + node.id, node, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<HierarchyNode>(`update Node`))
     );
   }
 
+  /* Gets a Subject's HierarchyNodes */
   getSubjectNodes(id: number): Observable<HierarchyNodeList> {
     return this.http.get<HierarchyNodeList>(this.nodeUrl + '/list/'+ id,  { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError<HierarchyNodeList>(`HierarchyNodeList`))
     );
   }
 
+  /* Deletes a HierarchyNode */
   deleteNode(node: HierarchyNode): Observable<any>{
     return this.http.delete<HierarchyNode>(this.nodeUrl + '/' + node.id, {headers: this.headers, withCredentials: true}).pipe(
       catchError(this.handleError<HierarchyNode>(`delete Node`))
     );
   }
 
+  /* Displays different error messages */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {
