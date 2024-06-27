@@ -28,7 +28,7 @@ export class DeleteExamComponent {
         () => {
           this.snackbarService.showSuccess('Resultados eliminados correctamente.');
           this.dialogRef.close();
-          this.router.navigate(['/exam-list/'+ this.exam.subject_id]);
+          this.router.navigate(['/subject/'+ this.data.subjectId]);
         }
       );
   }
